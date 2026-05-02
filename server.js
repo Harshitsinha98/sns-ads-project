@@ -1,45 +1,64 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const Razorpay = require('razorpay'); // 1. Razorpay ko bulaya
 require('dotenv').config();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-// 1. Database Connection
-mongoose.connect("mongodb+srv://sinhaharshit67_db_user:lkysa0Xm1tryCI3o@cluster0.ar6yjcf.mongodb.net/sns_ads_db?retryWrites=true&w=majority")
-.then(() => console.log("✅ Astra connected to MongoDB!"))
-.catch((err) => console.log("❌ DB Error:", err));
+// MongoDB Connection
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log("✅ MongoDB Connected"))
+    .catch(err => console.log("❌ DB Error:", err));
 
-// --- YE SECTION ADD KIYA HAI ---
-// Check karne ke liye ki backend zinda hai ya nahi
-app.get('/', (req, res) => {
-    res.send("🚀 SNS ADS Backend is Running on Astra!");
+// 2. Razorpay ka setup (Key ID aur Secret yahan use honge)
+const razorpay = new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
-// -------------------------------
 
-// 2. Lead Schema
+// Schema for Leads
 const leadSchema = new mongoose.Schema({
     name: String,
     email: String,
     service: String,
-    date: { type: Date, default: Date.now }
+    paymentStatus: { type: String, default: 'Pending' }, // Payment track karne ke liye
+    orderId: String
 });
 const Lead = mongoose.model('Lead', leadSchema);
 
-// 3. API Route
+// --- ROUTES ---
+
+// A. Purana Route: Lead save karne ke liye
 app.post('/api/contact', async (req, res) => {
-    console.log("Data received from Frontend:", req.body); // Debugging ke liye
     try {
         const newLead = new Lead(req.body);
         await newLead.save();
-        res.status(201).json({ message: "Lead saved successfully!" });
+        res.status(201).json({ message: "Lead Saved" });
     } catch (err) {
-        console.log("Save Error:", err);
-        res.status(500).json({ error: "Failed to save lead" });
+        res.status(500).json({ error: err.message });
     }
 });
 
-const PORT = 5001;
+// B. Naya Route: Razorpay Order banane ke liye
+app.post('/api/create-order', async (req, res) => {
+    const { amount } = req.body; // Amount frontend se aayega
+
+    const options = {
+        amount: amount * 100, // Razorpay paise mein leta hai (Rupees * 100)
+        currency: "INR",
+        receipt: "receipt_" + Math.random(),
+    };
+
+    try {
+        const order = await razorpay.orders.create(options);
+        res.json(order); // Ye Order ID frontend ko bhej dega
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
+
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

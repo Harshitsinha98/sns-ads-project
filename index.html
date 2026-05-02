@@ -6,6 +6,8 @@
     <title>SNS ADS | Premium Digital Agency</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Is line ko bas jod dena hai -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 <body class="bg-white text-slate-900 font-sans overflow-x-hidden">
 
@@ -69,6 +71,11 @@
                 </select>
                 <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold hover:bg-blue-700 transition">Send My Request</button>
             </form>
+                <!-- Form ke niche ise daal do -->
+            <button id="payButton" class="w-full mt-4 bg-green-600 text-white py-4 rounded-xl font-bold hover:bg-green-700 transition">
+             Pay Now (₹14,999)
+            </button>
+            
             <p id="responseMsg" class="mt-4 text-center font-bold"></p>
         </div>
     </section>
@@ -114,6 +121,53 @@
                 msg.style.color = "red";
             }
         });
+        // 1. Button ko pehchano
+document.getElementById('payButton').onclick = async function (e) {
+    e.preventDefault(); // Isse page refresh nahi hoga
+    
+    const responseMsg = document.getElementById('responseMsg');
+    responseMsg.innerText = "Generating Order..."; // User ko dikhane ke liye
+
+    try {
+        // 2. Render Backend se Order ID maango
+        const response = await fetch('https://sns-ads-project.onrender.com/api/create-order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ amount: 14999 }) // ₹14,999 bheja
+        });
+
+        const order = await response.json();
+
+        // 3. Razorpay ka Pop-up Configure karo
+        const options = {
+            "key": "rzp_test_SkanzCNHx8h7vh", // <--- Apni KEY ID yahan paste karein (Razorpay Dashboard se)
+            "amount": order.amount, // Paise mein (1499900)
+            "currency": "INR",
+            "name": "SNS ADS",
+            "description": "Premium Performance Marketing",
+            "order_id": order.id, // Ye ID Render server ne di hai
+            "handler": function (response){
+                // Ye tab chalega jab payment SUCCESS ho jayegi
+                alert("Mubarak ho! Payment Successful. ID: " + response.razorpay_payment_id);
+                responseMsg.innerText = "✅ Payment Received!";
+                responseMsg.style.color = "green";
+            },
+            "prefill": {
+                "name": document.getElementById('name').value, // Form se naam uthayega
+                "email": document.getElementById('email').value // Form se email uthayega
+            },
+            "theme": { "color": "#2563eb" } // Blue color theme
+        };
+
+        // 4. Pop-up kholo
+        const rzp1 = new Razorpay(options);
+        rzp1.open();
+
+    } catch (err) {
+        responseMsg.innerText = "❌ Connection Error!";
+        responseMsg.style.color = "red";
+    }
+};
     </script>
 </body>
 </html>
