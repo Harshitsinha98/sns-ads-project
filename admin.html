@@ -2,72 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SNS ADS - Admin Panel</title>
+    <title>SNS ADS Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-50 p-6">
+<body class="bg-gray-100 p-5">
     <div class="max-w-6xl mx-auto">
-        <div class="flex justify-between items-center mb-8">
-            <h1 class="text-3xl font-extrabold text-slate-800">Order Management</h1>
-            <button onclick="fetchLeads()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Refresh Data</button>
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold text-blue-900">SNS ADS - Master Dashboard</h1>
+            <button onclick="loadData()" class="bg-blue-600 text-white px-4 py-2 rounded">Refresh</button>
         </div>
-
-        <div class="bg-white shadow-xl rounded-2xl overflow-hidden border border-slate-200">
+        <div class="bg-white shadow rounded-lg overflow-hidden">
             <table class="w-full text-left">
-                <thead class="bg-slate-800 text-slate-200 text-sm">
+                <thead class="bg-gray-800 text-white">
                     <tr>
-                        <th class="p-4">Customer Details</th>
+                        <th class="p-4">Customer</th>
                         <th class="p-4">Service</th>
-                        <th class="p-4">Current Status</th>
-                        <th class="p-4 text-center">Update Actions</th>
+                        <th class="p-4">Status</th>
+                        <th class="p-4">Actions</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody" class="text-slate-700">
-                    <!-- Data yahan load hoga -->
-                </tbody>
+                <tbody id="leadsTable"></tbody>
             </table>
         </div>
     </div>
-
     <script>
-        async function fetchLeads() {
+        async function loadData() {
             const res = await fetch('https://sns-ads-project.onrender.com/api/admin/leads');
             const data = await res.json();
-            const tbody = document.getElementById('tableBody');
-            
-            tbody.innerHTML = data.map(item => `
-                <tr class="border-b border-slate-100 hover:bg-slate-50">
+            document.getElementById('leadsTable').innerHTML = data.map(item => `
+                <tr class="border-b">
+                    <td class="p-4"><b>${item.name}</b><br><span class="text-sm text-gray-500">${item.email}</span></td>
+                    <td class="p-4">${item.service}</td>
                     <td class="p-4">
-                        <div class="font-bold text-slate-900">${item.name}</div>
-                        <div class="text-xs text-slate-500">${item.email}</div>
-                    </td>
-                    <td class="p-4 text-sm">${item.service || 'Standard Ads'}</td>
-                    <td class="p-4">
-                        <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase ${
-                            item.paymentStatus === 'Completed' ? 'bg-green-100 text-green-700' : 
-                            item.paymentStatus === 'In Progress' ? 'bg-amber-100 text-amber-700' : 'bg-blue-100 text-blue-700'
-                        }">
+                        <span class="px-2 py-1 rounded text-xs font-bold ${item.paymentStatus === 'Completed' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}">
                             ${item.paymentStatus}
                         </span>
                     </td>
-                    <td class="p-4 text-center space-x-2">
-                        <button onclick="changeStatus('${item._id}', 'In Progress')" class="text-xs border border-amber-500 text-amber-600 px-2 py-1 rounded hover:bg-amber-500 hover:text-white transition">Start</button>
-                        <button onclick="changeStatus('${item._id}', 'Completed')" class="text-xs border border-green-600 text-green-700 px-2 py-1 rounded hover:bg-green-600 hover:text-white transition">Finish</button>
+                    <td class="p-4">
+                        <button onclick="updateStatus('${item._id}', 'In Progress')" class="bg-yellow-500 text-white text-xs px-2 py-1 rounded">Start</button>
+                        <button onclick="updateStatus('${item._id}', 'Completed')" class="bg-green-600 text-white text-xs px-2 py-1 rounded">Finish</button>
                     </td>
                 </tr>
             `).join('');
         }
-
-        async function changeStatus(id, newStatus) {
+        async function updateStatus(id, status) {
             await fetch('https://sns-ads-project.onrender.com/api/admin/update-status', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id, status: newStatus })
+                body: JSON.stringify({ id, status })
             });
-            fetchLeads(); // Table refresh
+            loadData();
         }
-
-        fetchLeads(); // Pehli baar load karne ke liye
+        loadData();
     </script>
 </body>
 </html>
