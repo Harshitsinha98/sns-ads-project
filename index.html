@@ -131,100 +131,50 @@
             <button onclick="submitEnquiry()" class="w-full bg-white text-black font-bold py-5 rounded-2xl hover:bg-gray-200 transition uppercase tracking-widest text-sm">Send Message</button>
         </div>
     </section>
-
-    <script>
-        async function payNow(baseAmount, planName) {
-    // 1. Payment click karte hi details maango
-    const name = prompt("Please enter your Full Name:");
-    const email = prompt("Please enter your Business Email:");
-
-    if (!name || !email) {
-        alert("Details are required to proceed with the payment!");
-        return;
+<script>
+    // 1. Redirect to Checkout Page
+    function goTocheckout(amount, plan) {
+        console.log("Redirecting to checkout for:", plan);
+        // Ensure checkout.html is in the same folder and small letters
+        window.location.href = `checkout.html?amount=${amount}&plan=${encodeURIComponent(plan)}`;
     }
 
-    const totalAmount = baseAmount * 1.05; // 5% GST
-
-    try {
-        const res = await fetch('https://sns-ads-project.onrender.com/api/create-order', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ amount: totalAmount })
-        });
-        const order = await res.json();
-
-        const options = {
-            "key": "rzp_test_SkanzCNHx8h7vh", 
-            "amount": order.amount,
-            "currency": "INR",
-            "name": "SNS ADS",
-            "description": `${planName} (Incl. GST)`,
-            "order_id": order.id,
-            "handler": async function (response) {
-                await fetch('https://sns-ads-project.onrender.com/api/payment-success', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        name, email,
-                        service: planName,
-                        amount: totalAmount * 100,
-                        paymentId: response.razorpay_payment_id,
-                        orderId: response.razorpay_order_id
-                    })
-                });
-                alert(`Mubarak ho! ${planName} active ho gaya hai.`);
-                window.location.reload();
-            },
-            "prefill": { "name": name, "email": email }, // Auto-fill details in Razorpay
-            "theme": { "color": "#2563eb" }
-        };
-        new Razorpay(options).open();
-    } catch (err) {
-        alert("Server issue!");
-    }
-}
+    // 2. Enquiry Logic (Prompt version)
     async function submitEnquiry() {
-    const name = prompt("Enter your Name:");
-    const email = prompt("Enter your Email:");
-    const message = document.getElementById('message').value;
+        const name = prompt("Please enter your Full Name:");
+        const email = prompt("Please enter your Business Email:");
+        const message = document.getElementById('message').value;
 
-    if(!name || !email) {
-        alert("Name and Email are required!"); return;
-    }
-
-    await fetch('https://sns-ads-project.onrender.com/api/enquiry', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, message })
-    });
-    alert("Enquiry sent!"); 
-    window.location.reload();
-}
-
-        function scrollToEnquire(plan) {
-            document.getElementById('enquire').scrollIntoView({ behavior: 'smooth' });
-            const msg = document.getElementById('message');
-            if(msg) msg.value = `I am interested in ${plan}. Tell me more.`;
+        if(!name || !email) {
+            alert("Bhai, details bharna zaroori hai enquiry ke liye!"); 
+            return;
         }
 
-        async function submitEnquiry() {
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-            if(!name || !email) { alert("Fill name/email!"); return; }
-
-            await fetch('https://sns-ads-project.onrender.com/api/enquiry', {
+        try {
+            const res = await fetch('https://sns-ads-project.onrender.com/api/enquiry', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, email, message })
             });
-            alert("Enquiry sent!"); window.location.reload();
+            
+            if(res.ok) {
+                alert("Enquiry sent! Hum aapse jald hi contact karenge.");
+                window.location.reload();
+            } else {
+                alert("Server issue! Check if backend is running.");
+            }
+        } catch (err) {
+            alert("Error: Connection failed!");
         }
-        function goTocheckout(amount, plan) {
-    // Ye user ko checkout page par bhej dega aur details URL mein le jayega
-    window.location.href = `checkout.html?amount=${amount}&plan=${encodeURIComponent(plan)}`;
-}
-    </script>
+    }
+
+    // 3. Smooth Scroll
+    function scrollToEnquire(plan) {
+        document.getElementById('enquire').scrollIntoView({ behavior: 'smooth' });
+        const msg = document.getElementById('message');
+        if(msg) msg.value = `I am interested in ${plan}. Please share more details.`;
+    }
+</script>
 </body>
 </html>
 
