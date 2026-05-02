@@ -1,144 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SNS ADS | Premium Growth Agency</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-        .hero-gradient {
-            background: radial-gradient(circle at top right, #1e3a8a, #0f172a, #000000);
-        }
-    </style>
-</head>
-<body class="hero-gradient text-white min-h-screen">
-
-    <!-- Navbar -->
-    <nav class="p-6 flex justify-between items-center max-w-7xl mx-auto">
-        <div class="text-2xl font-extrabold tracking-tighter text-blue-500">SNS ADS</div>
-        <div class="hidden md:flex gap-8 text-sm font-semibold text-gray-300 uppercase tracking-widest">
-            <a href="#" class="hover:text-blue-400">Services</a>
-            <a href="#pricing" class="hover:text-blue-400">Pricing</a>
-            <a href="#" class="hover:text-blue-400">Contact</a>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <header class="py-20 px-6 text-center max-w-4xl mx-auto">
-        <h1 class="text-5xl md:text-7xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500">
-            Scale Your Brand <br>Beyond Limits
-        </h1>
-        <p class="text-lg text-gray-400 mb-10 leading-relaxed">
-            We don't just run ads; we engineer growth. Experience high-converting Meta & Google campaigns tailored for your success.
-        </p>
-    </header>
-
-    <!-- Pricing Section with Glass Finish -->
-    <section class="py-24 px-6 relative" id="pricing">
-        <div class="max-w-md mx-auto relative group">
-            <!-- Background Glow -->
-            <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+<!-- Pricing Section -->
+<section class="py-24 px-6" id="pricing">
+    <div class="max-w-7xl mx-auto text-center">
+        <h2 class="text-4xl font-extrabold mb-16 bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400">Choose Your Growth Path</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             
-            <div class="glass-card relative rounded-3xl p-10 text-center">
-                <span class="bg-blue-600/20 text-blue-400 text-xs font-bold px-4 py-1.5 rounded-full border border-blue-500/30 uppercase tracking-widest">Most Requested</span>
-                
-                <h3 class="text-3xl font-bold mt-6 mb-2">Premium Ads Setup</h3>
-                <p class="text-gray-400 text-sm mb-8">Comprehensive growth management</p>
-                
-                <div class="text-6xl font-black mb-10 tracking-tight">
-                    <span class="text-2xl align-top text-blue-500">₹</span>14,999
-                </div>
-
-                <div class="space-y-4 mb-10">
-                    <input type="text" id="name" placeholder="Business Owner Name" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl focus:border-blue-500 outline-none transition">
-                    <input type="email" id="email" placeholder="Work Email Address" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl focus:border-blue-500 outline-none transition">
-                </div>
-
-                <ul class="text-left space-y-4 mb-10 text-sm text-gray-300">
-                    <li class="flex items-center">✨ Full Meta & Instagram Ads Strategy</li>
-                    <li class="flex items-center">✨ Advanced Audience Mining</li>
-                    <li class="flex items-center">✨ 24/7 Real-time Performance Tracking</li>
-                    <li class="flex items-center">✨ Weekly 1-on-1 Strategy Calls</li>
+            <!-- Starter - ₹6000 -->
+            <div class="glass-card relative rounded-3xl p-8 flex flex-col group hover:scale-105 transition-all duration-500">
+                <h3 class="text-xl font-bold text-blue-400 mb-2">Business Starter</h3>
+                <div class="text-4xl font-black mb-6">₹6,000<span class="text-sm text-gray-500 font-normal">+5% GST</span></div>
+                <ul class="text-left space-y-3 mb-8 text-sm text-gray-400 flex-grow">
+                    <li>✅ Meta Ads Basic Setup</li>
+                    <li>✅ 2 Ad Creatives</li>
+                    <li>✅ Basic Audience Targeting</li>
+                    <li>✅ Monthly Report</li>
                 </ul>
-
-                <button onclick="payNow()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-5 rounded-2xl transition-all shadow-lg shadow-blue-600/20 active:scale-95 uppercase tracking-widest text-sm">
-                    Initiate Growth
-                </button>
+                <button onclick="payNow(6000, 'Business Starter')" class="w-full bg-white/10 hover:bg-white/20 text-white font-bold py-3 rounded-xl transition-all border border-white/10 uppercase tracking-widest text-xs">Choose Starter</button>
             </div>
+
+            <!-- Medium - ₹8000 -->
+            <div class="glass-card relative rounded-3xl p-8 flex flex-col border-blue-500/50 hover:scale-105 transition-all duration-500">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-4 py-1 text-[10px] font-bold rounded-full uppercase">Most Popular</div>
+                <h3 class="text-xl font-bold text-blue-400 mb-2">Medium Business</h3>
+                <div class="text-4xl font-black mb-6">₹8,000<span class="text-sm text-gray-500 font-normal">+5% GST</span></div>
+                <ul class="text-left space-y-3 mb-8 text-sm text-gray-400 flex-grow">
+                    <li>✅ Meta + Google Ads</li>
+                    <li>✅ 5 Custom Ad Creatives</li>
+                    <li>✅ Re-targeting Campaigns</li>
+                    <li>✅ Weekly Progress Calls</li>
+                </ul>
+                <button onclick="payNow(8000, 'Medium Business')" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-blue-600/20 uppercase tracking-widest text-xs">Choose Medium</button>
+            </div>
+
+            <!-- Enterprise - ₹14000 -->
+            <div class="glass-card relative rounded-3xl p-8 flex flex-col hover:scale-105 transition-all duration-500">
+                <h3 class="text-xl font-bold text-blue-400 mb-2">Enterprise Level</h3>
+                <div class="text-4xl font-black mb-6">₹14,000<span class="text-sm text-gray-500 font-normal">+5% GST</span></div>
+                <ul class="text-left space-y-3 mb-8 text-sm text-gray-400 flex-grow">
+                    <li>✅ Full Funnel Strategy</li>
+                    <li>✅ Unlimited Ad Creatives</li>
+                    <li>✅ Competitor Analysis</li>
+                    <li>✅ 24/7 Priority Support</li>
+                </ul>
+                <button onclick="payNow(14000, 'Enterprise Level')" class="w-full bg-white/10 hover:bg-white/20 text-white font-bold py-3 rounded-xl transition-all border border-white/10 uppercase tracking-widest text-xs">Choose Enterprise</button>
+            </div>
+
         </div>
-    </section>
+    </div>
+</section>
 
-    <footer class="py-10 text-center text-gray-500 text-xs tracking-widest uppercase">
-        © 2026 SNS ADS | Built for the 1%
-    </footer>
+<script>
+    async function payNow(baseAmount, planName) {
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
 
-    <script>
-        async function payNow() {
-            const nameInput = document.getElementById('name');
-            const emailInput = document.getElementById('email');
-
-            if(!nameInput.value || !emailInput.value) {
-                alert("Please fill in your details to proceed.");
-                return;
-            }
-
-            try {
-                // Step 1: Create Order
-                const res = await fetch('https://sns-ads-project.onrender.com/api/create-order', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ amount: 14999 })
-                });
-                const order = await res.json();
-
-                // Step 2: Razorpay Config
-                const options = {
-                    "key": "rzp_test_YOUR_KEY_HERE", 
-                    "amount": order.amount,
-                    "currency": "INR",
-                    "name": "SNS ADS",
-                    "description": "Premium Ads Setup Fee",
-                    "order_id": order.id,
-                    "handler": async function (response) {
-                        // Step 3: Save Success Data
-                        await fetch('https://sns-ads-project.onrender.com/api/payment-success', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                name: nameInput.value,
-                                email: emailInput.value,
-                                service: "Premium Ads Setup",
-                                amount: 1499900,
-                                paymentId: response.razorpay_payment_id,
-                                orderId: response.razorpay_order_id
-                            })
-                        });
-                        alert("Success! Order placed and recorded.");
-                        window.location.reload();
-                    },
-                    "prefill": {
-                        "name": nameInput.value,
-                        "email": emailInput.value
-                    },
-                    "theme": { "color": "#2563eb" }
-                };
-
-                const rzp = new Razorpay(options);
-                rzp.open();
-            } catch (err) {
-                alert("Server error, please check connection.");
-            }
+        if(!name || !email) {
+            alert("Bhai, Details toh bhar do pehle!");
+            return;
         }
-    </script>
-</body>
-</html>
+
+        // GST Calculation (5%)
+        const gst = baseAmount * 0.05;
+        const totalAmount = baseAmount + gst;
+
+        try {
+            const res = await fetch('https://sns-ads-project.onrender.com/api/create-order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ amount: totalAmount }) 
+            });
+            const order = await res.json();
+
+            const options = {
+                "key": "rzp_test_SkanzCNHx8h7vh", // Yahan apni key daalna mat bhulna bhai!
+                "amount": order.amount,
+                "currency": "INR",
+                "name": "SNS ADS",
+                "description": `${planName} (Incl. 5% GST)`,
+                "order_id": order.id,
+                "handler": async function (response) {
+                    await fetch('https://sns-ads-project.onrender.com/api/payment-success', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            name: name,
+                            email: email,
+                            service: planName,
+                            amount: totalAmount * 100,
+                            paymentId: response.razorpay_payment_id,
+                            orderId: response.razorpay_order_id
+                        })
+                    });
+                    alert(`Payment Success for ${planName}! Total: ₹${totalAmount}`);
+                    window.location.reload();
+                },
+                "prefill": { "name": name, "email": email },
+                "theme": { "color": "#2563eb" }
+            };
+            const rzp = new Razorpay(options);
+            rzp.open();
+        } catch (err) {
+            alert("Error connecting to server!");
+        }
+    }
+</script>   
