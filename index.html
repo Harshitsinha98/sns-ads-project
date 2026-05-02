@@ -72,6 +72,10 @@
                     <li class="flex items-center gap-3"><span>—</span> Basic Targeting</li>
                 </ul>
                 <button onclick="payNow(6000, 'Business Starter')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition">Select Plan</button>
+                <!-- Har card ke Pay Now button ke niche ise daalo -->
+                <button onclick="scrollToEnquire('Business Starter')" class="w-full mt-3 bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">
+                Enquire Now
+</button>
             </div>
 
             <!-- Medium (Featured) -->
@@ -90,6 +94,10 @@
                     <li class="flex items-center gap-3"><span class="text-blue-500">✓</span> Weekly Strategy Call</li>
                 </ul>
                 <button onclick="payNow(8000, 'Medium Business')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-blue-600/30">Get Started</button>
+                <!-- Har card ke Pay Now button ke niche ise daalo -->
+<button onclick="scrollToEnquire('Medium Business')" class="w-full mt-3 bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">
+    Enquire Now
+</button>
             </div>
 
             <!-- Enterprise -->
@@ -107,6 +115,10 @@
                     <li class="flex items-center gap-3"><span>—</span> Priority 24/7 Support</li>
                 </ul>
                 <button onclick="payNow(14000, 'Enterprise Level')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition">Scale Now</button>
+                <!-- Har card ke Pay Now button ke niche ise daalo -->
+<button onclick="scrollToEnquire('Enterprise Level')" class="w-full mt-3 bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">
+    Enquire Now
+</button>
             </div>
 
         </div>
@@ -161,6 +173,34 @@
                 alert("Server issue!");
             }
         }
+        // 1. Smooth Scroll aur Plan Auto-fill karne ke liye
+function scrollToEnquire(plan) {
+    document.getElementById('enquire').scrollIntoView({ behavior: 'smooth' });
+    const messageBox = document.getElementById('message');
+    if(messageBox) {
+        messageBox.value = `I am interested in the ${plan}. Please share more details.`;
+    }
+}
+
+// 2. Enquiry Form submit karne ka function
+async function submitEnquiry() {
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+
+    if(!name || !email) {
+        alert("Bhai, kam se kam Name aur Email toh bhar do!"); return;
+    }
+
+    await fetch('https://sns-ads-project.onrender.com/api/enquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message, service: "General Enquiry" })
+    });
+    
+    alert("Enquiry sent! We will contact you soon.");
+    window.location.reload();
+}
     </script>
 </body>
 </html>

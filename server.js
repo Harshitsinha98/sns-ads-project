@@ -91,5 +91,23 @@ app.post('/api/admin/update-status', async (req, res) => {
     }
 });
 
+// Ye naya route Enquiry ke liye use karenge
+app.post('/api/enquiry', async (req, res) => {
+    try {
+        const { name, email, message, service } = req.body;
+        const newEnquiry = new Lead({
+            name,
+            email,
+            service: "Enquiry: " + service,
+            paymentStatus: 'Enquiry Only', // Taaki admin.html mein alag dikhe
+            amount: 0
+        });
+        await newEnquiry.save();
+        res.json({ message: "Enquiry Saved" });
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
+
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
