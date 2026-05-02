@@ -29,17 +29,19 @@
 <body class="hero-gradient text-white min-h-screen">
 
     <!-- Navbar -->
-    <nav class="p-8 flex justify-between items-center max-w-7xl mx-auto">
-        <div class="text-2xl font-black tracking-tighter text-blue-500">SNS ADS</div>
-        <div class="hidden md:flex gap-10 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">
-            <a href="#pricing" class="hover:text-blue-400 transition">Pricing</a>
-            <a href="#" class="hover:text-blue-400 transition">Process</a>
-            <a href="#" class="hover:text-blue-400 transition">Case Studies</a>
+    <nav class="fixed top-0 w-full z-50 bg-black/20 backdrop-blur-lg border-b border-white/5">
+        <div class="max-w-7xl mx-auto p-6 flex justify-between items-center">
+            <div class="text-2xl font-black tracking-tighter text-blue-500">SNS ADS</div>
+            <div class="hidden md:flex gap-10 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">
+                <a href="#about" class="hover:text-blue-400 transition">About</a>
+                <a href="#pricing" class="hover:text-blue-400 transition">Pricing</a>
+                <a href="#enquire" class="hover:text-blue-400 transition">Enquire</a>
+            </div>
         </div>
     </nav>
 
     <!-- Hero -->
-    <header class="pt-16 pb-10 px-6 text-center max-w-4xl mx-auto">
+    <header class="pt-40 pb-10 px-6 text-center max-w-4xl mx-auto">
         <h1 class="text-6xl md:text-8xl font-extrabold mb-8 bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500 tracking-tight">
             Built for <br>Scale.
         </h1>
@@ -47,80 +49,84 @@
             Elite Meta & Google ads management for businesses ready to dominate their market.
         </p>
 
-        <!-- User Info Inputs (Keep outside cards for clean UI) -->
+        <!-- User Info Inputs -->
         <div class="max-w-md mx-auto grid grid-cols-1 gap-4 mb-20">
             <input type="text" id="name" placeholder="Full Name" class="bg-white/5 border border-white/10 p-4 rounded-2xl focus:border-blue-500 outline-none text-center transition">
             <input type="email" id="email" placeholder="Business Email" class="bg-white/5 border border-white/10 p-4 rounded-2xl focus:border-blue-500 outline-none text-center transition">
         </div>
     </header>
 
+    <!-- About Section -->
+    <section id="about" class="py-24 px-6 max-w-4xl mx-auto text-center border-t border-white/5">
+        <h2 class="text-blue-500 font-bold uppercase tracking-widest text-sm mb-4">Our Legacy</h2>
+        <h3 class="text-4xl font-bold mb-8 text-white">About SNS ADS</h3>
+        <p class="text-gray-400 text-lg leading-relaxed">
+            Founded in Varanasi, SNS ADS is not just a marketing agency; we are growth engineers. We specialize in Meta and Google ad strategies that don't just generate clicks, but build empires.
+        </p>
+    </section>
+
     <!-- Pricing Grid -->
     <section class="pb-32 px-6" id="pricing">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
             
             <!-- Starter -->
-            <div class="glass-card rounded-[2.5rem] p-10 flex flex-col hover:border-blue-500/30 transition-all duration-500 group">
+            <div class="glass-card rounded-[2.5rem] p-10 flex flex-col hover:border-blue-500/30 transition-all duration-500 group text-center">
                 <div class="text-blue-500 font-bold text-xs uppercase tracking-widest mb-4">Starter</div>
-                <h3 class="text-2xl font-bold mb-6">Business Starter</h3>
+                <h3 class="text-2xl font-bold mb-6 text-white">Business Starter</h3>
                 <div class="mb-8">
-                    <span class="text-5xl font-black price-text">₹6,000</span>
-                    <span class="text-gray-500 block mt-2 text-sm">+ 5% GST (₹300)</span>
+                    <span class="text-5xl font-black price-text text-white">₹6,000</span>
+                    <span class="text-gray-500 block mt-2 text-sm text-gray-500">+ 5% GST (₹300)</span>
                 </div>
-                <ul class="text-gray-400 space-y-4 mb-10 text-sm flex-grow">
-                    <li class="flex items-center gap-3"><span>—</span> Meta Ads Setup</li>
-                    <li class="flex items-center gap-3"><span>—</span> 2 Ad Creatives</li>
-                    <li class="flex items-center gap-3"><span>—</span> Basic Targeting</li>
+                <ul class="text-gray-400 space-y-4 mb-10 text-sm flex-grow text-left">
+                    <li>— Meta Ads Setup</li>
+                    <li>— 2 Ad Creatives</li>
                 </ul>
-                <button onclick="payNow(6000, 'Business Starter')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition">Select Plan</button>
-                <!-- Har card ke Pay Now button ke niche ise daalo -->
-                <button onclick="scrollToEnquire('Business Starter')" class="w-full mt-3 bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">
-                Enquire Now
-</button>
+                <button onclick="payNow(6000, 'Business Starter')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition mb-3">Pay Now</button>
+                <button onclick="scrollToEnquire('Business Starter')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
             </div>
 
-            <!-- Medium (Featured) -->
-            <div class="glass-card rounded-[2.5rem] p-10 flex flex-col border-blue-500/50 relative transform md:-translate-y-4 scale-105 transition-all duration-500">
-                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-6 py-1.5 rounded-full text-[10px] font-black uppercase tracking-tighter shadow-xl shadow-blue-600/40">Most Popular</div>
+            <!-- Medium -->
+            <div class="glass-card rounded-[2.5rem] p-10 flex flex-col border-blue-500/50 relative transform md:-translate-y-4 scale-105 transition-all duration-500 text-center">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-6 py-1.5 rounded-full text-[10px] font-black uppercase tracking-tighter">Most Popular</div>
                 <div class="text-blue-400 font-bold text-xs uppercase tracking-widest mb-4">Growth</div>
-                <h3 class="text-2xl font-bold mb-6">Medium Business</h3>
-                <div class="mb-8">
-                    <span class="text-5xl font-black price-text">₹8,000</span>
-                    <span class="text-gray-400 block mt-2 text-sm">+ 5% GST (₹400)</span>
+                <h3 class="text-2xl font-bold mb-6 text-white">Medium Business</h3>
+                <div class="mb-8 text-white">
+                    <span class="text-5xl font-black price-text text-white">₹8,000</span>
+                    <span class="text-gray-400 block mt-2 text-sm text-gray-400">+ 5% GST (₹400)</span>
                 </div>
-                <ul class="text-gray-300 space-y-4 mb-10 text-sm flex-grow">
-                    <li class="flex items-center gap-3"><span class="text-blue-500">✓</span> Meta + Google Ads</li>
-                    <li class="flex items-center gap-3"><span class="text-blue-500">✓</span> 5 Custom Creatives</li>
-                    <li class="flex items-center gap-3"><span class="text-blue-500">✓</span> Retargeting Funnel</li>
-                    <li class="flex items-center gap-3"><span class="text-blue-500">✓</span> Weekly Strategy Call</li>
+                <ul class="text-gray-300 space-y-4 mb-10 text-sm flex-grow text-left">
+                    <li>✓ Meta + Google Ads</li>
+                    <li>✓ 5 Custom Creatives</li>
                 </ul>
-                <button onclick="payNow(8000, 'Medium Business')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-blue-600/30">Get Started</button>
-                <!-- Har card ke Pay Now button ke niche ise daalo -->
-<button onclick="scrollToEnquire('Medium Business')" class="w-full mt-3 bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">
-    Enquire Now
-</button>
+                <button onclick="payNow(8000, 'Medium Business')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-blue-600/30 mb-3">Get Started</button>
+                <button onclick="scrollToEnquire('Medium Business')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
             </div>
 
             <!-- Enterprise -->
-            <div class="glass-card rounded-[2.5rem] p-10 flex flex-col hover:border-blue-500/30 transition-all duration-500">
+            <div class="glass-card rounded-[2.5rem] p-10 flex flex-col hover:border-blue-500/30 transition-all duration-500 text-center">
                 <div class="text-blue-500 font-bold text-xs uppercase tracking-widest mb-4">Scale</div>
-                <h3 class="text-2xl font-bold mb-6">Enterprise Level</h3>
+                <h3 class="text-2xl font-bold mb-6 text-white">Enterprise Level</h3>
                 <div class="mb-8">
-                    <span class="text-5xl font-black price-text">₹14,000</span>
-                    <span class="text-gray-500 block mt-2 text-sm">+ 5% GST (₹700)</span>
+                    <span class="text-5xl font-black price-text text-white">₹14,000</span>
+                    <span class="text-gray-500 block mt-2 text-sm text-gray-500">+ 5% GST (₹700)</span>
                 </div>
-                <ul class="text-gray-400 space-y-4 mb-10 text-sm flex-grow">
-                    <li class="flex items-center gap-3"><span>—</span> Full Funnel Mastery</li>
-                    <li class="flex items-center gap-3"><span>—</span> Unlimited Creatives</li>
-                    <li class="flex items-center gap-3"><span>—</span> Competitor Analysis</li>
-                    <li class="flex items-center gap-3"><span>—</span> Priority 24/7 Support</li>
+                <ul class="text-gray-400 space-y-4 mb-10 text-sm flex-grow text-left">
+                    <li>— Full Funnel Mastery</li>
+                    <li>— Priority 24/7 Support</li>
                 </ul>
-                <button onclick="payNow(14000, 'Enterprise Level')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition">Scale Now</button>
-                <!-- Har card ke Pay Now button ke niche ise daalo -->
-<button onclick="scrollToEnquire('Enterprise Level')" class="w-full mt-3 bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">
-    Enquire Now
-</button>
+                <button onclick="payNow(14000, 'Enterprise Level')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition mb-3">Scale Now</button>
+                <button onclick="scrollToEnquire('Enterprise Level')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
             </div>
+        </div>
+    </section>
 
+    <!-- Enquiry Section (Naya Section - Zaroori!) -->
+    <section id="enquire" class="py-24 px-6 border-t border-white/5">
+        <div class="max-w-2xl mx-auto glass-card rounded-[2.5rem] p-12 text-center">
+            <h3 class="text-3xl font-bold mb-4 text-white">Custom Enquiry</h3>
+            <p class="text-gray-400 mb-10">Tell us your goals, and we'll craft the perfect strategy.</p>
+            <textarea id="message" placeholder="Describe your business goals..." class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl focus:border-blue-500 outline-none h-32 mb-6 transition text-white"></textarea>
+            <button onclick="submitEnquiry()" class="w-full bg-white text-black font-bold py-5 rounded-2xl hover:bg-gray-200 transition uppercase tracking-widest text-sm">Send Message</button>
         </div>
     </section>
 
@@ -128,12 +134,8 @@
         async function payNow(baseAmount, planName) {
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
-
-            if(!name || !email) {
-                alert("Please fill the details!"); return;
-            }
-
-            const totalAmount = baseAmount * 1.05; // 5% GST Added
+            if(!name || !email) { alert("Please fill the details!"); return; }
+            const totalAmount = baseAmount * 1.05;
 
             try {
                 const res = await fetch('https://sns-ads-project.onrender.com/api/create-order', {
@@ -142,65 +144,50 @@
                     body: JSON.stringify({ amount: totalAmount })
                 });
                 const order = await res.json();
-
                 const options = {
                     "key": "rzp_test_SkanzCNHx8h7vh", 
                     "amount": order.amount,
                     "currency": "INR",
                     "name": "SNS ADS",
-                    "description": `${planName} (Incl. GST)`,
+                    "description": planName,
                     "order_id": order.id,
                     "handler": async function (response) {
                         await fetch('https://sns-ads-project.onrender.com/api/payment-success', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
-                                name, email,
-                                service: planName,
-                                amount: totalAmount * 100,
-                                paymentId: response.razorpay_payment_id,
-                                orderId: response.razorpay_order_id
+                                name, email, service: planName, amount: totalAmount * 100,
+                                paymentId: response.razorpay_payment_id, orderId: response.razorpay_order_id
                             })
                         });
-                        alert(`Mubarak ho! ${planName} active ho gaya hai.`);
-                        window.location.reload();
+                        alert("Mubarak ho!"); window.location.reload();
                     },
-                    "prefill": { "name": name, "email": email },
-                    "theme": { "color": "#2563eb" }
+                    "prefill": { name, email },
+                    "theme": { color: "#2563eb" }
                 };
                 new Razorpay(options).open();
-            } catch (err) {
-                alert("Server issue!");
-            }
+            } catch (err) { alert("Server issue!"); }
         }
-        // 1. Smooth Scroll aur Plan Auto-fill karne ke liye
-function scrollToEnquire(plan) {
-    document.getElementById('enquire').scrollIntoView({ behavior: 'smooth' });
-    const messageBox = document.getElementById('message');
-    if(messageBox) {
-        messageBox.value = `I am interested in the ${plan}. Please share more details.`;
-    }
-}
 
-// 2. Enquiry Form submit karne ka function
-async function submitEnquiry() {
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
+        function scrollToEnquire(plan) {
+            document.getElementById('enquire').scrollIntoView({ behavior: 'smooth' });
+            const msg = document.getElementById('message');
+            if(msg) msg.value = `I am interested in ${plan}. Tell me more.`;
+        }
 
-    if(!name || !email) {
-        alert("Bhai, kam se kam Name aur Email toh bhar do!"); return;
-    }
+        async function submitEnquiry() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            if(!name || !email) { alert("Fill name/email!"); return; }
 
-    await fetch('https://sns-ads-project.onrender.com/api/enquiry', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, message, service: "General Enquiry" })
-    });
-    
-    alert("Enquiry sent! We will contact you soon.");
-    window.location.reload();
-}
+            await fetch('https://sns-ads-project.onrender.com/api/enquiry', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, message })
+            });
+            alert("Enquiry sent!"); window.location.reload();
+        }
     </script>
 </body>
 </html>
