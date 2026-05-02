@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout | SNS ADS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        body { background: radial-gradient(circle at top right, #1e3a8a, #0f172a, #000000); color: white; }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6">
+    <div class="glass-card max-w-lg w-full rounded-[2.5rem] p-10 shadow-2xl">
+        <h2 class="text-3xl font-bold mb-2">Complete Your Order</h2>
+        <p id="planDisplay" class="text-blue-400 mb-8 font-semibold"></p>
+
+        <div class="space-y-4">
+            <input type="text" id="custName" placeholder="Full Name" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition">
+            <input type="email" id="custEmail" placeholder="Business Email" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition">
+            <input type="tel" id="custPhone" placeholder="Mobile Number" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition">
+            <textarea id="custAddress" placeholder="Full Address" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition h-24"></textarea>
+        </div>
+
+        <div class="mt-8 p-4 bg-blue-600/10 rounded-xl border border-blue-500/20 mb-8">
+            <div class="flex justify-between text-sm"><span>Base Amount:</span> <span id="baseAmt"></span></div>
+            <div class="flex justify-between text-sm text-gray-400"><span>GST (5%):</span> <span id="gstAmt"></span></div>
+            <div class="flex justify-between font-bold text-lg mt-2 border-t border-white/10 pt-2"><span>Total Payable:</span> <span id="totalAmt"></span></div>
+        </div>
+
+        <button onclick="startPayment()" class="w-full bg-blue-600 hover:bg-blue-500 py-4 rounded-2xl font-bold uppercase tracking-widest transition shadow-lg shadow-blue-600/30">Proceed to Payment</button>
+    </div>
+
+    <script>
+        // URL se data nikalna
+        const params = new URLSearchParams(window.location.search);
+        const base = parseFloat(params.get('amount'));
+        const plan = params.get('plan');
+        const gst = base * 0.05;
+        const total = base + gst;
+
+        document.getElementById('planDisplay').innerText = plan;
+        document.getElementById('baseAmt').innerText = `₹${base}`;
+        document.getElementById('gstAmt').innerText = `₹${gst}`;
+        document.getElementById('totalAmt').innerText = `₹${total}`;
+
+        async function startPayment() {
+            const name = document.getElementById('custName').value;
+            const email = document.getElementById('custEmail').value;
+            const phone = document.getElementById('custPhone').value;
+            const address = document.getElementById('custAddress').value;
+
+            if(!name || !email || !phone || !address) { alert("Please fill all details!"); return; }
+
+            try {
+                const res = await fetch('https://sns-ads-project.onrender.com/api/create-order', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ amount: total })
+                });
+                const order = await res.json();
+
+                const options = {
+                    "key": "rzp_test_SkanzCNHx8h7vh", 
+                    "amount": order.amount,
+                    "currency": "INR",
+                    "name": "SNS ADS",
+                    "description": plan,
+                    "order_id": order.id,
+                    "handler": async function (response) {
+                        await fetch('https://sns-ads-project.onrender.com/api/payment-success', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                name, email, service: `${plan} (Mob: ${phone}, Addr: ${address})`,
+                                amount: total * 100,
+                                paymentId: response.razorpay_payment_id, orderId: response.razorpay_order_id
+                            })
+                        });
+                        alert("Payment Success!"); window.location.href = "index.html";
+                    },
+                    "prefill": { "name": name, "email": email, "contact": phone },
+                    "theme": { "color": "#2563eb" }
+                };
+                new Razorpay(options).open();
+            } catch (err) { alert("Server Error!"); }
+        }
+    </script>
+</body>
+</html>

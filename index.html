@@ -76,7 +76,8 @@
                     <li>— Meta Ads Setup</li>
                     <li>— 2 Ad Creatives</li>
                 </ul>
-                <button onclick="payNow(6000, 'Business Starter')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition mb-3">Pay Now</button>
+                <!-- Starter -->
+                <button onclick="goToCheckout(6000, 'Business Starter')" class="...">Pay Now</button>
                 <button onclick="scrollToEnquire('Business Starter')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
             </div>
 
@@ -93,7 +94,7 @@
                     <li>✓ Meta + Google Ads</li>
                     <li>✓ 5 Custom Creatives</li>
                 </ul>
-                <button onclick="payNow(8000, 'Medium Business')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-blue-600/30 mb-3">Get Started</button>
+                <button onclick="goToCheckout(8000, 'Medium Business')" class="...">Get Started</button>
                 <button onclick="scrollToEnquire('Medium Business')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
             </div>
 
@@ -109,7 +110,7 @@
                     <li>— Full Funnel Mastery</li>
                     <li>— Priority 24/7 Support</li>
                 </ul>
-                <button onclick="payNow(14000, 'Enterprise Level')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition mb-3">Scale Now</button>
+                <button onclick="goToCheckout(14000, 'Enterprise Level')" class="...">Scale Now</button>
                 <button onclick="scrollToEnquire('Enterprise Level')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
             </div>
         </div>
@@ -213,6 +214,10 @@
             });
             alert("Enquiry sent!"); window.location.reload();
         }
+        function goToCheckout(amount, plan) {
+    // Ye user ko checkout page par bhej dega aur details URL mein le jayega
+    window.location.href = `checkout.html?amount=${amount}&plan=${encodeURIComponent(plan)}`;
+}
     </script>
 </body>
 </html>
