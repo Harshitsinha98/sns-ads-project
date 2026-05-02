@@ -118,7 +118,7 @@
             const email = document.getElementById('email').value;
 
             if(!name || !email) {
-                alert("Bhai, Details toh bhar do!"); return;
+                alert("Please fill the details!"); return;
             }
 
             const totalAmount = baseAmount * 1.05; // 5% GST Added
@@ -132,7 +132,7 @@
                 const order = await res.json();
 
                 const options = {
-                    "key": "rzp_test_YOUR_KEY_HERE", 
+                    "key": "rzp_test_SkanzCNHx8h7vh", 
                     "amount": order.amount,
                     "currency": "INR",
                     "name": "SNS ADS",
