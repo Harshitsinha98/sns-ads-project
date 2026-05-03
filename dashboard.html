@@ -16,6 +16,8 @@
         .hero-gradient {
             background: radial-gradient(circle at top right, #1e3a8a, #0f172a, #000000);
         }
+        /* Smooth progress bar transition */
+        #progressBar { transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
     </style>
 </head>
 <body class="hero-gradient text-white min-h-screen">
@@ -23,54 +25,66 @@
     <!-- Navbar -->
     <nav class="p-6 border-b border-white/5 bg-black/20 backdrop-blur-lg">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="text-2xl font-black tracking-tighter text-blue-500">SNS ADS</div>
-            <button onclick="logout()" class="text-xs font-bold text-gray-400 uppercase tracking-widest hover:text-red-400 transition">Logout</button>
+            <div class="text-2xl font-black tracking-tighter text-blue-500 underline decoration-blue-500/30">SNS ADS</div>
+            <button onclick="logout()" class="text-[10px] font-bold text-gray-400 uppercase tracking-widest hover:text-red-400 transition border border-white/10 px-4 py-2 rounded-xl">Logout</button>
         </div>
     </nav>
 
-    <main class="max-w-5xl mx-auto py-20 px-6">
+    <main class="max-w-5xl mx-auto py-16 px-6">
+        <!-- Header -->
         <div class="mb-12">
-            <h1 class="text-5xl font-extrabold mb-2">Welcome Back, <span id="userName" class="text-blue-500">...</span></h1>
-            <p class="text-gray-400">Manage your growth strategy and active subscriptions.</p>
+            <h1 class="text-5xl font-extrabold mb-2 tracking-tight">Welcome Back, <span id="userName" class="text-blue-500 italic">...</span></h1>
+            <p class="text-gray-400 font-medium">Manage your growth strategy and active subscriptions.</p>
         </div>
 
+        <!-- Stats Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div class="glass-card p-8 rounded-3xl">
-                <p class="text-gray-500 text-xs uppercase font-bold tracking-widest mb-2">Active Plans</p>
-                <h3 id="activeCount" class="text-3xl font-bold">0</h3>
+            <div class="glass-card p-8 rounded-3xl border-l-4 border-l-blue-500">
+                <p class="text-gray-500 text-[10px] uppercase font-black tracking-widest mb-2">Active Plans</p>
+                <h3 id="activeCount" class="text-4xl font-bold">0</h3>
             </div>
             <div class="glass-card p-8 rounded-3xl">
-                <p class="text-gray-500 text-xs uppercase font-bold tracking-widest mb-2">Total Spent</p>
-                <h3 id="totalSpent" class="text-3xl font-bold">₹0</h3>
+                <p class="text-gray-500 text-[10px] uppercase font-black tracking-widest mb-2">Total Investment</p>
+                <h3 id="totalSpent" class="text-4xl font-bold">₹0</h3>
             </div>
             <div class="glass-card p-8 rounded-3xl">
-                <p class="text-gray-500 text-xs uppercase font-bold tracking-widest mb-2">Account Status</p>
-                <h3 class="text-3xl font-bold text-green-500">Verified</h3>
+                <p class="text-gray-500 text-[10px] uppercase font-black tracking-widest mb-2">Account Status</p>
+                <h3 class="text-3xl font-bold text-green-500 flex items-center gap-2">
+                    Verified <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg>
+                </h3>
             </div>
         </div>
 
+        <!-- Live Campaign Progress (NEW & DYNAMIC) -->
+        <div class="glass-card p-10 rounded-[2.5rem] mb-12 border border-blue-500/20">
+            <div class="flex justify-between items-end mb-6">
+                <div>
+                    <h3 class="text-2xl font-bold mb-1">Live Campaign Progress</h3>
+                    <p id="statusUpdate" class="text-blue-400 text-sm font-medium italic">Connecting to growth engine...</p>
+                </div>
+                <div id="progressText" class="text-3xl font-black text-white">0%</div>
+            </div>
+            <div class="w-full bg-white/5 rounded-full h-4 overflow-hidden border border-white/5">
+                <div id="progressBar" class="bg-gradient-to-r from-blue-600 to-blue-400 h-full rounded-full shadow-[0_0_20px_rgba(37,99,235,0.4)]" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Order List -->
         <div class="glass-card rounded-[2.5rem] p-10">
             <h2 class="text-xl font-bold mb-8 flex items-center gap-3">
                 <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
-                Your Subscriptions
+                Your Subscription History
             </h2>
-            <div id="ordersList" class="space-y-4">
-                <p class="text-gray-500 italic">Fetching your data from the cloud...</p>
+            <div id="ordersList" class="space-y-4 text-center">
+                <p class="text-gray-500 italic py-10">Syncing with cloud database...</p>
             </div>
         </div>
-        <div class="glass-card p-8 rounded-3xl mt-8">
-    <h3 class="text-xl font-bold mb-4">Live Campaign Progress</h3>
-    <div class="w-full bg-white/5 rounded-full h-4 mb-4">
-        <div id="progressBar" class="bg-blue-600 h-4 rounded-full transition-all duration-1000" style="width: 0%"></div>
-    </div>
-    <p id="statusUpdate" class="text-gray-400 text-sm font-medium italic">"No active updates from admin yet."</p>
-</div>
     </main>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyB7W5HWVe1JYbqhpGdrguNrQOgU3DwW_44",
@@ -85,18 +99,34 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        onAuthStateChanged(auth, async (user) => {
-    if (user) {
-        const docRef = doc(db, "customers", user.uid);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-            const data = docSnap.data();
-            // Admin updates handle karein
-            document.getElementById('progressBar').style.width = data.progress || "10%";
-            document.getElementById('statusUpdate').innerText = data.manualUpdate || "Hum aapke creatives par kaam kar rahe hain!";
-        }
-    }
-});
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // REAL-TIME LISTENER: Admin kuch bhi badlega, yahan turant dikhega
+                const unsub = onSnapshot(doc(db, "customers", user.email), (snapshot) => {
+                    if (snapshot.exists()) {
+                        const data = snapshot.data();
+                        
+                        // 1. Update Name
+                        document.getElementById('userName').innerText = data.name || "Growth Partner";
+                        
+                        // 2. Update Progress Bar & Text
+                        const prog = data.progress || "0%";
+                        document.getElementById('progressBar').style.width = prog;
+                        document.getElementById('progressText').innerText = prog;
+                        
+                        // 3. Update Manual Status Message
+                        document.getElementById('statusUpdate').innerText = data.manualUpdate || "We are analyzing your business goals...";
+                        
+                        // 4. Render Orders List
+                        renderOrders(data.orders || []);
+                    } else {
+                        document.getElementById('ordersList').innerHTML = `<p class="text-gray-500 py-10">Welcome! Your first campaign details will appear here after checkout.</p>`;
+                    }
+                });
+            } else {
+                window.location.href = "index.html";
+            }
+        });
 
         function renderOrders(orders) {
             const list = document.getElementById('ordersList');
@@ -104,7 +134,7 @@
             const totalSpent = document.getElementById('totalSpent');
             
             if (orders.length === 0) {
-                list.innerHTML = `<p class="text-gray-500">Aapka koi active plan nahi hai.</p>`;
+                list.innerHTML = `<p class="text-gray-500 py-10">No active plans found.</p>`;
                 return;
             }
 
@@ -113,14 +143,17 @@
             orders.forEach(order => {
                 spent += order.amount;
                 list.innerHTML += `
-                    <div class="flex flex-col md:flex-row justify-between items-center p-6 bg-white/5 border border-white/5 rounded-2xl">
-                        <div>
+                    <div class="flex flex-col md:flex-row justify-between items-center p-6 bg-white/5 border border-white/5 rounded-2xl hover:bg-white/10 transition">
+                        <div class="text-left">
                             <h4 class="font-bold text-lg text-blue-400">${order.plan}</h4>
-                            <p class="text-xs text-gray-500">OrderID: ${order.orderId}</p>
+                            <p class="text-[10px] text-gray-500 uppercase font-bold mt-1">ID: ${order.orderId}</p>
                         </div>
-                        <div class="text-right mt-4 md:mt-0">
-                            <span class="bg-blue-500/20 text-blue-400 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter">${order.status}</span>
-                            <p class="mt-2 font-black">₹${order.amount}</p>
+                        <div class="text-right mt-4 md:mt-0 flex items-center gap-6">
+                            <div class="text-right">
+                                <p class="font-black text-xl">₹${order.amount.toLocaleString()}</p>
+                                <p class="text-[10px] text-gray-500 uppercase font-bold">${order.date ? new Date(order.date).toLocaleDateString() : 'Active'}</p>
+                            </div>
+                            <span class="bg-blue-500/20 text-blue-400 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-tighter border border-blue-500/20">${order.status}</span>
                         </div>
                     </div>
                 `;

@@ -30,17 +30,15 @@
 
     <!-- Navbar -->
     <nav class="fixed top-0 w-full z-50 bg-black/20 backdrop-blur-lg border-b border-white/5">
-        <div class="max-w-7xl mx-auto p-6 flex justify-between items-center">
-            <div class="text-2xl font-black tracking-tighter text-blue-500">SNS ADS</div>
-            <div class="hidden md:flex gap-10 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">
-                <a href="#about" class="hover:text-blue-400 transition">About</a>
-                <a href="#pricing" class="hover:text-blue-400 transition">Pricing</a>
-                <a href="#enquire" class="hover:text-blue-400 transition">Enquire</a>
-            </div>
-        </div>
-        <div id="authButtons" class="flex gap-4">
-        <button onclick="window.loginAndCheckout(null, null)" class="text-[10px] font-bold text-blue-400 border border-blue-400/30 px-4 py-2 rounded-xl uppercase tracking-widest hover:bg-blue-400/10 transition">Client Portal</button>
-        </div>
+        <div class="hidden md:flex gap-10 items-center text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">
+    <a href="#about" class="hover:text-blue-400 transition">About</a>
+    <a href="#pricing" class="hover:text-blue-400 transition">Pricing</a>
+    <a href="#enquire" class="hover:text-blue-400 transition">Enquire</a>
+    <!-- Portal Position Updated -->
+    <button onclick="window.loginAndCheckout(null, null)" class="bg-blue-600/10 hover:bg-blue-600 text-blue-400 hover:text-white border border-blue-500/30 px-4 py-2 rounded-xl transition-all duration-300">
+        Client Portal
+    </button>
+</div>
     </nav>
 
     <!-- Hero -->
