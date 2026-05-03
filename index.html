@@ -232,17 +232,19 @@
             body: JSON.stringify({ email, name })
         });
 
+        const data = await res.json();
+
         if(res.ok) {
-            alert("OTP sent! Please check your email.");
+            alert("OTP bhej diya gaya hai! Check karein.");
             document.getElementById('otpSection').classList.remove('hidden');
             btn.classList.add('hidden');
         } else {
-            alert("OTP bhejne mein error aaya! Backend check karein.");
+            alert("Galti: " + (data.detail || "Email nahi ja raha!"));
             btn.innerText = "Send Verification OTP";
             btn.disabled = false;
         }
     } catch (err) {
-        alert("Backend connection failed!");
+        alert("Server se connection nahi ho paa raha!");
         btn.innerText = "Send Verification OTP";
         btn.disabled = false;
     }
@@ -252,7 +254,7 @@ async function verifyAndPay() {
     const otp = document.getElementById('otpInput').value;
     const email = document.getElementById('custEmail').value;
 
-    if(!otp) return alert("OTP daalna zaroori hai!");
+    if(!otp) return alert("OTP toh daalo!");
 
     try {
         const res = await fetch('https://sns-ads-project.onrender.com/api/verify-otp', {
@@ -262,13 +264,13 @@ async function verifyAndPay() {
         });
 
         if(res.ok) {
-            alert("Verified! Payment gateway khul raha hai...");
+            alert("Verified! Proceeding to Payment...");
             processFinalPayment(); 
         } else {
-            alert("Galat OTP! Sahi code daalo.");
+            alert("Galat OTP!");
         }
     } catch (err) {
-        alert("Verification failed!");
+        alert("Verification error!");
     }
 }
 </script>
