@@ -58,6 +58,13 @@
                 <p class="text-gray-500 italic">Fetching your data from the cloud...</p>
             </div>
         </div>
+        <div class="glass-card p-8 rounded-3xl mt-8">
+    <h3 class="text-xl font-bold mb-4">Live Campaign Progress</h3>
+    <div class="w-full bg-white/5 rounded-full h-4 mb-4">
+        <div id="progressBar" class="bg-blue-600 h-4 rounded-full transition-all duration-1000" style="width: 0%"></div>
+    </div>
+    <p id="statusUpdate" class="text-gray-400 text-sm font-medium italic">"No active updates from admin yet."</p>
+</div>
     </main>
 
     <script type="module">
@@ -79,21 +86,17 @@
         const db = getFirestore(app);
 
         onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                const docRef = doc(db, "customers", user.uid);
-                const docSnap = await getDoc(docRef);
-
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    document.getElementById('userName').innerText = data.name || "Customer";
-                    renderOrders(data.orders || []);
-                } else {
-                    document.getElementById('ordersList').innerHTML = `<p class="text-red-400">No active orders found. Start growing today!</p>`;
-                }
-            } else {
-                window.location.href = "index.html";
-            }
-        });
+    if (user) {
+        const docRef = doc(db, "customers", user.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            // Admin updates handle karein
+            document.getElementById('progressBar').style.width = data.progress || "10%";
+            document.getElementById('statusUpdate').innerText = data.manualUpdate || "Hum aapke creatives par kaam kar rahe hain!";
+        }
+    }
+});
 
         function renderOrders(orders) {
             const list = document.getElementById('ordersList');

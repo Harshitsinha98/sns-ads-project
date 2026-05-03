@@ -2,57 +2,95 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SNS ADS Admin</title>
+    <title>SNS ADS Master Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 p-5">
+<body class="bg-gray-900 text-white p-5">
     <div class="max-w-6xl mx-auto">
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-blue-900">SNS ADS - Master Dashboard</h1>
-            <button onclick="loadData()" class="bg-blue-600 text-white px-4 py-2 rounded">Refresh</button>
+        <div class="flex justify-between items-center mb-8 border-b border-white/10 pb-5">
+            <h1 class="text-3xl font-black text-blue-500">SNS ADS Master Control</h1>
+            <button onclick="loadData()" class="bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded-xl font-bold transition">Refresh Leads</button>
         </div>
-        <div class="bg-white shadow rounded-lg overflow-hidden">
+
+        <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-[2rem] overflow-hidden">
             <table class="w-full text-left">
-                <thead class="bg-gray-800 text-white">
+                <thead class="bg-white/5 text-gray-400 uppercase text-xs tracking-widest">
                     <tr>
-                        <th class="p-4">Customer</th>
-                        <th class="p-4">Service</th>
-                        <th class="p-4">Status</th>
-                        <th class="p-4">Actions</th>
+                        <th class="p-6">Customer & Plan</th>
+                        <th class="p-6">Progress Control</th>
+                        <th class="p-6">Manual Message</th>
+                        <th class="p-6">Actions</th>
                     </tr>
                 </thead>
-                <tbody id="leadsTable"></tbody>
+                <tbody id="leadsTable" class="divide-y divide-white/5"></tbody>
             </table>
         </div>
     </div>
-    <script>
-        async function loadData() {
+
+    <script type="module">
+        // Firebase setup for real-time updates
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB7W5HWVe1JYbqhpGdrguNrQOgU3DwW_44",
+            authDomain: "sns-ads.firebaseapp.com",
+            projectId: "sns-ads",
+            storageBucket: "sns-ads.firebasestorage.app",
+            messagingSenderId: "193364476047",
+            appId: "1:193364476047:web:d65e2412d13a42f701f0fa"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // MongoDB se data load karna
+        window.loadData = async function() {
             const res = await fetch('https://sns-ads-project.onrender.com/api/admin/leads');
             const data = await res.json();
+            
             document.getElementById('leadsTable').innerHTML = data.map(item => `
-                <tr class="border-b">
-                    <td class="p-4"><b>${item.name}</b><br><span class="text-sm text-gray-500">${item.email}</span></td>
-                    <td class="p-4">${item.service}</td>
-                    <td class="p-4">
-                        <span class="px-2 py-1 rounded text-xs font-bold ${item.paymentStatus === 'Completed' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}">
-                            ${item.paymentStatus}
-                        </span>
+                <tr>
+                    <td class="p-6">
+                        <div class="font-bold text-lg">${item.name}</div>
+                        <div class="text-blue-400 text-sm">${item.service}</div>
+                        <div class="text-gray-500 text-xs mt-1">UID: ${item.email}</div>
                     </td>
-                    <td class="p-4">
-                        <button onclick="updateStatus('${item._id}', 'In Progress')" class="bg-yellow-500 text-white text-xs px-2 py-1 rounded">Start</button>
-                        <button onclick="updateStatus('${item._id}', 'Completed')" class="bg-green-600 text-white text-xs px-2 py-1 rounded">Finish</button>
+                    <td class="p-6">
+                        <input type="range" id="range-${item._id}" min="0" max="100" value="10" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                        <div class="text-[10px] text-center mt-2 text-gray-400">Slide to update bar</div>
+                    </td>
+                    <td class="p-6">
+                        <input type="text" id="msg-${item._id}" placeholder="e.g. Creative is ready" class="bg-white/5 border border-white/10 rounded-lg p-2 text-xs w-full outline-none focus:border-blue-500">
+                    </td>
+                    <td class="p-6">
+                        <button onclick="window.pushToClient('${item.email}', '${item._id}')" class="bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-black uppercase px-4 py-2 rounded-lg transition">Update Portal</button>
                     </td>
                 </tr>
             `).join('');
-        }
-        async function updateStatus(id, status) {
-            await fetch('https://sns-ads-project.onrender.com/api/admin/update-status', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id, status })
-            });
-            loadData();
-        }
+        };
+
+        // User ke dashboard par Live push karna
+        window.pushToClient = async function(userEmail, id) {
+            // Note: Dashboard UID se chalta hai, toh ensure karein dashboard code mein email ya uid match ho raha ho
+            const progressValue = document.getElementById(`range-${id}`).value;
+            const msgValue = document.getElementById(`msg-${id}`).value;
+
+            try {
+                // Hum user ke email ko hi document ID maan kar update kar rahe hain (ya UID use karein agar store ki hai)
+                const clientRef = doc(db, "customers", userEmail); 
+                await setDoc(clientRef, {
+                    progress: progressValue + "%",
+                    manualUpdate: msgValue
+                }, { merge: true });
+
+                alert("Customer Dashboard Updated Live!");
+            } catch (e) {
+                console.error(e);
+                alert("Error: Make sure customer has logged in once.");
+            }
+        };
+
         loadData();
     </script>
 </body>

@@ -129,5 +129,15 @@ app.post('/api/payment-success', async (req, res) => {
         res.status(500).json({ error: "Data save nahi ho paya" });
     }
 });
+// admin.html ke liye saari leads fetch karna
+app.get('/api/admin/leads', async (req, res) => {
+    try {
+        // MongoDB se saari leads nikaalo (latest orders upar)
+        const leads = await Lead.find().sort({ date: -1 });
+        res.status(200).json(leads);
+    } catch (err) {
+        res.status(500).json({ error: "Data fetch fail ho gaya" });
+    }
+});
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

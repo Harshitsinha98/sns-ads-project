@@ -38,6 +38,9 @@
                 <a href="#enquire" class="hover:text-blue-400 transition">Enquire</a>
             </div>
         </div>
+        <div id="authButtons" class="flex gap-4">
+        <button onclick="window.loginAndCheckout(null, null)" class="text-[10px] font-bold text-blue-400 border border-blue-400/30 px-4 py-2 rounded-xl uppercase tracking-widest hover:bg-blue-400/10 transition">Client Portal</button>
+        </div>
     </nav>
 
     <!-- Hero -->
@@ -146,26 +149,24 @@
 
     // --- STEP 1: Google Login & Data Pre-fill ---
     window.loginAndCheckout = async function(amount, plan) {
-        try {
-            const result = await signInWithPopup(auth, provider);
-            const user = result.user;
-            
+    try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        
+        // Agar user ne product select kiya hai, toh checkout modal kholo
+        if (amount && plan) {
+            window.currentPlan = { amount, name: plan };
             document.getElementById('custName').value = user.displayName;
             document.getElementById('custEmail').value = user.email;
-            
-            window.currentPlan = { amount, name: plan };
             document.getElementById('modalPlanDisplay').innerText = plan + " (₹" + (amount * 1.05).toFixed(0) + " incl. GST)";
             document.getElementById('checkoutModal').classList.remove('hidden');
             document.getElementById('checkoutModal').classList.add('flex');
-            
-            const otpBtn = document.getElementById('sendOtpBtn');
-            otpBtn.innerText = "Verify Phone to Proceed";
-            otpBtn.onclick = () => window.startPhoneVerification(); 
-            
-        } catch (error) {
-            alert("Login failed: " + error.message);
+        } else {
+            // Agar seedha login kiya hai, toh dashboard par bhej do
+            window.location.href = "dashboard.html";
         }
-    };
+    } catch (error) { alert("Login failed: " + error.message); }
+};
 
     // --- STEP 2: Phone Verification (OTP) ---
     window.startPhoneVerification = async function() {
