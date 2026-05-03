@@ -28,18 +28,26 @@
 </head>
 <body class="hero-gradient text-white min-h-screen">
 
-    <!-- Navbar -->
-    <nav class="fixed top-0 w-full z-50 bg-black/20 backdrop-blur-lg border-b border-white/5">
-        <div class="hidden md:flex gap-10 items-center text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">
-    <a href="#about" class="hover:text-blue-400 transition">About</a>
-    <a href="#pricing" class="hover:text-blue-400 transition">Pricing</a>
-    <a href="#enquire" class="hover:text-blue-400 transition">Enquire</a>
-    <!-- Portal Position Updated -->
-    <button onclick="window.loginAndCheckout(null, null)" class="bg-blue-600/10 hover:bg-blue-600 text-blue-400 hover:text-white border border-blue-500/30 px-4 py-2 rounded-xl transition-all duration-300">
-        Client Portal
-    </button>
-</div>
-    </nav>
+   <!-- Fixed Glass Navbar -->
+<nav class="fixed top-0 left-0 w-full z-[100] border-b border-white/10 bg-black/40 backdrop-blur-xl transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-8 py-6 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <div class="w-2 h-8 bg-blue-600 rounded-full"></div>
+            <div class="text-3xl font-black tracking-tighter text-white">SNS ADS</div>
+        </div>
+        <div class="flex items-center gap-6">
+            <span class="hidden md:block text-[10px] font-bold text-gray-500 uppercase tracking-widest">Client Portal</span>
+            <button onclick="logout()" class="text-[10px] font-bold text-white uppercase tracking-widest bg-red-500/20 hover:bg-red-500 border border-red-500/30 px-6 py-2.5 rounded-xl transition-all">
+                Logout
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Spacer: Taaki content navbar ke niche na dabe -->
+<div class="h-28"></div>
+<main class="max-w-5xl mx-auto py-16 px-6">
+        <!-- Baki ka dashboard content yahan se shuru hoga -->
 
     <!-- Hero -->
     <header class="pt-40 pb-10 px-6 text-center max-w-4xl mx-auto">
@@ -280,6 +288,25 @@
         document.getElementById('enquire').scrollIntoView({ behavior: 'smooth' });
         document.getElementById('message').value = `Interested in ${plan}.`;
     };
+
+   // Sabse niche, logout function ke upar ya niche paste karein
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                // Scroll hone par navbar thoda chhota aur dark ho jayega
+                nav.classList.add('bg-black/90', 'py-4');
+                nav.classList.remove('bg-black/40', 'py-6');
+            } else {
+                // Wapis upar aane par purana glass look
+                nav.classList.add('bg-black/40', 'py-6');
+                nav.classList.remove('bg-black/90', 'py-4');
+            }
+        });
+
+        window.logout = () => {
+            signOut(auth).then(() => window.location.href = "index.html");
+        };
+    </script> 
 </script>
 
 <!-- Checkout Modal -->
