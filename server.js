@@ -26,10 +26,15 @@ const Lead = mongoose.model('Lead', leadSchema);
 
 // --- Nodemailer Transporter (Sahi ID aur Password ke saath) ---
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true, // Port 465 ke liye true rahega
     auth: {
-        user: 'sinhahaharshit67@gmail.com', // Aapki sahi email ID
-        pass: 'mkadlbglunwoihdj'            // Aapka 16-digit App Password (no spaces)
+        user: 'sinhahaharshit67@gmail.com',
+        pass: 'mkadlbglunwoihdj'
+    },
+    tls: {
+        rejectUnauthorized: false // Isse connection timeout ke chances kam ho jate hain
     }
 });
 
