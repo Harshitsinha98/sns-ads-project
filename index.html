@@ -221,30 +221,6 @@
     
     if(!name || !email) return alert("Pehle Name aur Email bharo!");
 
-    document.getElementById('sendOtpBtn').innerText = "Sending OTP...";
-    
-    const res = await fetch('https://sns-ads-project.onrender.com/api/send-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, name })
-    });
-
-    if(res.ok) {
-        alert("OTP sent to your email!");
-        document.getElementById('otpSection').classList.remove('hidden');
-        document.getElementById('sendOtpBtn').classList.add('hidden');
-    } else {
-        alert("OTP bhejane mein galti hui!");
-        document.getElementById('sendOtpBtn').innerText = "Send Verification OTP";
-    }
-}
-
-async function sendOtpRequest() {
-    const name = document.getElementById('custName').value;
-    const email = document.getElementById('custEmail').value;
-    
-    if(!name || !email) return alert("Pehle Name aur Email bharo!");
-
     const btn = document.getElementById('sendOtpBtn');
     btn.innerText = "Sending OTP...";
     btn.disabled = true;
@@ -261,12 +237,14 @@ async function sendOtpRequest() {
             document.getElementById('otpSection').classList.remove('hidden');
             btn.classList.add('hidden');
         } else {
-            alert("OTP bhejne mein error aaya!");
+            alert("OTP bhejne mein error aaya! Backend check karein.");
             btn.innerText = "Send Verification OTP";
             btn.disabled = false;
         }
     } catch (err) {
         alert("Backend connection failed!");
+        btn.innerText = "Send Verification OTP";
+        btn.disabled = false;
     }
 }
 
@@ -274,7 +252,7 @@ async function verifyAndPay() {
     const otp = document.getElementById('otpInput').value;
     const email = document.getElementById('custEmail').value;
 
-    if(!otp) return alert("OTP toh daalo bhai!");
+    if(!otp) return alert("OTP daalna zaroori hai!");
 
     try {
         const res = await fetch('https://sns-ads-project.onrender.com/api/verify-otp', {
@@ -284,13 +262,13 @@ async function verifyAndPay() {
         });
 
         if(res.ok) {
-            alert("Verification Successful! Proceeding to payment...");
-            processFinalPayment(); // Razorpay logic call hoga
+            alert("Verified! Payment gateway khul raha hai...");
+            processFinalPayment(); 
         } else {
-            alert("Invalid OTP! Try again.");
+            alert("Galat OTP! Sahi code daalo.");
         }
     } catch (err) {
-        alert("Verification failed due to server error!");
+        alert("Verification failed!");
     }
 }
 </script>
@@ -308,7 +286,18 @@ async function verifyAndPay() {
             <textarea id="custAddress" placeholder="Full Address" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition h-24 text-white"></textarea>
         </div>
 
-        <button onclick="processFinalPayment()" class="w-full bg-blue-600 hover:bg-blue-500 py-4 rounded-2xl font-bold uppercase tracking-widest transition shadow-lg shadow-blue-600/30 mt-8 text-white">Proceed to Payment</button>
+        <!-- Is button ko modal ke end mein lagao -->
+<button id="sendOtpBtn" onclick="sendOtpRequest()" class="w-full bg-blue-600 hover:bg-blue-500 py-4 rounded-2xl font-bold uppercase tracking-widest transition shadow-lg shadow-blue-600/30 mt-8 text-white">
+    Send Verification OTP
+</button>
+
+<!-- Iske niche ye OTP section bhi add karo jo hidden rahega -->
+<div id="otpSection" class="hidden space-y-4 mt-6 border-t border-white/10 pt-6">
+    <input type="text" id="otpInput" placeholder="Enter 6-Digit OTP" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition text-white text-center tracking-[0.5em] font-bold">
+    <button onclick="verifyAndPay()" class="w-full bg-green-600 hover:bg-green-500 py-4 rounded-2xl font-bold uppercase tracking-widest transition shadow-lg shadow-green-600/30 text-white">
+        Verify & Pay Now
+    </button>
+</div>
     </div>
 </div>
 </body>

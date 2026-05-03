@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const Razorpay = require('razorpay');
+const nodemailer = require('nodemailer'); // Sirf ek baar upar define karo
 require('dotenv').config();
 
 const app = express();
@@ -19,7 +20,7 @@ const razorpay = new Razorpay({
     key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-// --- Schema for Leads (Important: Status aur Service added) ---
+// --- Schema ---
 const leadSchema = new mongoose.Schema({
     name: String,
     email: String,
@@ -32,100 +33,23 @@ const leadSchema = new mongoose.Schema({
 });
 const Lead = mongoose.model('Lead', leadSchema);
 
-// --- ROUTES ---
-
-// 1. Create Razorpay Order
-app.post('/api/create-order', async (req, res) => {
-    const { amount } = req.body;
-    const options = {
-        amount: amount * 100, // Paise mein
-        currency: "INR",
-        receipt: "receipt_" + Math.random(),
-    };
-    try {
-        const order = await razorpay.orders.create(options);
-        res.json(order);
-    } catch (err) {
-        res.status(500).send(err);
-    }
-});
-
-// 2. Payment Success: Data Save karne ke liye (Ye zaroori tha!)
-app.post('/api/payment-success', async (req, res) => {
-    try {
-        const { name, email, service, amount, paymentId, orderId } = req.body;
-        const newLead = new Lead({
-            name,
-            email,
-            service: service || 'Standard Ads',
-            amount: amount / 100,
-            paymentId,
-            orderId,
-            paymentStatus: 'Paid' // Pehla status 'Paid' hoga
-        });
-        await newLead.save();
-        res.status(200).json({ message: "Lead Saved Successfully" });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-// 3. Admin: Saara data fetch karne ke liye
-app.get('/api/admin/leads', async (req, res) => {
-    try {
-        const leads = await Lead.find().sort({ _id: -1 });
-        res.json(leads);
-    } catch (err) {
-        res.status(500).send(err);
-    }
-});
-
-// 4. Admin: Status update karne ke liye
-app.post('/api/admin/update-status', async (req, res) => {
-    try {
-        const { id, status } = req.body;
-        await Lead.findByIdAndUpdate(id, { paymentStatus: status });
-        res.json({ message: "Status Updated" });
-    } catch (err) {
-        res.status(500).send(err);
-    }
-});
-
-// Ye naya route Enquiry ke liye use karenge
-app.post('/api/enquiry', async (req, res) => {
-    try {
-        const { name, email, message, service } = req.body;
-        const newEnquiry = new Lead({
-            name,
-            email,
-            service: "Enquiry: " + service,
-            paymentStatus: 'Enquiry Only', // Taaki admin.html mein alag dikhe
-            amount: 0
-        });
-        await newEnquiry.save();
-        res.json({ message: "Enquiry Saved" });
-    } catch (err) {
-        res.status(500).send(err);
-    }
-});
-const nodemailer = require('nodemailer');
-const nodemailer = require('nodemailer');
-
-// 1. Transporter Setup - Aapke Gmail se connect kiya gaya hai
+// --- OTP Configuration ---
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'harshit.sinha.ece@gmail.com', // Aapka email
-        pass: 'mkadlbglunwoihdj'           // Aapka naya 16-digit App Password
+        user: 'harshit.sinha.ece@gmail.com', //
+        pass: 'mkadlbglunwoihdj' //
     }
 });
 
-let otpStore = {}; // Temporary memory mein OTP save karne ke liye
+let otpStore = {}; 
 
-// 2. Route: User ko OTP bhejna
+// --- ROUTES ---
+
+// 1. Send OTP Route
 app.post('/api/send-otp', async (req, res) => {
     const { email, name } = req.body;
-    const otp = Math.floor(100000 + Math.random() * 900000).toString(); // 6 digit random number
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
     otpStore[email] = otp; 
 
     const mailOptions = {
@@ -146,23 +70,93 @@ app.post('/api/send-otp', async (req, res) => {
     };
 
     try {
-        await transporter.sendMail(mailOptions); // Email bhej raha hai
+        await transporter.sendMail(mailOptions);
         res.status(200).json({ message: "OTP Sent Successfully" });
     } catch (err) {
-        console.error(err);
         res.status(500).json({ error: "Failed to send OTP" });
     }
 });
 
-// 3. Route: OTP Verify karna
+// 2. Verify OTP Route
 app.post('/api/verify-otp', (req, res) => {
     const { email, otp } = req.body;
     if (otpStore[email] && otpStore[email] === otp) {
-        delete otpStore[email]; // Ek baar verify hone par delete kar do
+        delete otpStore[email];
         res.status(200).json({ message: "Verified" });
     } else {
         res.status(400).json({ error: "Invalid OTP" });
     }
 });
+
+// 3. Create Razorpay Order
+app.post('/api/create-order', async (req, res) => {
+    const { amount } = req.body;
+    const options = {
+        amount: amount * 100, 
+        currency: "INR",
+        receipt: "receipt_" + Math.random(),
+    };
+    try {
+        const order = await razorpay.orders.create(options);
+        res.json(order);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
+
+// 4. Payment Success
+app.post('/api/payment-success', async (req, res) => {
+    try {
+        const { name, email, service, amount, paymentId, orderId } = req.body;
+        const newLead = new Lead({
+            name, email, service,
+            amount: amount / 100,
+            paymentId, orderId,
+            paymentStatus: 'Paid'
+        });
+        await newLead.save();
+        res.status(200).json({ message: "Lead Saved" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// 5. Admin Routes
+app.get('/api/admin/leads', async (req, res) => {
+    try {
+        const leads = await Lead.find().sort({ _id: -1 });
+        res.json(leads);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
+
+app.post('/api/admin/update-status', async (req, res) => {
+    try {
+        const { id, status } = req.body;
+        await Lead.findByIdAndUpdate(id, { paymentStatus: status });
+        res.json({ message: "Status Updated" });
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
+
+// 6. Enquiry Route
+app.post('/api/enquiry', async (req, res) => {
+    try {
+        const { name, email, message } = req.body;
+        const newEnquiry = new Lead({
+            name, email,
+            service: "Enquiry: " + message,
+            paymentStatus: 'Enquiry Only',
+            amount: 0
+        });
+        await newEnquiry.save();
+        res.json({ message: "Enquiry Saved" });
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
+
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
