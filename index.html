@@ -555,26 +555,30 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
 
 <!-- Checkout Modal -->
 <div id="checkoutModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-6">
-    <div class="glass-card max-w-lg w-full rounded-[2.5rem] p-10 shadow-2xl relative">
-        <button onclick="closeCheckout()" class="absolute top-6 right-8 text-gray-400 hover:text-white text-2xl">&times;</button>
-        <h2 class="text-3xl font-bold mb-2 text-white">Complete Your Order</h2>
-        <p id="modalPlanDisplay" class="text-blue-400 mb-8 font-semibold"></p>
+    <div class="glass-card max-w-lg w-full rounded-[2.5rem] p-10 shadow-2xl relative border border-white/10 bg-zinc-900/90">
+        <button onclick="closeCheckout()" class="absolute top-6 right-8 text-gray-400 hover:text-white text-2xl transition">&times;</button>
+        <h2 class="text-3xl font-bold mb-2 text-white tracking-tight">Complete Your Order</h2>
+        <p id="modalPlanDisplay" class="text-blue-400 mb-8 font-semibold italic text-sm uppercase tracking-wider"></p>
 
         <div class="space-y-4">
-            <input type="text" id="custName" placeholder="Full Name" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition text-white">
-            <input type="email" id="custEmail" placeholder="Business Email" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition text-white">
-            <input type="tel" id="custPhone" placeholder="Mobile (+91...)" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition text-white">
-            <textarea id="custAddress" placeholder="Full Address" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition h-24 text-white"></textarea>
+            <input type="text" id="custName" placeholder="Full Name" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition text-white text-sm">
+            <input type="email" id="custEmail" placeholder="Business Email" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition text-white text-sm">
+            <input type="tel" id="custPhone" placeholder="Mobile (+91...)" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition text-white text-sm">
+            <textarea id="custAddress" placeholder="Full Address" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition h-24 text-white text-sm"></textarea>
         </div>
 
-        <button id="sendOtpBtn" onclick="sendOtpRequest()" class="w-full bg-blue-600 hover:bg-blue-500 py-4 rounded-2xl font-bold uppercase tracking-widest transition shadow-lg shadow-blue-600/30 mt-8 text-white">
+        <!-- Yahan function name update kiya gaya hai -->
+        <button id="sendOtpBtn" onclick="window.startPhoneVerification()" class="w-full bg-blue-600 hover:bg-blue-500 py-4 rounded-2xl font-bold uppercase tracking-widest transition shadow-lg shadow-blue-600/30 mt-8 text-white text-xs">
             Send Verification OTP
         </button>
 
         <div id="otpSection" class="hidden space-y-4 mt-6 border-t border-white/10 pt-6">
-            <input type="text" id="otpInput" placeholder="Enter 6-Digit OTP" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition text-white text-center tracking-[0.5em] font-bold">
-            <button onclick="verifyAndPay()" class="w-full bg-green-600 hover:bg-green-500 py-4 rounded-2xl font-bold uppercase tracking-widest transition shadow-lg shadow-green-600/30 text-white">
-                Verify & Pay Now
+            <p class="text-[10px] text-center text-gray-500 uppercase font-bold tracking-widest">Verification Required</p>
+            <input type="text" id="otpInput" placeholder="Enter 6-Digit OTP" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition text-white text-center tracking-[0.5em] font-bold text-lg">
+            
+            <!-- Yahan verifyAndPay ko window object se call karein -->
+            <button onclick="window.verifyAndPay()" class="w-full bg-green-600 hover:bg-green-500 py-4 rounded-2xl font-bold uppercase tracking-widest transition shadow-lg shadow-green-600/30 text-white text-xs">
+                Verify OTP & Finalize
             </button>
         </div>
     </div>
