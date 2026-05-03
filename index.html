@@ -25,7 +25,17 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+    
     </style>
+    <style>
+    /* Mobile optimization for large headings */
+    @media (max-width: 768px) {
+        h1 { font-size: 3.5rem !important; line-height: 1 !important; }
+        h2 { font-size: 2.5rem !important; }
+        .py-32 { padding-top: 4rem !important; padding-bottom: 4rem !important; }
+        .px-10 { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+    }
+</style>
 </head>
 <body class="hero-gradient text-white min-h-screen">
 
@@ -66,48 +76,36 @@
 <div class="h-20"></div>
 
     <!-- Hero Section with Video Background -->
-<section class="relative h-screen flex items-center justify-center overflow-hidden">
-    <!-- Video Wrapper -->
+<!-- Optimized Hero for Mobile -->
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden py-20">
     <div class="absolute inset-0 z-0">
-        <video 
-            autoplay 
-            muted 
-            loop 
-            playsinline 
-            class="w-full h-full object-cover opacity-40">
+        <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-30">
             <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-technology-connection-lines-render-loop-21782-large.mp4" type="video/mp4">
-            Your browser does not support the video tag.
         </video>
-        <!-- Overlay for better text readability -->
-        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black"></div>
     </div>
 
-    <!-- Hero Content -->
-    <div class="max-w-6xl mx-auto text-center relative z-10 px-6">
-        <div class="inline-flex items-center gap-2 bg-blue-600/20 border border-blue-500/30 px-6 py-2 rounded-full mb-10 backdrop-blur-md">
-            <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
-            <span class="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400">Next-Gen Performance Marketing</span>
+    <div class="relative z-10 text-center px-4">
+        <!-- Badge hidden on very small screens -->
+        <div class="inline-flex items-center gap-2 bg-blue-600/10 border border-blue-500/20 px-4 py-2 rounded-full mb-6">
+            <span class="text-[9px] font-black uppercase tracking-[0.2em] text-blue-400">Next-Gen Ads Agency</span>
         </div>
-
-        <h1 class="text-7xl md:text-9xl font-black mb-10 tracking-tighter leading-none italic text-white">
-            DIGITAL <br> <span class="text-blue-600 drop-shadow-[0_0_30px_rgba(37,99,235,0.5)]">DOMINANCE.</span>
+        
+        <!-- Responsive Font Size: text-5xl on mobile, text-9xl on desktop -->
+        <h1 class="text-5xl md:text-9xl font-black tracking-tighter leading-tight italic mb-8">
+            DIGITAL <br class="hidden md:block"> <span class="text-blue-600">DOMINANCE.</span>
         </h1>
-
-        <p class="text-gray-300 text-xl md:text-2xl max-w-3xl mx-auto font-medium leading-relaxed mb-12 drop-shadow-md">
-            SNS ADS engineers high-performance marketing funnels. We turn Meta and Google algorithms into revenue machines for brands that refuse to settle.
+        
+        <p class="text-gray-400 text-base md:text-xl max-w-xl mx-auto mb-10 font-medium px-4">
+            We turn algorithms into revenue machines. ROI-driven growth for ambitious brands.
         </p>
 
-        <div class="flex flex-col md:flex-row justify-center gap-6">
-            <a href="#pricing" class="bg-blue-600 text-white px-12 py-6 rounded-full font-black uppercase tracking-tighter text-sm hover:bg-blue-500 transition-all shadow-xl shadow-blue-600/30">
-                Start Your Campaign
-            </a>
-            <a href="#about" class="backdrop-blur-md border border-white/20 px-12 py-6 rounded-full font-black uppercase tracking-tighter text-sm hover:bg-white/10 transition-all">
-                Our Strategy
-            </a>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a href="#pricing" class="w-full sm:w-auto bg-blue-600 text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest text-[10px] shadow-lg transition-all">Launch Campaign</a>
+            <a href="#enquire" class="w-full sm:w-auto glass-ui text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest text-[10px] hover:bg-white/5 transition-all">Strategy Call</a>
         </div>
     </div>
 </section>
-
 <!-- Contact Section (Book a Call) -->
 <section id="enquire" class="py-24 px-6 max-w-7xl mx-auto border-t border-white/5">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
