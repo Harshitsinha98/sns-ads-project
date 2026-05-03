@@ -122,13 +122,12 @@
             <button onclick="submitEnquiry()" class="w-full bg-white text-black font-bold py-5 rounded-2xl hover:bg-gray-200 transition uppercase tracking-widest text-sm">Send Message</button>
         </div>
     </section>
-
 <!-- Firebase Scripts & Logic -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    // TODO: Paste your Firebase config here
     const firebaseConfig = {
         apiKey: "AIzaSyB7W5HWVe1JYbqhpGdrguNrQOgU3DwW_44",
         authDomain: "sns-ads.firebaseapp.com",
@@ -140,17 +139,43 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
 
-    // Global Functions for buttons
-    window.sendOtpRequest = async function() {
+    window.currentPlan = { amount: 0, name: '' };
+
+    // --- STEP 1: Google Login & Data Pre-fill ---
+    window.loginAndCheckout = async function(amount, plan) {
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+            
+            document.getElementById('custName').value = user.displayName;
+            document.getElementById('custEmail').value = user.email;
+            
+            window.currentPlan = { amount, name: plan };
+            document.getElementById('modalPlanDisplay').innerText = plan + " (₹" + (amount * 1.05).toFixed(0) + " incl. GST)";
+            document.getElementById('checkoutModal').classList.remove('hidden');
+            document.getElementById('checkoutModal').classList.add('flex');
+            
+            const otpBtn = document.getElementById('sendOtpBtn');
+            otpBtn.innerText = "Verify Phone to Proceed";
+            otpBtn.onclick = () => window.startPhoneVerification(); 
+            
+        } catch (error) {
+            alert("Login failed: " + error.message);
+        }
+    };
+
+    // --- STEP 2: Phone Verification (OTP) ---
+    window.startPhoneVerification = async function() {
         const phoneInput = document.getElementById('custPhone').value.trim();
-        if(!phoneInput) return alert("Mobile number daalo bhai!");
-        
+        if(!phoneInput) return alert("Bhai, mobile number toh daalo!");
+
         let phoneNumber = phoneInput.startsWith('+') ? phoneInput : '+91' + phoneInput;
         const btn = document.getElementById('sendOtpBtn');
-        
-        btn.innerText = "Sending SMS...";
         btn.disabled = true;
+        btn.innerText = "Sending SMS...";
 
         if(!window.recaptchaVerifier) {
             window.recaptchaVerifier = new RecaptchaVerifier(auth, 'sendOtpBtn', { 'size': 'invisible' });
@@ -159,56 +184,38 @@
         try {
             const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier);
             window.confirmationResult = confirmationResult;
-            alert("OTP bhej diya gaya hai!");
             document.getElementById('otpSection').classList.remove('hidden');
             btn.classList.add('hidden');
+            alert("OTP bhej diya gaya hai!");
         } catch (error) {
-            console.error(error);
-            alert("Error: " + error.message);
-            btn.innerText = "Send Verification OTP";
+            alert("SMS Error: " + error.message);
             btn.disabled = false;
+            btn.innerText = "Retry Phone Verification";
         }
     };
 
     window.verifyAndPay = async function() {
-    const code = document.getElementById('otpInput').value;
-    try {
-        await window.confirmationResult.confirm(code);
-        alert("Phone Verified! Ab payment kariye.");
-        
-        // OTP section chhupao aur Payment button dikhao
-        document.getElementById('otpSection').innerHTML = `
-            <button onclick="processFinalPayment()" class="w-full bg-green-600 hover:bg-green-500 py-4 rounded-2xl font-bold uppercase tracking-widest transition shadow-lg shadow-green-600/30 text-white">
-                Pay Now
-            </button>`;
-    } catch (error) {
-        alert("Galat OTP!");
-    }
-};
-</script>
+        const code = document.getElementById('otpInput').value;
+        try {
+            await window.confirmationResult.confirm(code);
+            alert("Phone Verified! Ab payment kariye.");
+            
+            document.getElementById('otpSection').innerHTML = `
+                <button onclick="window.processFinalPayment()" class="w-full bg-green-600 hover:bg-green-500 py-4 rounded-2xl font-bold uppercase tracking-widest transition shadow-lg shadow-green-600/30 text-white">
+                    Confirm & Pay Now
+                </button>`;
+        } catch (error) {
+            alert("Galat OTP!");
+        }
+    };
 
-<script>
-    let currentPlan = { amount: 0, name: '' };
-
-    function goTocheckout(amount, plan) {
-        currentPlan = { amount, name: plan };
-        document.getElementById('modalPlanDisplay').innerText = plan + " (₹" + (amount * 1.05).toFixed(0) + " incl. GST)";
-        document.getElementById('checkoutModal').classList.remove('hidden');
-        document.getElementById('checkoutModal').classList.add('flex');
-    }
-
-    function closeCheckout() {
-        document.getElementById('checkoutModal').classList.add('hidden');
-        document.getElementById('checkoutModal').classList.remove('flex');
-    }
-
-    async function processFinalPayment() {
+    // --- STEP 3: Final Payment & Dashboard Sync ---
+    window.processFinalPayment = async function() {
         const name = document.getElementById('custName').value;
         const email = document.getElementById('custEmail').value;
         const phone = document.getElementById('custPhone').value;
         const address = document.getElementById('custAddress').value;
-
-        const totalAmount = currentPlan.amount * 1.05;
+        const totalAmount = window.currentPlan.amount * 1.05;
 
         try {
             const res = await fetch('https://sns-ads-project.onrender.com/api/create-order', {
@@ -223,106 +230,57 @@
                 "amount": order.amount,
                 "currency": "INR",
                 "name": "SNS ADS",
-                "description": currentPlan.name,
+                "description": window.currentPlan.name,
                 "order_id": order.id,
                 "handler": async function (response) {
+                    // Backend Sync (Mongo/Email)
                     await fetch('https://sns-ads-project.onrender.com/api/payment-success', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             name, email, 
-                            service: `${currentPlan.name} | Mob: ${phone} | Addr: ${address}`,
+                            service: window.currentPlan.name,
                             amount: totalAmount * 100,
                             paymentId: response.razorpay_payment_id,
                             orderId: response.razorpay_order_id
                         })
                     });
+
+                    // Firestore Sync (Dashboard)
+                    const user = auth.currentUser;
+                    if(user) {
+                        await setDoc(doc(db, "customers", user.uid), {
+                            name, email, phone: user.phoneNumber,
+                            orders: arrayUnion({
+                                orderId: response.razorpay_order_id,
+                                plan: window.currentPlan.name,
+                                amount: totalAmount,
+                                status: "Active",
+                                date: new Date().toISOString()
+                            })
+                        }, { merge: true });
+                    }
+
                     alert("Mubarak ho! Payment Success.");
-                    window.location.reload();
+                    window.location.href = "dashboard.html";
                 },
                 "prefill": { "name": name, "email": email, "contact": phone },
                 "theme": { "color": "#2563eb" }
             };
             new Razorpay(options).open();
-        } catch (err) { alert("Server issues during payment!"); }
-    }
+        } catch (err) { alert("Server issue during payment!"); }
+    };
 
-    async function submitEnquiry() {
-        const name = prompt("Name:");
-        const email = prompt("Email:");
-        const message = document.getElementById('message').value;
-        if(!name || !email) return alert("Details required!");
+    // Helper functions
+    window.closeCheckout = () => {
+        document.getElementById('checkoutModal').classList.add('hidden');
+        document.getElementById('checkoutModal').classList.remove('flex');
+    };
 
-        await fetch('https://sns-ads-project.onrender.com/api/enquiry', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, email, message })
-        });
-        alert("Enquiry sent!");
-        window.location.reload();
-    }
-
-    function scrollToEnquire(plan) {
+    window.scrollToEnquire = (plan) => {
         document.getElementById('enquire').scrollIntoView({ behavior: 'smooth' });
         document.getElementById('message').value = `Interested in ${plan}.`;
-    }
-    import { getAuth, signInWithPopup, GoogleAuthProvider, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-const provider = new GoogleAuthProvider();
-const auth = getAuth();
-
-window.loginAndCheckout = async function(amount, plan) {
-    try {
-        // Step 1: Google Login
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
-        
-        // Auto-fill details
-        document.getElementById('custName').value = user.displayName;
-        document.getElementById('custEmail').value = user.email;
-        
-        // Step 2: Modal Kholo (Ab isme Phone verification zaroori hai)
-        currentPlan = { amount, name: plan };
-        document.getElementById('modalPlanDisplay').innerText = plan + " (₹" + (amount * 1.05).toFixed(0) + " incl. GST)";
-        document.getElementById('checkoutModal').classList.remove('hidden');
-        document.getElementById('checkoutModal').classList.add('flex');
-        
-        // Reset button for Phone Auth
-        const otpBtn = document.getElementById('sendOtpBtn');
-        otpBtn.innerText = "Verify Phone to Proceed";
-        otpBtn.onclick = () => startPhoneVerification(); 
-        
-    } catch (error) {
-        alert("Login failed: " + error.message);
-    }
-};
-
-// Step 3: Phone Verification Logic
-async function startPhoneVerification() {
-    const phoneInput = document.getElementById('custPhone').value.trim();
-    if(!phoneInput) return alert("Bhai, mobile number toh daalo!");
-
-    let phoneNumber = phoneInput.startsWith('+') ? phoneInput : '+91' + phoneInput;
-    const btn = document.getElementById('sendOtpBtn');
-    btn.disabled = true;
-    btn.innerText = "Sending SMS...";
-
-    if(!window.recaptchaVerifier) {
-        window.recaptchaVerifier = new RecaptchaVerifier(auth, 'sendOtpBtn', { 'size': 'invisible' });
-    }
-
-    try {
-        const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier);
-        window.confirmationResult = confirmationResult;
-        document.getElementById('otpSection').classList.remove('hidden');
-        btn.classList.add('hidden');
-        alert("OTP bhej diya gaya hai!");
-    } catch (error) {
-        alert("SMS Error: " + error.message);
-        btn.disabled = false;
-        btn.innerText = "Retry Phone Verification";
-    }
-}
+    };
 </script>
 
 <!-- Checkout Modal -->
