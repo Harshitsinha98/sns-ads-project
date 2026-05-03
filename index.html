@@ -64,18 +64,118 @@
 <!-- Spacer: Content ko niche dhakelne ke liye -->
 <div class="h-20"></div>
 
-    <!-- Hero -->
-    <section class="relative pt-32 pb-20 px-6 overflow-hidden">
-    <div class="max-w-6xl mx-auto text-center relative z-10">
-        <h1 class="text-7xl md:text-9xl font-black mb-10 tracking-tighter leading-none italic">
-            DIGITAL <br> <span class="text-blue-600">DOMINANCE.</span>
+    <!-- Hero Section with Video Background -->
+<section class="relative h-screen flex items-center justify-center overflow-hidden">
+    <!-- Video Wrapper -->
+    <div class="absolute inset-0 z-0">
+        <video 
+            autoplay 
+            muted 
+            loop 
+            playsinline 
+            class="w-full h-full object-cover opacity-40">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-technology-connection-lines-render-loop-21782-large.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <!-- Overlay for better text readability -->
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80"></div>
+    </div>
+
+    <!-- Hero Content -->
+    <div class="max-w-6xl mx-auto text-center relative z-10 px-6">
+        <div class="inline-flex items-center gap-2 bg-blue-600/20 border border-blue-500/30 px-6 py-2 rounded-full mb-10 backdrop-blur-md">
+            <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
+            <span class="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400">Next-Gen Performance Marketing</span>
+        </div>
+
+        <h1 class="text-7xl md:text-9xl font-black mb-10 tracking-tighter leading-none italic text-white">
+            DIGITAL <br> <span class="text-blue-600 drop-shadow-[0_0_30px_rgba(37,99,235,0.5)]">DOMINANCE.</span>
         </h1>
-        <p class="text-gray-500 text-xl md:text-2xl max-w-3xl mx-auto font-medium leading-relaxed mb-12">
-            SNS ADS engineers high-performance marketing funnels for brands that refuse to settle. We turn Meta and Google algorithms into revenue machines.
+
+        <p class="text-gray-300 text-xl md:text-2xl max-w-3xl mx-auto font-medium leading-relaxed mb-12 drop-shadow-md">
+            SNS ADS engineers high-performance marketing funnels. We turn Meta and Google algorithms into revenue machines for brands that refuse to settle.
         </p>
+
         <div class="flex flex-col md:flex-row justify-center gap-6">
-            <a href="#pricing" class="bg-white text-black px-12 py-6 rounded-full font-black uppercase tracking-tighter text-sm hover:bg-blue-600 hover:text-white transition-all">Start Your Campaign</a>
-            <a href="#about" class="border border-white/10 px-12 py-6 rounded-full font-black uppercase tracking-tighter text-sm hover:bg-white/5 transition-all">Our Strategy</a>
+            <a href="#pricing" class="bg-blue-600 text-white px-12 py-6 rounded-full font-black uppercase tracking-tighter text-sm hover:bg-blue-500 transition-all shadow-xl shadow-blue-600/30">
+                Start Your Campaign
+            </a>
+            <a href="#about" class="backdrop-blur-md border border-white/20 px-12 py-6 rounded-full font-black uppercase tracking-tighter text-sm hover:bg-white/10 transition-all">
+                Our Strategy
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section (Book a Call) -->
+<section id="enquire" class="py-24 px-6 max-w-7xl mx-auto border-t border-white/5">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+        
+        <!-- Left: Creative Image Display -->
+        <div class="hidden md:block relative group">
+            <div class="absolute -inset-1 bg-gradient-to-r from-red-600 to-blue-600 rounded-[2.5rem] blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+            <div class="relative bg-black rounded-[2.5rem] overflow-hidden border border-white/10 h-[600px]">
+                <!-- Yahan aap apni koi bhi portfolio image ya graphic laga sakte hain -->
+                <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80" alt="Work Showcase" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+            </div>
+        </div>
+
+        <!-- Right: Contact Form -->
+        <div class="space-y-8">
+            <div>
+                <p class="text-red-500 font-bold uppercase tracking-[0.3em] text-[10px] mb-4">Get Started</p>
+                <h2 class="text-5xl font-black tracking-tighter text-white leading-tight">Let's book a call.</h2>
+            </div>
+
+            <form id="contactForm" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Name -->
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1">Full Name</label>
+                        <input type="text" id="formName" placeholder="Jane Smith" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-red-500/50 transition text-white text-sm" required>
+                    </div>
+                    <!-- Phone -->
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1">Phone Number</label>
+                        <input type="tel" id="formPhone" placeholder="+91 98765 43210" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-red-500/50 transition text-white text-sm" required>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1">Email Address</label>
+                    <input type="email" id="formEmail" placeholder="jane@company.com" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-red-500/50 transition text-white text-sm" required>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Business Name -->
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1">Business Name</label>
+                        <input type="text" id="formBusiness" placeholder="Acme Inc." class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-red-500/50 transition text-white text-sm">
+                    </div>
+                    <!-- Monthly Budget -->
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1">Monthly Budget</label>
+                        <select id="formBudget" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-red-500/50 transition text-gray-400 text-sm appearance-none">
+                            <option value="" disabled selected>Select range</option>
+                            <option value="below_50k">Below ₹50,000</option>
+                            <option value="50k_100k">₹50,000 - ₹1,00,000</option>
+                            <option value="100k_above">₹1,00,000+</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-4 pt-4">
+                    <button type="submit" class="flex-1 bg-red-600 hover:bg-red-500 text-white py-5 rounded-2xl font-bold uppercase tracking-widest transition shadow-lg shadow-red-600/20 flex items-center justify-center gap-2">
+                        Submit <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                    </button>
+                    <a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="flex-1 bg-transparent border border-white/10 hover:bg-white/5 text-white py-5 rounded-2xl font-bold uppercase tracking-widest transition flex items-center justify-center gap-3">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        WhatsApp us
+                    </a>
+                </div>
+            </form>
         </div>
     </div>
 </section>
@@ -107,6 +207,66 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- What We Do Section -->
+<section id="services" class="py-32 px-6 max-w-7xl mx-auto border-t border-white/5">
+    <div class="mb-16">
+        <p class="text-red-500 font-bold uppercase tracking-[0.3em] text-[10px] mb-4">What We Do</p>
+        <h2 class="text-5xl md:text-7xl font-black tracking-tighter leading-tight">
+            Everything your brand <br>
+            <span class="text-gray-500">needs to Grow.</span>
+        </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 border border-white/10 rounded-[2.5rem] overflow-hidden bg-white/5 backdrop-blur-sm">
+        
+        <!-- 01: Social Media Marketing -->
+        <div class="p-12 border-b border-r border-white/10 hover:bg-white/5 transition-all group relative">
+            <span class="text-red-500 font-black text-xs">01</span>
+            <div class="absolute top-10 right-10 opacity-20 group-hover:opacity-100 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+            </div>
+            <h4 class="text-2xl font-bold mt-6 mb-4">Social Media Marketing</h4>
+            <p class="text-gray-400 text-sm leading-relaxed">Hyper-targeted campaigns built for engagement, reach, and conversion across every major platform.</p>
+        </div>
+
+        <!-- 02: Brand Strategy -->
+        <div class="p-12 border-b border-r border-white/10 hover:bg-white/5 transition-all group relative">
+            <span class="text-red-500 font-black text-xs">02</span>
+            <h4 class="text-2xl font-bold mt-6 mb-4">Brand Strategy</h4>
+            <p class="text-gray-400 text-sm leading-relaxed">From identity to narrative — we architect brands that command attention and earn loyalty.</p>
+        </div>
+
+        <!-- 03: Content Creation -->
+        <div class="p-12 border-b border-white/10 hover:bg-white/5 transition-all group relative">
+            <span class="text-red-500 font-black text-xs">03</span>
+            <h4 class="text-2xl font-bold mt-6 mb-4">Content Creation</h4>
+            <p class="text-gray-400 text-sm leading-relaxed">High-impact visuals, video, and copy that stop the scroll and start the conversation.</p>
+        </div>
+
+        <!-- 04: Paid Advertising -->
+        <div class="p-12 border-r border-white/10 hover:bg-white/5 transition-all group relative">
+            <span class="text-red-500 font-black text-xs">04</span>
+            <h4 class="text-2xl font-bold mt-6 mb-4">Paid Advertising</h4>
+            <p class="text-gray-400 text-sm leading-relaxed">Performance-driven media buying that maximises every dollar across Meta, Google, LinkedIn, and beyond.</p>
+        </div>
+
+        <!-- 05: SEO & Growth -->
+        <div class="p-12 border-r border-white/10 hover:bg-white/5 transition-all group relative">
+            <span class="text-red-500 font-black text-xs">05</span>
+            <h4 class="text-2xl font-bold mt-6 mb-4">SEO & Growth</h4>
+            <p class="text-gray-400 text-sm leading-relaxed">Organic visibility strategies that compound over time and reduce your reliance on paid channels.</p>
+        </div>
+
+        <!-- 06: Analytics & Reporting -->
+        <div class="p-12 hover:bg-white/5 transition-all group relative">
+            <span class="text-red-500 font-black text-xs">06</span>
+            <h4 class="text-2xl font-bold mt-6 mb-4">Analytics & Reporting</h4>
+            <p class="text-gray-400 text-sm leading-relaxed">Crystal-clear dashboards and insights that tie marketing activity directly to revenue.</p>
+        </div>
+
     </div>
 </section>
 
@@ -215,7 +375,49 @@
         }
     } catch (error) { alert("Login failed: " + error.message); }
 };
+// Contact Form Logic - Ise script ke end mein add karein
+document.getElementById('contactForm').addEventListener('submit', async (e) => {
+    e.preventDefault(); // Page refresh hone se rokne ke liye
 
+    // Form se data uthana
+    const formData = {
+        name: document.getElementById('formName').value,
+        phone: document.getElementById('formPhone').value,
+        email: document.getElementById('formEmail').value,
+        business: document.getElementById('formBusiness').value,
+        budget: document.getElementById('formBudget').value,
+        date: new Date().toISOString()
+    };
+
+    // Button ko "Sending" state mein dikhana
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerText = "Sending...";
+    submitBtn.disabled = true;
+
+    try {
+        // Backend API call (Aapka Render wala endpoint)
+        const response = await fetch('https://sns-ads-project.onrender.com/api/enquiry', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        });
+
+        if (response.ok) {
+            alert("Behtareen! Aapka message mil gaya hai. Hum jaldi call karenge.");
+            document.getElementById('contactForm').reset(); // Form khali karne ke liye
+        } else {
+            throw new Error("Server error");
+        }
+    } catch (error) {
+        console.error("Submission Error:", error);
+        alert("Bhai, kuch issue aa gaya. Ek baar refresh karke try karo ya WhatsApp par msg kardo.");
+    } finally {
+        // Button ko wapis pehle jaisa karna
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }
+});
     // --- STEP 2: Phone Verification (OTP) ---
     window.startPhoneVerification = async function() {
         const phoneInput = document.getElementById('custPhone').value.trim();
