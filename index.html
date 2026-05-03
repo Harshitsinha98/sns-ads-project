@@ -48,7 +48,6 @@
         <p class="text-gray-400 text-lg mb-12 max-w-2xl mx-auto leading-relaxed">
             Elite Meta & Google ads management for businesses ready to dominate their market.
         </p>
-
     </header>
 
     <!-- About Section -->
@@ -63,23 +62,19 @@
     <!-- Pricing Grid -->
     <section class="pb-32 px-6" id="pricing">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-            
             <!-- Starter -->
             <div class="glass-card rounded-[2.5rem] p-10 flex flex-col hover:border-blue-500/30 transition-all duration-500 group text-center">
                 <div class="text-blue-500 font-bold text-xs uppercase tracking-widest mb-4">Starter</div>
                 <h3 class="text-2xl font-bold mb-6 text-white">Business Starter</h3>
                 <div class="mb-8">
                     <span class="text-5xl font-black price-text text-white">₹6,000</span>
-                    <span class="text-gray-500 block mt-2 text-sm text-gray-500">+ 5% GST (₹300)</span>
+                    <span class="text-gray-500 block mt-2 text-sm">+ 5% GST (₹300)</span>
                 </div>
                 <ul class="text-gray-400 space-y-4 mb-10 text-sm flex-grow text-left">
                     <li>— Meta Ads Setup</li>
                     <li>— 2 Ad Creatives</li>
                 </ul>
-                <!-- Starter -->
-                <button onclick="goTocheckout(6000, 'Business Starter')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition mb-3">
-    Pay Now
-</button>
+                <button onclick="goTocheckout(6000, 'Business Starter')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition mb-3">Pay Now</button>
                 <button onclick="scrollToEnquire('Business Starter')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
             </div>
 
@@ -90,15 +85,13 @@
                 <h3 class="text-2xl font-bold mb-6 text-white">Medium Business</h3>
                 <div class="mb-8 text-white">
                     <span class="text-5xl font-black price-text text-white">₹8,000</span>
-                    <span class="text-gray-400 block mt-2 text-sm text-gray-400">+ 5% GST (₹400)</span>
+                    <span class="text-gray-400 block mt-2 text-sm">+ 5% GST (₹400)</span>
                 </div>
                 <ul class="text-gray-300 space-y-4 mb-10 text-sm flex-grow text-left">
                     <li>✓ Meta + Google Ads</li>
                     <li>✓ 5 Custom Creatives</li>
                 </ul>
-                <button onclick="goTocheckout(8000, 'Medium Business')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-blue-600/30 mb-3">
-    Get Started
-</button>
+                <button onclick="goTocheckout(8000, 'Medium Business')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-blue-600/30 mb-3">Get Started</button>
                 <button onclick="scrollToEnquire('Medium Business')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
             </div>
 
@@ -108,21 +101,19 @@
                 <h3 class="text-2xl font-bold mb-6 text-white">Enterprise Level</h3>
                 <div class="mb-8">
                     <span class="text-5xl font-black price-text text-white">₹14,000</span>
-                    <span class="text-gray-500 block mt-2 text-sm text-gray-500">+ 5% GST (₹700)</span>
+                    <span class="text-gray-500 block mt-2 text-sm">+ 5% GST (₹700)</span>
                 </div>
                 <ul class="text-gray-400 space-y-4 mb-10 text-sm flex-grow text-left">
                     <li>— Full Funnel Mastery</li>
                     <li>— Priority 24/7 Support</li>
                 </ul>
-                <button onclick="goTocheckout(14000, 'Enterprise Level')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition mb-3">
-    Scale Now
-</button>
+                <button onclick="goTocheckout(14000, 'Enterprise Level')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition mb-3">Scale Now</button>
                 <button onclick="scrollToEnquire('Enterprise Level')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
             </div>
         </div>
     </section>
 
-    <!-- Enquiry Section (Naya Section - Zaroori!) -->
+    <!-- Enquiry Section -->
     <section id="enquire" class="py-24 px-6 border-t border-white/5">
         <div class="max-w-2xl mx-auto glass-card rounded-[2.5rem] p-12 text-center">
             <h3 class="text-3xl font-bold mb-4 text-white">Custom Enquiry</h3>
@@ -131,10 +122,71 @@
             <button onclick="submitEnquiry()" class="w-full bg-white text-black font-bold py-5 rounded-2xl hover:bg-gray-200 transition uppercase tracking-widest text-sm">Send Message</button>
         </div>
     </section>
+
+<!-- Firebase Scripts & Logic -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    // TODO: Paste your Firebase config here
+    const firebaseConfig = {
+        apiKey: "AIzaSyB7W5HWVe1JYbqhpGdrguNrQOgU3DwW_44",
+        authDomain: "sns-ads.firebaseapp.com",
+        projectId: "sns-ads",
+        storageBucket: "sns-ads.firebasestorage.app",
+        messagingSenderId: "193364476047",
+        appId: "1:193364476047:web:d65e2412d13a42f701f0fa"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Global Functions for buttons
+    window.sendOtpRequest = async function() {
+        const phoneInput = document.getElementById('custPhone').value.trim();
+        if(!phoneInput) return alert("Mobile number daalo bhai!");
+        
+        let phoneNumber = phoneInput.startsWith('+') ? phoneInput : '+91' + phoneInput;
+        const btn = document.getElementById('sendOtpBtn');
+        
+        btn.innerText = "Sending SMS...";
+        btn.disabled = true;
+
+        if(!window.recaptchaVerifier) {
+            window.recaptchaVerifier = new RecaptchaVerifier(auth, 'sendOtpBtn', { 'size': 'invisible' });
+        }
+
+        try {
+            const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier);
+            window.confirmationResult = confirmationResult;
+            alert("OTP bhej diya gaya hai!");
+            document.getElementById('otpSection').classList.remove('hidden');
+            btn.classList.add('hidden');
+        } catch (error) {
+            console.error(error);
+            alert("Error: " + error.message);
+            btn.innerText = "Send Verification OTP";
+            btn.disabled = false;
+        }
+    };
+
+    window.verifyAndPay = async function() {
+        const code = document.getElementById('otpInput').value;
+        if(!code) return alert("OTP toh daalo!");
+
+        try {
+            await window.confirmationResult.confirm(code);
+            alert("Phone Verified! Shuru kar rahe hain payment...");
+            processFinalPayment(); 
+        } catch (error) {
+            alert("Galat OTP! Check karke phir se daalo.");
+        }
+    };
+</script>
+
 <script>
     let currentPlan = { amount: 0, name: '' };
 
-    // 1. Modal Kholne ke liye
     function goTocheckout(amount, plan) {
         currentPlan = { amount, name: plan };
         document.getElementById('modalPlanDisplay').innerText = plan + " (₹" + (amount * 1.05).toFixed(0) + " incl. GST)";
@@ -147,14 +199,11 @@
         document.getElementById('checkoutModal').classList.remove('flex');
     }
 
-    // 2. Final Payment Logic
     async function processFinalPayment() {
         const name = document.getElementById('custName').value;
         const email = document.getElementById('custEmail').value;
         const phone = document.getElementById('custPhone').value;
         const address = document.getElementById('custAddress').value;
-
-        if(!name || !email || !phone || !address) return alert("Bhai, saari details bhar do!");
 
         const totalAmount = currentPlan.amount * 1.05;
 
@@ -192,10 +241,9 @@
                 "theme": { "color": "#2563eb" }
             };
             new Razorpay(options).open();
-        } catch (err) { alert("Server issues!"); }
+        } catch (err) { alert("Server issues during payment!"); }
     }
 
-    // 3. Enquiry & Scroll (Same as before)
     async function submitEnquiry() {
         const name = prompt("Name:");
         const email = prompt("Email:");
@@ -215,65 +263,8 @@
         document.getElementById('enquire').scrollIntoView({ behavior: 'smooth' });
         document.getElementById('message').value = `Interested in ${plan}.`;
     }
-    async function sendOtpRequest() {
-    const name = document.getElementById('custName').value;
-    const email = document.getElementById('custEmail').value;
-    
-    if(!name || !email) return alert("Pehle Name aur Email bharo!");
-
-    const btn = document.getElementById('sendOtpBtn');
-    btn.innerText = "Sending OTP...";
-    btn.disabled = true;
-
-    try {
-        const res = await fetch('https://sns-ads-project.onrender.com/api/send-otp', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, name })
-        });
-
-        const data = await res.json();
-
-        if(res.ok) {
-            alert("OTP bhej diya gaya hai! Check karein.");
-            document.getElementById('otpSection').classList.remove('hidden');
-            btn.classList.add('hidden');
-        } else {
-            alert("Galti: " + (data.detail || "Email nahi ja raha!"));
-            btn.innerText = "Send Verification OTP";
-            btn.disabled = false;
-        }
-    } catch (err) {
-        alert("Server se connection nahi ho paa raha!");
-        btn.innerText = "Send Verification OTP";
-        btn.disabled = false;
-    }
-}
-
-async function verifyAndPay() {
-    const otp = document.getElementById('otpInput').value;
-    const email = document.getElementById('custEmail').value;
-
-    if(!otp) return alert("OTP toh daalo!");
-
-    try {
-        const res = await fetch('https://sns-ads-project.onrender.com/api/verify-otp', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, otp })
-        });
-
-        if(res.ok) {
-            alert("Verified! Proceeding to Payment...");
-            processFinalPayment(); 
-        } else {
-            alert("Galat OTP!");
-        }
-    } catch (err) {
-        alert("Verification error!");
-    }
-}
 </script>
+
 <!-- Checkout Modal -->
 <div id="checkoutModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-6">
     <div class="glass-card max-w-lg w-full rounded-[2.5rem] p-10 shadow-2xl relative">
@@ -284,22 +275,20 @@ async function verifyAndPay() {
         <div class="space-y-4">
             <input type="text" id="custName" placeholder="Full Name" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition text-white">
             <input type="email" id="custEmail" placeholder="Business Email" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition text-white">
-            <input type="tel" id="custPhone" placeholder="Mobile Number" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition text-white">
+            <input type="tel" id="custPhone" placeholder="Mobile (+91...)" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition text-white">
             <textarea id="custAddress" placeholder="Full Address" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition h-24 text-white"></textarea>
         </div>
 
-        <!-- Is button ko modal ke end mein lagao -->
-<button id="sendOtpBtn" onclick="sendOtpRequest()" class="w-full bg-blue-600 hover:bg-blue-500 py-4 rounded-2xl font-bold uppercase tracking-widest transition shadow-lg shadow-blue-600/30 mt-8 text-white">
-    Send Verification OTP
-</button>
+        <button id="sendOtpBtn" onclick="sendOtpRequest()" class="w-full bg-blue-600 hover:bg-blue-500 py-4 rounded-2xl font-bold uppercase tracking-widest transition shadow-lg shadow-blue-600/30 mt-8 text-white">
+            Send Verification OTP
+        </button>
 
-<!-- Iske niche ye OTP section bhi add karo jo hidden rahega -->
-<div id="otpSection" class="hidden space-y-4 mt-6 border-t border-white/10 pt-6">
-    <input type="text" id="otpInput" placeholder="Enter 6-Digit OTP" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition text-white text-center tracking-[0.5em] font-bold">
-    <button onclick="verifyAndPay()" class="w-full bg-green-600 hover:bg-green-500 py-4 rounded-2xl font-bold uppercase tracking-widest transition shadow-lg shadow-green-600/30 text-white">
-        Verify & Pay Now
-    </button>
-</div>
+        <div id="otpSection" class="hidden space-y-4 mt-6 border-t border-white/10 pt-6">
+            <input type="text" id="otpInput" placeholder="Enter 6-Digit OTP" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition text-white text-center tracking-[0.5em] font-bold">
+            <button onclick="verifyAndPay()" class="w-full bg-green-600 hover:bg-green-500 py-4 rounded-2xl font-bold uppercase tracking-widest transition shadow-lg shadow-green-600/30 text-white">
+                Verify & Pay Now
+            </button>
+        </div>
     </div>
 </div>
 </body>
