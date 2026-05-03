@@ -83,6 +83,51 @@ app.post('/api/verify-otp', (req, res) => {
 });
 
 // ... (Baki Create-Order aur Success Routes purane wale hi rakhein) ...
+// --- RAZORPAY ORDER CREATE ROUTE ---
+app.post('/api/create-order', async (req, res) => {
+    try {
+        const { amount } = req.body;
+        const options = {
+            amount: Math.round(amount * 100), // Paise mein convert karna zaroori hai
+            currency: "INR",
+            receipt: `receipt_${Date.now()}`
+        };
+        const order = await razorpay.orders.create(options);
+        res.status(200).json(order);
+    } catch (err) {
+        console.error("Razorpay Order Error:", err);
+        res.status(500).json({ error: "Razorpay order fail ho gaya", detail: err.message });
+    }
+});
 
+// --- PAYMENT SUCCESS & DATA SAVE ROUTE ---
+app.post('/api/payment-success', async (req, res) => {
+    try {
+        const { name, email, service, amount, paymentId, orderId } = req.body;
+        
+        // MongoDB mein lead save karna
+        const newLead = new Lead({
+            name, email, service,
+            amount: amount / 100, // Wapas Rupees mein save karne ke liye
+            paymentId, orderId,
+            paymentStatus: 'Paid'
+        });
+        await newLead.save();
+
+        // Confirmation Email (Background mein)
+        const mailOptions = {
+            from: '"SNS ADS" <sinhahaharshit67@gmail.com>',
+            to: email,
+            subject: 'Order Confirmed - SNS ADS',
+            html: `<h2>Dhanyawad ${name}!</h2><p>Aapka payment successful raha. Hum jald hi aapse contact karenge.</p>`
+        };
+        transporter.sendMail(mailOptions).catch(e => console.log("Email send fail (silent):", e.message));
+
+        res.status(200).json({ message: "Lead saved successfully" });
+    } catch (err) {
+        console.error("Database Save Error:", err);
+        res.status(500).json({ error: "Data save nahi ho paya" });
+    }
+});
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
