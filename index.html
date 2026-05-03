@@ -324,14 +324,76 @@
         </div>
     </section>
 
-    <!-- Enquiry Section -->
-    <section id="enquire" class="py-24 px-6 border-t border-white/5">
-        <div class="max-w-2xl mx-auto glass-card rounded-[2.5rem] p-12 text-center">
-            <h3 class="text-3xl font-bold mb-4 text-white">Custom Enquiry</h3>
-            <p class="text-gray-400 mb-10">Tell us your goals, and we'll craft the perfect strategy.</p>
-            <textarea id="message" placeholder="Describe your business goals..." class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl focus:border-blue-500 outline-none h-32 mb-6 transition text-white"></textarea>
-            <button onclick="submitEnquiry()" class="w-full bg-white text-black font-bold py-5 rounded-2xl hover:bg-gray-200 transition uppercase tracking-widest text-sm">Send Message</button>
+    <!-- Testimonials Section -->
+<section class="py-32 px-6 max-w-7xl mx-auto">
+    <div class="text-center mb-20">
+        <p class="text-blue-500 font-bold uppercase tracking-[0.3em] text-[10px] mb-4">Success Stories</p>
+        <h2 class="text-4xl md:text-6xl font-black tracking-tighter">What our clients say.</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Review 1 -->
+        <div class="glass-ui p-8 rounded-[2.5rem] border border-white/5 hover:border-blue-500/30 transition-all duration-500">
+            <div class="flex gap-1 text-yellow-500 mb-6 text-xs">★★★★★</div>
+            <p class="text-gray-300 italic mb-8 leading-relaxed text-sm">"SNS ADS ne hamare Meta ads ka ROI 3 guna kar diya sirf 2 mahine mein. Inki strategy ekdum focused aur data-driven hai."</p>
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center font-bold text-xs">RK</div>
+                <div>
+                    <h4 class="font-bold text-sm">Rahul Kapoor</h4>
+                    <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Founder, TechGadgets</p>
+                </div>
+            </div>
         </div>
+
+        <!-- Review 2 -->
+        <div class="glass-ui p-8 rounded-[2.5rem] border border-white/5 hover:border-blue-500/30 transition-all duration-500">
+            <div class="flex gap-1 text-yellow-500 mb-6 text-xs">★★★★★</div>
+            <p class="text-gray-300 italic mb-8 leading-relaxed text-sm">"Working with Harshit and his team was the best decision for our Google Ads campaigns. Genuine leads aur transparency bhot pasand aayi."</p>
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center font-bold text-xs">AS</div>
+                <div>
+                    <h4 class="font-bold text-sm">Anjali Sharma</h4>
+                    <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">CEO, Luxe Decor</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="glass-ui p-8 rounded-[2.5rem] border border-white/5 hover:border-blue-500/30 transition-all duration-500">
+            <div class="flex gap-1 text-yellow-500 mb-6 text-xs">★★★★★</div>
+            <p class="text-gray-300 italic mb-8 leading-relaxed text-sm">"Inka client portal bhot helpful hai. Saara progress real-time dikhta hai. Creative ads ne hamare brand ko bhot help ki."</p>
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center font-bold text-xs">VP</div>
+                <div>
+                    <h4 class="font-bold text-sm">Vikram Pratap</h4>
+                    <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Marketing Head, FitLife</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Final CTA Section (Red Bold) -->
+<section class="bg-[#ff2020] py-32 px-6 text-center text-white">
+    <div class="max-w-4xl mx-auto">
+        <p class="text-[10px] font-black uppercase tracking-[0.4em] mb-8 opacity-80">Ready to Grow?</p>
+        <h2 class="text-6xl md:text-8xl font-black tracking-tighter leading-none mb-10">
+            Let's build <br> something great.
+        </h2>
+        <p class="text-white/80 text-lg md:text-xl mb-12 max-w-2xl mx-auto font-medium">
+            Book a free strategy call. We'll audit your current marketing, identify gaps, and show you exactly how we'd scale your brand.
+        </p>
+        
+        <div class="flex flex-col md:flex-row justify-center items-center gap-6">
+            <a href="#enquire" class="bg-white text-black px-12 py-6 rounded-full font-black uppercase tracking-widest text-xs hover:bg-black hover:text-white transition-all shadow-2xl">
+                Book a call ↗
+            </a>
+            <a href="mailto:work@snsmedia.in" class="bg-transparent border border-white/30 text-white px-12 py-6 rounded-full font-black uppercase tracking-widest text-xs hover:bg-white hover:text-black transition-all">
+                work@snsmedia.in
+            </a>
+        </div>
+    </div>
+</section>
     </section>
 <!-- Firebase Scripts & Logic -->
 <script type="module">
@@ -584,17 +646,50 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
     </div>
 </div>
 </body>
-<footer class="py-20 px-6 border-t border-white/5 text-center">
-    <div class="max-w-4xl mx-auto">
-        <h2 class="text-4xl font-black mb-8 italic text-blue-500">SNS ADS</h2>
-        <p class="text-gray-500 text-sm mb-12">Building Digital Empires from Varanasi to the World.</p>
-        <div class="flex justify-center gap-10 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-            <a href="#about" class="hover:text-white transition">About</a>
-            <a href="#pricing" class="hover:text-white transition">Pricing</a>
-            <a href="#enquire" class="hover:text-white transition">Contact</a>
+<!-- Final Elite Footer -->
+<footer class="bg-black text-white py-20 px-10 border-t border-white/5">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
+        
+        <!-- Left: Logo & Branding -->
+        <div class="flex flex-col items-center md:items-start">
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-1.5 h-8 bg-blue-600 rounded-full"></div>
+                <div class="text-3xl font-black tracking-tighter uppercase italic">SNS Media</div>
+            </div>
+            <p class="text-[10px] text-gray-600 font-bold uppercase tracking-[0.4em] ml-5">Digital Growth Agency</p>
         </div>
-        <div class="mt-12 text-[10px] text-gray-700">
-            © 2026 SNS ADS. All Rights Reserved. Engineered by Harshit & Shiwangi.
+
+        <!-- Center: Quick Links -->
+        <div class="flex gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
+            <a href="#about" class="hover:text-blue-500 transition-all duration-300">Work</a>
+            <a href="#services" class="hover:text-blue-500 transition-all duration-300">Services</a>
+            <a href="#pricing" class="hover:text-blue-500 transition-all duration-300">About</a>
+            <a href="#enquire" class="hover:text-blue-500 transition-all duration-300">Results</a>
+        </div>
+
+        <!-- Right: Social Icons -->
+        <div class="flex gap-5">
+            <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-500">
+                <i class="fab fa-instagram text-xs"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-500">
+                <i class="fab fa-linkedin-in text-xs"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-500">
+                <i class="fab fa-facebook-f text-xs"></i>
+            </a>
+            <a href="https://wa.me/917016163373" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-green-500 hover:text-white transition-all duration-500">
+                <i class="fab fa-whatsapp text-xs"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Bottom Copyright -->
+    <div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[9px] text-gray-600 font-bold uppercase tracking-widest gap-4">
+        <div>© 2026 SNS Media. All rights reserved.</div>
+        <div class="flex gap-8">
+            <a href="#" class="hover:text-white transition">Privacy Policy</a>
+            <a href="#" class="hover:text-white transition">Terms of Service</a>
         </div>
     </div>
 </footer>
