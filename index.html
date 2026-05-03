@@ -74,7 +74,7 @@
                     <li>— Meta Ads Setup</li>
                     <li>— 2 Ad Creatives</li>
                 </ul>
-                <button onclick="goTocheckout(6000, 'Business Starter')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition mb-3">Pay Now</button>
+                <button onclick="loginAndCheckout(6000, 'Business Starter')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition mb-3">Pay Now</button>
                 <button onclick="scrollToEnquire('Business Starter')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
             </div>
 
@@ -91,7 +91,7 @@
                     <li>✓ Meta + Google Ads</li>
                     <li>✓ 5 Custom Creatives</li>
                 </ul>
-                <button onclick="goTocheckout(8000, 'Medium Business')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-blue-600/30 mb-3">Get Started</button>
+                <button onclick="loginAndCheckout(8000, 'Medium Business')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-blue-600/30 mb-3">Get Started</button>
                 <button onclick="scrollToEnquire('Medium Business')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
             </div>
 
@@ -107,7 +107,7 @@
                     <li>— Full Funnel Mastery</li>
                     <li>— Priority 24/7 Support</li>
                 </ul>
-                <button onclick="goTocheckout(14000, 'Enterprise Level')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition mb-3">Scale Now</button>
+                <button onclick="loginAndCheckout(14000, 'Enterprise Level')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition mb-3">Scale Now</button>
                 <button onclick="scrollToEnquire('Enterprise Level')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
             </div>
         </div>
@@ -171,17 +171,20 @@
     };
 
     window.verifyAndPay = async function() {
-        const code = document.getElementById('otpInput').value;
-        if(!code) return alert("OTP toh daalo!");
-
-        try {
-            await window.confirmationResult.confirm(code);
-            alert("Phone Verified! Shuru kar rahe hain payment...");
-            processFinalPayment(); 
-        } catch (error) {
-            alert("Galat OTP! Check karke phir se daalo.");
-        }
-    };
+    const code = document.getElementById('otpInput').value;
+    try {
+        await window.confirmationResult.confirm(code);
+        alert("Phone Verified! Ab payment kariye.");
+        
+        // OTP section chhupao aur Payment button dikhao
+        document.getElementById('otpSection').innerHTML = `
+            <button onclick="processFinalPayment()" class="w-full bg-green-600 hover:bg-green-500 py-4 rounded-2xl font-bold uppercase tracking-widest transition shadow-lg shadow-green-600/30 text-white">
+                Pay Now
+            </button>`;
+    } catch (error) {
+        alert("Galat OTP!");
+    }
+};
 </script>
 
 <script>
@@ -263,6 +266,63 @@
         document.getElementById('enquire').scrollIntoView({ behavior: 'smooth' });
         document.getElementById('message').value = `Interested in ${plan}.`;
     }
+    import { getAuth, signInWithPopup, GoogleAuthProvider, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const provider = new GoogleAuthProvider();
+const auth = getAuth();
+
+window.loginAndCheckout = async function(amount, plan) {
+    try {
+        // Step 1: Google Login
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        
+        // Auto-fill details
+        document.getElementById('custName').value = user.displayName;
+        document.getElementById('custEmail').value = user.email;
+        
+        // Step 2: Modal Kholo (Ab isme Phone verification zaroori hai)
+        currentPlan = { amount, name: plan };
+        document.getElementById('modalPlanDisplay').innerText = plan + " (₹" + (amount * 1.05).toFixed(0) + " incl. GST)";
+        document.getElementById('checkoutModal').classList.remove('hidden');
+        document.getElementById('checkoutModal').classList.add('flex');
+        
+        // Reset button for Phone Auth
+        const otpBtn = document.getElementById('sendOtpBtn');
+        otpBtn.innerText = "Verify Phone to Proceed";
+        otpBtn.onclick = () => startPhoneVerification(); 
+        
+    } catch (error) {
+        alert("Login failed: " + error.message);
+    }
+};
+
+// Step 3: Phone Verification Logic
+async function startPhoneVerification() {
+    const phoneInput = document.getElementById('custPhone').value.trim();
+    if(!phoneInput) return alert("Bhai, mobile number toh daalo!");
+
+    let phoneNumber = phoneInput.startsWith('+') ? phoneInput : '+91' + phoneInput;
+    const btn = document.getElementById('sendOtpBtn');
+    btn.disabled = true;
+    btn.innerText = "Sending SMS...";
+
+    if(!window.recaptchaVerifier) {
+        window.recaptchaVerifier = new RecaptchaVerifier(auth, 'sendOtpBtn', { 'size': 'invisible' });
+    }
+
+    try {
+        const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier);
+        window.confirmationResult = confirmationResult;
+        document.getElementById('otpSection').classList.remove('hidden');
+        btn.classList.add('hidden');
+        alert("OTP bhej diya gaya hai!");
+    } catch (error) {
+        alert("SMS Error: " + error.message);
+        btn.disabled = false;
+        btn.innerText = "Retry Phone Verification";
+    }
+}
 </script>
 
 <!-- Checkout Modal -->
