@@ -215,6 +215,84 @@
         document.getElementById('enquire').scrollIntoView({ behavior: 'smooth' });
         document.getElementById('message').value = `Interested in ${plan}.`;
     }
+    async function sendOtpRequest() {
+    const name = document.getElementById('custName').value;
+    const email = document.getElementById('custEmail').value;
+    
+    if(!name || !email) return alert("Pehle Name aur Email bharo!");
+
+    document.getElementById('sendOtpBtn').innerText = "Sending OTP...";
+    
+    const res = await fetch('https://sns-ads-project.onrender.com/api/send-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, name })
+    });
+
+    if(res.ok) {
+        alert("OTP sent to your email!");
+        document.getElementById('otpSection').classList.remove('hidden');
+        document.getElementById('sendOtpBtn').classList.add('hidden');
+    } else {
+        alert("OTP bhejane mein galti hui!");
+        document.getElementById('sendOtpBtn').innerText = "Send Verification OTP";
+    }
+}
+
+async function sendOtpRequest() {
+    const name = document.getElementById('custName').value;
+    const email = document.getElementById('custEmail').value;
+    
+    if(!name || !email) return alert("Pehle Name aur Email bharo!");
+
+    const btn = document.getElementById('sendOtpBtn');
+    btn.innerText = "Sending OTP...";
+    btn.disabled = true;
+
+    try {
+        const res = await fetch('https://sns-ads-project.onrender.com/api/send-otp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, name })
+        });
+
+        if(res.ok) {
+            alert("OTP sent! Please check your email.");
+            document.getElementById('otpSection').classList.remove('hidden');
+            btn.classList.add('hidden');
+        } else {
+            alert("OTP bhejne mein error aaya!");
+            btn.innerText = "Send Verification OTP";
+            btn.disabled = false;
+        }
+    } catch (err) {
+        alert("Backend connection failed!");
+    }
+}
+
+async function verifyAndPay() {
+    const otp = document.getElementById('otpInput').value;
+    const email = document.getElementById('custEmail').value;
+
+    if(!otp) return alert("OTP toh daalo bhai!");
+
+    try {
+        const res = await fetch('https://sns-ads-project.onrender.com/api/verify-otp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, otp })
+        });
+
+        if(res.ok) {
+            alert("Verification Successful! Proceeding to payment...");
+            processFinalPayment(); // Razorpay logic call hoga
+        } else {
+            alert("Invalid OTP! Try again.");
+        }
+    } catch (err) {
+        alert("Verification failed due to server error!");
+    }
+}
 </script>
 <!-- Checkout Modal -->
 <div id="checkoutModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-6">

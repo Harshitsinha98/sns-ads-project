@@ -108,6 +108,61 @@ app.post('/api/enquiry', async (req, res) => {
         res.status(500).send(err);
     }
 });
+const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer');
 
+// 1. Transporter Setup - Aapke Gmail se connect kiya gaya hai
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'harshit.sinha.ece@gmail.com', // Aapka email
+        pass: 'mkadlbglunwoihdj'           // Aapka naya 16-digit App Password
+    }
+});
+
+let otpStore = {}; // Temporary memory mein OTP save karne ke liye
+
+// 2. Route: User ko OTP bhejna
+app.post('/api/send-otp', async (req, res) => {
+    const { email, name } = req.body;
+    const otp = Math.floor(100000 + Math.random() * 900000).toString(); // 6 digit random number
+    otpStore[email] = otp; 
+
+    const mailOptions = {
+        from: '"SNS ADS Verification" <harshit.sinha.ece@gmail.com>',
+        to: email,
+        subject: 'Verify Your SNS ADS Account',
+        html: `
+            <div style="font-family: Arial, sans-serif; background-color: #0f172a; color: white; padding: 40px; border-radius: 20px;">
+                <h1 style="color: #3b82f6;">SNS ADS</h1>
+                <p>Hello <b>${name}</b>,</p>
+                <p>Your verification code for SNS ADS is:</p>
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; font-size: 32px; font-weight: bold; letter-spacing: 5px; text-align: center; border-radius: 10px; border: 1px solid #3b82f6;">
+                    ${otp}
+                </div>
+                <p style="margin-top: 20px; color: #94a3b8;">This code is valid for 10 minutes.</p>
+            </div>
+        `
+    };
+
+    try {
+        await transporter.sendMail(mailOptions); // Email bhej raha hai
+        res.status(200).json({ message: "OTP Sent Successfully" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to send OTP" });
+    }
+});
+
+// 3. Route: OTP Verify karna
+app.post('/api/verify-otp', (req, res) => {
+    const { email, otp } = req.body;
+    if (otpStore[email] && otpStore[email] === otp) {
+        delete otpStore[email]; // Ek baar verify hone par delete kar do
+        res.status(200).json({ message: "Verified" });
+    } else {
+        res.status(400).json({ error: "Invalid OTP" });
+    }
+});
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
