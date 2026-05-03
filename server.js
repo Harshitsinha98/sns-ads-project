@@ -37,7 +37,7 @@ const Lead = mongoose.model('Lead', leadSchema);
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'harshit.sinha.ece@gmail.com', //
+        user: 'sinhaharshit67@gmail.com', //
         pass: 'mkadlbglunwoihdj' //
     }
 });
@@ -53,7 +53,7 @@ app.post('/api/send-otp', async (req, res) => {
     otpStore[email] = otp; 
 
     const mailOptions = {
-        from: '"SNS ADS Verification" <harshit.sinha.ece@gmail.com>',
+        from: '"SNS ADS Verification" <sinhaharshit67@gmail.com>',
         to: email,
         subject: 'Verify Your SNS ADS Account',
         html: `
