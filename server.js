@@ -7,7 +7,12 @@ require('dotenv').config();
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+// server.js ke top par ye replace karein
+app.use(cors({
+    origin: '*', // Pitch ke liye ise open rakho taaki koi blockage na ho
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type']
+}));
 
 // --- MongoDB & Razorpay Connection ---
 mongoose.connect(process.env.MONGO_URI);
