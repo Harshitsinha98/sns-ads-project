@@ -38,7 +38,7 @@ const leadSchema = new mongoose.Schema({
 const Lead = mongoose.model('Lead', leadSchema);
 
 // ==========================================
-// BREVO API HELPER FUNCTION (Secured via .env)
+// BREVO API HELPER FUNCTION (Updated Sender)
 // ==========================================
 async function sendEmailViaBrevo(toEmail, toName, subject, htmlContent) {
     const BREVO_API_KEY = process.env.BREVO_API_KEY; 
@@ -56,7 +56,7 @@ async function sendEmailViaBrevo(toEmail, toName, subject, htmlContent) {
             'content-type': 'application/json'
         },
         body: JSON.stringify({
-            sender: { name: "SNS ADS Portal", email: "sinhahaharshit67@gmail.com" },
+            sender: { name: "SNS ADS", email: "admin@pragathanumanji.in" }, // Yahan update kar diya hai
             to: [{ email: toEmail, name: toName || "Client" }],
             subject: subject,
             htmlContent: htmlContent
@@ -95,7 +95,6 @@ app.post('/api/send-otp', async (req, res) => {
 
     try {
         await sendEmailViaBrevo(email, name, subject, htmlContent);
-        console.log(`OTP API Call successful for ${email}`);
         res.status(200).json({ message: "OTP Sent Successfully" });
     } catch (err) {
         console.error("Brevo OTP Delivery Error:", err);
@@ -134,7 +133,7 @@ app.post('/api/enquiry', async (req, res) => {
     `;
 
     try {
-        await sendEmailViaBrevo('sinhahaharshit67@gmail.com', 'Admin', subject, htmlContent);
+        await sendEmailViaBrevo('admin@pragathanumanji.in', 'Admin', subject, htmlContent);
         res.status(200).json({ message: "Enquiry received successfully" });
     } catch (err) {
         console.error("Enquiry Email Error:", err);
