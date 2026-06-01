@@ -1,1382 +1,530 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SNS ADS | Premium Growth Agency</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at top right, #1e3a8a, #0f172a, #000000);
+        }
+        .price-text {
+            background: linear-gradient(to bottom, #fff 30%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>SNS ADS | Premium Growth Agency</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-<style>
-
-body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
-
-.glass-card {
-
-background: rgba(255, 255, 255, 0.03);
-
-backdrop-filter: blur(15px);
-
--webkit-backdrop-filter: blur(15px);
-
-border: 1px solid rgba(255, 255, 255, 0.1);
-
-box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-
-}
-
-.hero-gradient {
-
-background: radial-gradient(circle at top right, #1e3a8a, #0f172a, #000000);
-
-}
-
-.price-text {
-
-background: linear-gradient(to bottom, #fff 30%, #94a3b8 100%);
-
--webkit-background-clip: text;
-
--webkit-text-fill-color: transparent;
-
-}
-
-
-</style>
-
-<style>
-
-/* Mobile optimization for large headings */
-
-@media (max-width: 768px) {
-
-h1 { font-size: 3.5rem !important; line-height: 1 !important; }
-
-h2 { font-size: 2.5rem !important; }
-
-.py-32 { padding-top: 4rem !important; padding-bottom: 4rem !important; }
-
-.px-10 { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
-
-}
-
-</style>
-
+        /* Mobile optimization for large headings */
+        @media (max-width: 768px) {
+            h1 { font-size: 3.5rem !important; line-height: 1 !important; }
+            h2 { font-size: 2.5rem !important; }
+            .py-32 { padding-top: 4rem !important; padding-bottom: 4rem !important; }
+            .px-10 { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+        }
+    </style>
 </head>
-
 <body class="hero-gradient text-white min-h-screen">
 
-
-
-<nav class="fixed top-0 left-0 w-full z-[100] bg-black/60 backdrop-blur-md border-b border-white/5 transition-all duration-300">
-
-<div class="max-w-7xl mx-auto px-10 py-5 flex justify-between items-center">
-
-<!-- Brand Logo -->
-
-<a href="index.html" class="flex items-center gap-3">
-
-<div class="h-10 w-1 bg-blue-600 rounded-full"></div>
-
-<div class="text-2xl font-black tracking-tight text-white uppercase">SNS ADS</div>
-
-</a>
-
-
-
-<!-- Menu Links -->
-
-<div class="hidden md:flex items-center gap-12">
-
-<div class="flex gap-10 text-[11px] font-bold text-gray-400 uppercase tracking-[0.25em]">
-
-<a href="#about" class="hover:text-blue-500 transition">Strategy</a>
-
-<a href="#pricing" class="hover:text-blue-500 transition">Plans</a>
-
-<a href="#enquire" class="hover:text-blue-500 transition">Contact</a>
-
-</div>
-
-<!-- Dynamic Login/Portal Button -->
-
-<button onclick="window.loginAndCheckout(null, null)" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition shadow-lg shadow-blue-600/20">
-
-Portal Login
-
-</button>
-
-</div>
-
-</div>
-
-</nav>
-
-<div class="h-24"></div>
-
-
-
-<!-- Mobile Menu Icon (Simple for now) -->
-
-<div class="md:hidden text-white">
-
-<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-
-</svg>
-
-</div>
-
-</div>
-
-</nav>
-
-
-
-<!-- Spacer: Content ko niche dhakelne ke liye -->
-
-<div class="h-20"></div>
-
-
-
-<!-- Hero Section with Video Background -->
-
-<!-- Optimized Hero for Mobile -->
-
-<div class="absolute inset-0 z-0">
-    <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-30">
-        <source src="assets/hero-bg.mp4" type="video/mp4">
-    </video>
-    <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black"></div>
-</div>
-
-
-<div class="relative z-10 text-center px-4">
-
-<!-- Badge hidden on very small screens -->
-
-<div class="inline-flex items-center gap-2 bg-blue-600/10 border border-blue-500/20 px-4 py-2 rounded-full mb-6">
-
-<span class="text-[9px] font-black uppercase tracking-[0.2em] text-blue-400">Next-Gen Ads Agency</span>
-
-</div>
-
-
-<!-- Responsive Font Size: text-5xl on mobile, text-9xl on desktop -->
-
-<h1 class="text-5xl md:text-9xl font-black tracking-tighter leading-tight italic mb-8">
-
-DIGITAL <br class="hidden md:block"> <span class="text-blue-600">DOMINANCE.</span>
-
-</h1>
-
-
-<p class="text-gray-400 text-base md:text-xl max-w-xl mx-auto mb-10 font-medium px-4">
-
-We turn algorithms into revenue machines. ROI-driven growth for ambitious brands.
-
-</p>
-
-
-
-<div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-
-<a href="#pricing" class="w-full sm:w-auto bg-blue-600 text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest text-[10px] shadow-lg transition-all">Launch Campaign</a>
-
-<a href="#enquire" class="w-full sm:w-auto glass-ui text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest text-[10px] hover:bg-white/5 transition-all">Strategy Call</a>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- Contact Section (Book a Call) -->
-
-<section id="enquire" class="py-24 px-6 max-w-7xl mx-auto border-t border-white/5">
-
-<div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-
-
-<!-- Left: Creative Image Display -->
-
-<div class="hidden md:block relative group">
-
-<div class="absolute -inset-1 bg-gradient-to-r from-red-600 to-blue-600 rounded-[2.5rem] blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-
-<div class="relative bg-black rounded-[2.5rem] overflow-hidden border border-white/10 h-[600px]">
-
-<!-- Yahan aap apni koi bhi portfolio image ya graphic laga sakte hain -->
-
-<img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80" alt="Work Showcase" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition duration-700">
-
-<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-
-</div>
-
-</div>
-
-
-
-<!-- Right: Contact Form -->
-
-<div class="space-y-8">
-
-<div>
-
-<p class="text-red-500 font-bold uppercase tracking-[0.3em] text-[10px] mb-4">Get Started</p>
-
-<h2 class="text-5xl font-black tracking-tighter text-white leading-tight">Let's book a call.</h2>
-
-</div>
-
-
-
-<form id="contactForm" class="space-y-6">
-
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-<!-- Name -->
-
-<div class="space-y-2">
-
-<label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1">Full Name</label>
-
-<input type="text" id="formName" placeholder="Jane Smith" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-red-500/50 transition text-white text-sm" required>
-
-</div>
-
-<!-- Phone -->
-
-<div class="space-y-2">
-
-<label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1">Phone Number</label>
-
-<input type="tel" id="formPhone" placeholder="+91 98765 43210" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-red-500/50 transition text-white text-sm" required>
-
-</div>
-
-</div>
-
-
-
-<!-- Email -->
-
-<div class="space-y-2">
-
-<label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1">Email Address</label>
-
-<input type="email" id="formEmail" placeholder="jane@company.com" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-red-500/50 transition text-white text-sm" required>
-
-</div>
-
-
-
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-<!-- Business Name -->
-
-<div class="space-y-2">
-
-<label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1">Business Name</label>
-
-<input type="text" id="formBusiness" placeholder="Acme Inc." class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-red-500/50 transition text-white text-sm">
-
-</div>
-
-<!-- Monthly Budget -->
-
-<div class="space-y-2">
-
-<label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1">Monthly Budget</label>
-
-<select id="formBudget" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-red-500/50 transition text-gray-400 text-sm appearance-none">
-
-<option value="" disabled selected>Select range</option>
-
-<option value="below_50k">Below ₹50,000</option>
-
-<option value="50k_100k">₹50,000 - ₹1,00,000</option>
-
-<option value="100k_above">₹1,00,000+</option>
-
-</select>
-
-</div>
-
-</div>
-
-
-
-<div class="flex flex-col md:flex-row gap-4 pt-4">
-
-<button type="submit" class="flex-1 bg-red-600 hover:bg-red-500 text-white py-5 rounded-2xl font-bold uppercase tracking-widest transition shadow-lg shadow-red-600/20 flex items-center justify-center gap-2">
-
-Submit <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-
-</button>
-
-<a href="https://wa.me/917016163373" target="_blank" class="flex-1 bg-transparent border border-white/10 hover:bg-white/5 text-white py-5 rounded-2xl font-bold uppercase tracking-widest transition flex items-center justify-center gap-3">
-
-<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-
-WhatsApp us
-
-</a>
-
-</div>
-
-</form>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- About Section Optimized for Mobile -->
-
-<section id="about" class="py-16 md:py-32 px-6 max-w-7xl mx-auto">
-
-<!-- Grid logic: grid-cols-1 for mobile, grid-cols-12 for desktop -->
-
-<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-
-
-<!-- Big Card: Meta Ads -->
-
-<div class="md:col-span-8 glass-card p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] border-t border-blue-500/30">
-
-<h2 class="text-blue-500 font-bold uppercase tracking-widest text-[10px] mb-4 italic">Performance Marketing</h2>
-
-<!-- text-3xl for mobile, text-5xl for desktop -->
-
-<h3 class="text-3xl md:text-5xl font-extrabold mb-6 md:mb-8 tracking-tight text-white">Meta Ads Management for High-Growth ROI.</h3>
-
-<p class="text-gray-400 text-base md:text-lg leading-relaxed mb-8">
-
-We specialize in scaling Meta ad accounts from scratch to high-volume revenue. From precision audience targeting to scroll-stopping creatives, SNS ADS handles the full funnel.
-
-</p>
-
-<!-- Flex-wrap added for mobile tags -->
-
-<div class="flex flex-wrap gap-3">
-
-<span class="bg-white/5 px-3 py-2 rounded-lg text-[9px] font-bold uppercase text-gray-400 border border-white/5">Facebook Ads</span>
-
-<span class="bg-white/5 px-3 py-2 rounded-lg text-[9px] font-bold uppercase text-gray-400 border border-white/5">Instagram Growth</span>
-
-<span class="bg-white/5 px-3 py-2 rounded-lg text-[9px] font-bold uppercase text-gray-400 border border-white/5">Retargeting</span>
-
-</div>
-
-</div>
-
-
-
-<!-- Small Card: Google Ads -->
-
-<div class="md:col-span-4 glass-card p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] bg-gradient-to-br from-blue-600/10 to-transparent border border-white/5">
-
-<h3 class="text-2xl md:text-3xl font-bold mb-6 text-white">Google Ads Mastery</h3>
-
-<p class="text-gray-400 text-sm leading-relaxed mb-8">
-
-Dominate Google Search and Display. We capture intent-driven leads with data-backed keyword strategies.
-
-</p>
-
-<div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-600/20">
-
-<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-
-</svg>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- What We Do Section -->
-
-<section id="services" class="py-32 px-6 max-w-7xl mx-auto border-t border-white/5">
-
-<div class="mb-16">
-
-<p class="text-red-500 font-bold uppercase tracking-[0.3em] text-[10px] mb-4">What We Do</p>
-
-<h2 class="text-5xl md:text-7xl font-black tracking-tighter leading-tight">
-
-Everything your brand <br>
-
-<span class="text-gray-500">needs to Grow.</span>
-
-</h2>
-
-</div>
-
-
-
-<div class="grid grid-cols-1 md:grid-cols-3 border border-white/10 rounded-[2.5rem] overflow-hidden bg-white/5 backdrop-blur-sm">
-
-
-<!-- 01: Social Media Marketing -->
-
-<div class="p-12 border-b border-r border-white/10 hover:bg-white/5 transition-all group relative">
-
-<span class="text-red-500 font-black text-xs">01</span>
-
-<div class="absolute top-10 right-10 opacity-20 group-hover:opacity-100 transition">
-
-<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-
-</div>
-
-<h4 class="text-2xl font-bold mt-6 mb-4">Social Media Marketing</h4>
-
-<p class="text-gray-400 text-sm leading-relaxed">Hyper-targeted campaigns built for engagement, reach, and conversion across every major platform.</p>
-
-</div>
-
-
-
-<!-- 02: Brand Strategy -->
-
-<div class="p-12 border-b border-r border-white/10 hover:bg-white/5 transition-all group relative">
-
-<span class="text-red-500 font-black text-xs">02</span>
-
-<h4 class="text-2xl font-bold mt-6 mb-4">Brand Strategy</h4>
-
-<p class="text-gray-400 text-sm leading-relaxed">From identity to narrative — we architect brands that command attention and earn loyalty.</p>
-
-</div>
-
-
-
-<!-- 03: Content Creation -->
-
-<div class="p-12 border-b border-white/10 hover:bg-white/5 transition-all group relative">
-
-<span class="text-red-500 font-black text-xs">03</span>
-
-<h4 class="text-2xl font-bold mt-6 mb-4">Content Creation</h4>
-
-<p class="text-gray-400 text-sm leading-relaxed">High-impact visuals, video, and copy that stop the scroll and start the conversation.</p>
-
-</div>
-
-
-
-<!-- 04: Paid Advertising -->
-
-<div class="p-12 border-r border-white/10 hover:bg-white/5 transition-all group relative">
-
-<span class="text-red-500 font-black text-xs">04</span>
-
-<h4 class="text-2xl font-bold mt-6 mb-4">Paid Advertising</h4>
-
-<p class="text-gray-400 text-sm leading-relaxed">Performance-driven media buying that maximises every dollar across Meta, Google, LinkedIn, and beyond.</p>
-
-</div>
-
-
-
-<!-- 05: SEO & Growth -->
-
-<div class="p-12 border-r border-white/10 hover:bg-white/5 transition-all group relative">
-
-<span class="text-red-500 font-black text-xs">05</span>
-
-<h4 class="text-2xl font-bold mt-6 mb-4">SEO & Growth</h4>
-
-<p class="text-gray-400 text-sm leading-relaxed">Organic visibility strategies that compound over time and reduce your reliance on paid channels.</p>
-
-</div>
-
-
-
-<!-- 06: Analytics & Reporting -->
-
-<div class="p-12 hover:bg-white/5 transition-all group relative">
-
-<span class="text-red-500 font-black text-xs">06</span>
-
-<h4 class="text-2xl font-bold mt-6 mb-4">Analytics & Reporting</h4>
-
-<p class="text-gray-400 text-sm leading-relaxed">Crystal-clear dashboards and insights that tie marketing activity directly to revenue.</p>
-
-</div>
-
-
-
-</div>
-
-</section>
-
-
-
-<!-- Pricing Grid -->
-
-<section class="pb-32 px-6" id="pricing">
-
-<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-
-<!-- Starter -->
-
-<div class="glass-card rounded-[2.5rem] p-10 flex flex-col hover:border-blue-500/30 transition-all duration-500 group text-center">
-
-<div class="text-blue-500 font-bold text-xs uppercase tracking-widest mb-4">Starter</div>
-
-<h3 class="text-2xl font-bold mb-6 text-white">Business Starter</h3>
-
-<div class="mb-8">
-
-<span class="text-5xl font-black price-text text-white">₹6,000</span>
-
-<span class="text-gray-500 block mt-2 text-sm">+ 5% GST (₹300)</span>
-
-</div>
-
-<ul class="text-gray-400 space-y-4 mb-10 text-sm flex-grow text-left">
-
-<li>— Meta Ads Setup</li>
-
-<li>— 2 Ad Creatives</li>
-
-</ul>
-
-<button onclick="loginAndCheckout(6000, 'Business Starter')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition mb-3">Pay Now</button>
-
-<button onclick="scrollToEnquire('Business Starter')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
-
-</div>
-
-
-
-<!-- Medium -->
-
-<div class="glass-card rounded-[2.5rem] p-10 flex flex-col border-blue-500/50 relative transform md:-translate-y-4 scale-105 transition-all duration-500 text-center">
-
-<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-6 py-1.5 rounded-full text-[10px] font-black uppercase tracking-tighter">Most Popular</div>
-
-<div class="text-blue-400 font-bold text-xs uppercase tracking-widest mb-4">Growth</div>
-
-<h3 class="text-2xl font-bold mb-6 text-white">Medium Business</h3>
-
-<div class="mb-8 text-white">
-
-<span class="text-5xl font-black price-text text-white">₹8,000</span>
-
-<span class="text-gray-400 block mt-2 text-sm">+ 5% GST (₹400)</span>
-
-</div>
-
-<ul class="text-gray-300 space-y-4 mb-10 text-sm flex-grow text-left">
-
-<li>✓ Meta + Google Ads</li>
-
-<li>✓ 5 Custom Creatives</li>
-
-</ul>
-
-<button onclick="loginAndCheckout(8000, 'Medium Business')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-blue-600/30 mb-3">Get Started</button>
-
-<button onclick="scrollToEnquire('Medium Business')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
-
-</div>
-
-
-
-<!-- Enterprise -->
-
-<div class="glass-card rounded-[2.5rem] p-10 flex flex-col hover:border-blue-500/30 transition-all duration-500 text-center">
-
-<div class="text-blue-500 font-bold text-xs uppercase tracking-widest mb-4">Scale</div>
-
-<h3 class="text-2xl font-bold mb-6 text-white">Enterprise Level</h3>
-
-<div class="mb-8">
-
-<span class="text-5xl font-black price-text text-white">₹14,000</span>
-
-<span class="text-gray-500 block mt-2 text-sm">+ 5% GST (₹700)</span>
-
-</div>
-
-<ul class="text-gray-400 space-y-4 mb-10 text-sm flex-grow text-left">
-
-<li>— Full Funnel Mastery</li>
-
-<li>— Priority 24/7 Support</li>
-
-</ul>
-
-<button onclick="loginAndCheckout(14000, 'Enterprise Level')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition mb-3">Scale Now</button>
-
-<button onclick="scrollToEnquire('Enterprise Level')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- Testimonials Section -->
-
-<section class="py-32 px-6 max-w-7xl mx-auto">
-
-<div class="text-center mb-20">
-
-<p class="text-blue-500 font-bold uppercase tracking-[0.3em] text-[10px] mb-4">Success Stories</p>
-
-<h2 class="text-4xl md:text-6xl font-black tracking-tighter">What our clients say.</h2>
-
-</div>
-
-
-
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-<!-- Review 1 -->
-
-<div class="glass-ui p-8 rounded-[2.5rem] border border-white/5 hover:border-blue-500/30 transition-all duration-500">
-
-<div class="flex gap-1 text-yellow-500 mb-6 text-xs">★★★★★</div>
-
-<p class="text-gray-300 italic mb-8 leading-relaxed text-sm">"SNS ADS ne hamare Meta ads ka ROI 3 guna kar diya sirf 2 mahine mein. Inki strategy ekdum focused aur data-driven hai."</p>
-
-<div class="flex items-center gap-4">
-
-<div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center font-bold text-xs">RK</div>
-
-<div>
-
-<h4 class="font-bold text-sm">Rahul Kapoor</h4>
-
-<p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Founder, TechGadgets</p>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<!-- Review 2 -->
-
-<div class="glass-ui p-8 rounded-[2.5rem] border border-white/5 hover:border-blue-500/30 transition-all duration-500">
-
-<div class="flex gap-1 text-yellow-500 mb-6 text-xs">★★★★★</div>
-
-<p class="text-gray-300 italic mb-8 leading-relaxed text-sm">"Working with Harshit and his team was the best decision for our Google Ads campaigns. Genuine leads aur transparency bhot pasand aayi."</p>
-
-<div class="flex items-center gap-4">
-
-<div class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center font-bold text-xs">AS</div>
-
-<div>
-
-<h4 class="font-bold text-sm">Anjali Sharma</h4>
-
-<p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">CEO, Luxe Decor</p>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<!-- Review 3 -->
-
-<div class="glass-ui p-8 rounded-[2.5rem] border border-white/5 hover:border-blue-500/30 transition-all duration-500">
-
-<div class="flex gap-1 text-yellow-500 mb-6 text-xs">★★★★★</div>
-
-<p class="text-gray-300 italic mb-8 leading-relaxed text-sm">"Inka client portal bhot helpful hai. Saara progress real-time dikhta hai. Creative ads ne hamare brand ko bhot help ki."</p>
-
-<div class="flex items-center gap-4">
-
-<div class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center font-bold text-xs">VP</div>
-
-<div>
-
-<h4 class="font-bold text-sm">Vikram Pratap</h4>
-
-<p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Marketing Head, FitLife</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- Final CTA Section (Red Bold) -->
-
-<section class="bg-[#ff2020] py-32 px-6 text-center text-white">
-
-<div class="max-w-4xl mx-auto">
-
-<p class="text-[10px] font-black uppercase tracking-[0.4em] mb-8 opacity-80">Ready to Grow?</p>
-
-<h2 class="text-6xl md:text-8xl font-black tracking-tighter leading-none mb-10">
-
-Let's build <br> something great.
-
-</h2>
-
-<p class="text-white/80 text-lg md:text-xl mb-12 max-w-2xl mx-auto font-medium">
-
-Book a free strategy call. We'll audit your current marketing, identify gaps, and show you exactly how we'd scale your brand.
-
-</p>
-
-
-<div class="flex flex-col md:flex-row justify-center items-center gap-6">
-
-<a href="#enquire" class="bg-white text-black px-12 py-6 rounded-full font-black uppercase tracking-widest text-xs hover:bg-black hover:text-white transition-all shadow-2xl">
-
-Book a call ↗
-
-</a>
-
-<a href="mailto:sinha.harshit@gmail.com" class="bg-transparent border border-white/30 text-white px-12 py-6 rounded-full font-black uppercase tracking-widest text-xs hover:bg-white hover:text-black transition-all">
-
-sinha.harshit@gmail.com
-
-</a>
-
-</div>
-
-</div>
-
-</section>
-
-</section>
-
-<!-- Firebase Scripts & Logic -->
-
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-
-import { getAuth, signInWithPopup, GoogleAuthProvider, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-
-
-const firebaseConfig = {
-
-apiKey: "AIzaSyB7W5HWVe1JYbqhpGdrguNrQOgU3DwW_44",
-
-authDomain: "sns-ads.firebaseapp.com",
-
-projectId: "sns-ads",
-
-storageBucket: "sns-ads.firebasestorage.app",
-
-messagingSenderId: "193364476047",
-
-appId: "1:193364476047:web:d65e2412d13a42f701f0fa"
-
-};
-
-
-
-const app = initializeApp(firebaseConfig);
-
-const auth = getAuth(app);
-
-const db = getFirestore(app);
-
-const provider = new GoogleAuthProvider();
-
-
-
-window.currentPlan = { amount: 0, name: '' };
-
-
-
-// --- STEP 1: Google Login & Data Pre-fill ---
-
-window.loginAndCheckout = async function(amount, plan) {
-
-try {
-
-const result = await signInWithPopup(auth, provider);
-
-const user = result.user;
-
-
-// Agar user ne product select kiya hai, toh checkout modal kholo
-
-if (amount && plan) {
-
-window.currentPlan = { amount, name: plan };
-
-document.getElementById('custName').value = user.displayName;
-
-document.getElementById('custEmail').value = user.email;
-
-document.getElementById('modalPlanDisplay').innerText = plan + " (₹" + (amount * 1.05).toFixed(0) + " incl. GST)";
-
-document.getElementById('checkoutModal').classList.remove('hidden');
-
-document.getElementById('checkoutModal').classList.add('flex');
-
-} else {
-
-// Agar seedha login kiya hai, toh dashboard par bhej do
-
-window.location.href = "dashboard.html";
-
-}
-
-} catch (error) { alert("Login failed: " + error.message); }
-
-};
-
-// Contact Form Logic - Ise script ke end mein add karein
-
-document.getElementById('contactForm').addEventListener('submit', async (e) => {
-
-e.preventDefault(); // Page refresh hone se rokne ke liye
-
-
-
-// Form se data uthana
-
-const formData = {
-
-name: document.getElementById('formName').value,
-
-phone: document.getElementById('formPhone').value,
-
-email: document.getElementById('formEmail').value,
-
-business: document.getElementById('formBusiness').value,
-
-budget: document.getElementById('formBudget').value,
-
-date: new Date().toISOString()
-
-};
-
-
-
-// Button ko "Sending" state mein dikhana
-
-const submitBtn = e.target.querySelector('button[type="submit"]');
-
-const originalText = submitBtn.innerHTML;
-
-submitBtn.innerText = "Sending...";
-
-submitBtn.disabled = true;
-
-
-
-try {
-
-// Backend API call (Aapka Render wala endpoint)
-
-const response = await fetch('https://sns-ads-project.onrender.com/api/enquiry', {
-
-method: 'POST',
-
-headers: { 'Content-Type': 'application/json' },
-
-body: JSON.stringify(formData)
-
-});
-
-
-
-if (response.ok) {
-
-alert("Behtareen! Aapka message mil gaya hai. Hum jaldi call karenge.");
-
-document.getElementById('contactForm').reset(); // Form khali karne ke liye
-
-} else {
-
-throw new Error("Server error");
-
-}
-
-} catch (error) {
-
-console.error("Submission Error:", error);
-
-alert("Bhai, kuch issue aa gaya. Ek baar refresh karke try karo ya WhatsApp par msg kardo.");
-
-} finally {
-
-// Button ko wapis pehle jaisa karna
-
-submitBtn.innerHTML = originalText;
-
-submitBtn.disabled = false;
-
-}
-
-});
-
-// --- STEP 2: Phone Verification (OTP) ---
-
-window.startPhoneVerification = async function() {
-
-const phoneInput = document.getElementById('custPhone').value.trim();
-
-if(!phoneInput) return alert("Bhai, mobile number toh daalo!");
-
-
-
-let phoneNumber = phoneInput.startsWith('+') ? phoneInput : '+91' + phoneInput;
-
-const btn = document.getElementById('sendOtpBtn');
-
-btn.disabled = true;
-
-btn.innerText = "Sending SMS...";
-
-
-
-if(!window.recaptchaVerifier) {
-
-window.recaptchaVerifier = new RecaptchaVerifier(auth, 'sendOtpBtn', { 'size': 'invisible' });
-
-}
-
-
-
-try {
-
-const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier);
-
-window.confirmationResult = confirmationResult;
-
-document.getElementById('otpSection').classList.remove('hidden');
-
-btn.classList.add('hidden');
-
-alert("OTP bhej diya gaya hai!");
-
-} catch (error) {
-
-alert("SMS Error: " + error.message);
-
-btn.disabled = false;
-
-btn.innerText = "Retry Phone Verification";
-
-}
-
-};
-
-
-
-window.verifyAndPay = async function() {
-
-const code = document.getElementById('otpInput').value;
-
-try {
-
-await window.confirmationResult.confirm(code);
-
-alert("Phone Verified! Ab payment kariye.");
-
-
-document.getElementById('otpSection').innerHTML = `
-
-<button onclick="window.processFinalPayment()" class="w-full bg-green-600 hover:bg-green-500 py-4 rounded-2xl font-bold uppercase tracking-widest transition shadow-lg shadow-green-600/30 text-white">
-
-Confirm & Pay Now
-
-</button>`;
-
-} catch (error) {
-
-alert("Galat OTP!");
-
-}
-
-};
-
-
-
-// --- STEP 3: Final Payment & Dashboard Sync ---
-
-window.processFinalPayment = async function() {
-
-const name = document.getElementById('custName').value;
-
-const email = document.getElementById('custEmail').value;
-
-const phone = document.getElementById('custPhone').value;
-
-const address = document.getElementById('custAddress').value;
-
-const totalAmount = window.currentPlan.amount * 1.05;
-
-
-
-try {
-
-const res = await fetch('https://sns-ads-project.onrender.com/api/create-order', {
-
-method: 'POST',
-
-headers: { 'Content-Type': 'application/json' },
-
-body: JSON.stringify({ amount: totalAmount })
-
-});
-
-const order = await res.json();
-
-
-
-const options = {
-
-"key": "rzp_test_SkanzCNHx8h7vh",
-
-"amount": order.amount,
-
-"currency": "INR",
-
-"name": "SNS ADS",
-
-"description": window.currentPlan.name,
-
-"order_id": order.id,
-
-"handler": async function (response) {
-
-// Backend Sync (Mongo/Email)
-
-await fetch('https://sns-ads-project.onrender.com/api/payment-success', {
-
-method: 'POST',
-
-headers: { 'Content-Type': 'application/json' },
-
-body: JSON.stringify({
-
-name, email,
-
-service: window.currentPlan.name,
-
-amount: totalAmount * 100,
-
-paymentId: response.razorpay_payment_id,
-
-orderId: response.razorpay_order_id
-
-})
-
-});
-
-
-
-// Firestore Sync (Dashboard)
-
-const user = auth.currentUser;
-
-if(user) {
-
-await setDoc(doc(db, "customers", user.uid), {
-
-name, email, phone: user.phoneNumber,
-
-orders: arrayUnion({
-
-orderId: response.razorpay_order_id,
-
-plan: window.currentPlan.name,
-
-amount: totalAmount,
-
-status: "Active",
-
-date: new Date().toISOString()
-
-})
-
-}, { merge: true });
-
-}
-
-
-
-alert("Mubarak ho! Payment Success.");
-
-window.location.href = "dashboard.html";
-
-},
-
-"prefill": { "name": name, "email": email, "contact": phone },
-
-"theme": { "color": "#2563eb" }
-
-};
-
-new Razorpay(options).open();
-
-} catch (err) { alert("Server issue during payment!"); }
-
-};
-
-
-
-// Helper functions
-
-window.closeCheckout = () => {
-
-document.getElementById('checkoutModal').classList.add('hidden');
-
-document.getElementById('checkoutModal').classList.remove('flex');
-
-};
-
-
-
-window.scrollToEnquire = (plan) => {
-
-document.getElementById('enquire').scrollIntoView({ behavior: 'smooth' });
-
-document.getElementById('message').value = `Interested in ${plan}.`;
-
-};
-
-
-
-// Sabse niche, logout function ke upar ya niche paste karein
-
-window.addEventListener('scroll', function() {
-
-const nav = document.querySelector('nav');
-
-if (window.scrollY > 50) {
-
-// Scroll hone par navbar thoda chhota aur dark ho jayega
-
-nav.classList.add('bg-black/90', 'py-4');
-
-nav.classList.remove('bg-black/40', 'py-6');
-
-} else {
-
-// Wapis upar aane par purana glass look
-
-nav.classList.add('bg-black/40', 'py-6');
-
-nav.classList.remove('bg-black/90', 'py-4');
-
-}
-
-});
-
-
-
-window.logout = () => {
-
-signOut(auth).then(() => window.location.href = "index.html");
-
-};
-
-</script>
-
-</script>
-
-
-
-<!-- Checkout Modal -->
-
-<div id="checkoutModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-6">
-
-<div class="glass-card max-w-lg w-full rounded-[2.5rem] p-10 shadow-2xl relative border border-white/10 bg-zinc-900/90">
-
-<button onclick="closeCheckout()" class="absolute top-6 right-8 text-gray-400 hover:text-white text-2xl transition">&times;</button>
-
-<h2 class="text-3xl font-bold mb-2 text-white tracking-tight">Complete Your Order</h2>
-
-<p id="modalPlanDisplay" class="text-blue-400 mb-8 font-semibold italic text-sm uppercase tracking-wider"></p>
-
-
-
-<div class="space-y-4">
-
-<input type="text" id="custName" placeholder="Full Name" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition text-white text-sm">
-
-<input type="email" id="custEmail" placeholder="Business Email" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition text-white text-sm">
-
-<input type="tel" id="custPhone" placeholder="Mobile (+91...)" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition text-white text-sm">
-
-<textarea id="custAddress" placeholder="Full Address" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition h-24 text-white text-sm"></textarea>
-
-</div>
-
-
-
-<!-- Yahan function name update kiya gaya hai -->
-
-<button id="sendOtpBtn" onclick="window.startPhoneVerification()" class="w-full bg-blue-600 hover:bg-blue-500 py-4 rounded-2xl font-bold uppercase tracking-widest transition shadow-lg shadow-blue-600/30 mt-8 text-white text-xs">
-
-Send Verification OTP
-
-</button>
-
-
-
-<div id="otpSection" class="hidden space-y-4 mt-6 border-t border-white/10 pt-6">
-
-<p class="text-[10px] text-center text-gray-500 uppercase font-bold tracking-widest">Verification Required</p>
-
-<input type="text" id="otpInput" placeholder="Enter 6-Digit OTP" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition text-white text-center tracking-[0.5em] font-bold text-lg">
-
-
-<!-- Yahan verifyAndPay ko window object se call karein -->
-
-<button onclick="window.verifyAndPay()" class="w-full bg-green-600 hover:bg-green-500 py-4 rounded-2xl font-bold uppercase tracking-widest transition shadow-lg shadow-green-600/30 text-white text-xs">
-
-Verify OTP & Finalize
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 w-full z-[100] bg-black/60 backdrop-blur-md border-b border-white/5 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 md:px-10 py-5 flex justify-between items-center">
+            
+            <!-- Brand Logo -->
+            <a href="index.html" class="flex items-center gap-3">
+                <div class="h-10 w-1 bg-blue-600 rounded-full"></div>
+                <div class="text-2xl font-black tracking-tight text-white uppercase">SNS ADS</div>
+            </a>
+
+            <!-- Menu Links -->
+            <div class="hidden md:flex items-center gap-12">
+                <div class="flex gap-10 text-[11px] font-bold text-gray-400 uppercase tracking-[0.25em]">
+                    <a href="#about" class="hover:text-blue-500 transition">Strategy</a>
+                    <a href="#pricing" class="hover:text-blue-500 transition">Plans</a>
+                    <a href="#enquire" class="hover:text-blue-500 transition">Contact</a>
+                </div>
+                <!-- Dynamic Login/Portal Button -->
+                <button onclick="window.loginAndCheckout(null, null)" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition shadow-lg shadow-blue-600/20">
+                    Portal Login
+                </button>
+            </div>
+
+            <!-- Mobile Menu Icon -->
+            <div class="md:hidden text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Spacer -->
+    <div class="h-20"></div>
+
+    <!-- ================= ELITE HIGH-END HERO SECTION WITH VIDEO ================= -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden py-24 md:py-32">
+        <!-- Background Core Layer -->
+        <div class="absolute inset-0 z-0">
+            <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-[0.22] scale-105 transition-transform duration-[10000ms] ease-out">
+                <!-- Local Video Path mapped for your setup -->
+                <source src="assets/hero-bg.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 bg-gradient-to-b from-black via-slate-950/40 to-black"></div>
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_-20%,rgba(37,99,235,0.18),transparent_50%)]"></div>
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(239,68,68,0.05),transparent_40%)]"></div>
+        </div>
+
+        <div class="absolute top-1/4 left-1/10 w-72 h-72 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none animate-pulse hidden md:block"></div>
+        <div class="absolute bottom-1/4 right-1/10 w-96 h-96 bg-red-600/5 rounded-full blur-[150px] pointer-events-none hidden md:block"></div>
+
+        <!-- Main Interface -->
+        <div class="relative z-10 text-center px-6 max-w-6xl mx-auto flex flex-col items-center">
+            <div class="inline-flex items-center gap-3 bg-white/[0.02] border border-white/10 backdrop-blur-md px-5 py-2.5 rounded-full mb-10 transform hover:scale-102 transition duration-300 shadow-[0_0_30px_rgba(37,99,235,0.05)] group">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
+                </span>
+                <span class="text-[10px] md:text-[11px] font-black uppercase tracking-[0.25em] text-gray-300 group-hover:text-blue-400 transition-colors">
+                    Next-Gen Performance Architecture 2026
+                </span>
+            </div>
+            
+            <h1 class="text-6xl sm:text-7xl md:text-9xl font-extrabold tracking-tighter leading-[0.9] uppercase mb-8 select-none">
+                <span class="text-white block opacity-95 transition-all hover:opacity-100">DIGITAL</span> 
+                <span class="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-blue-400 to-indigo-600 font-black italic tracking-tight py-2 drop-shadow-[0_10px_40px_rgba(37,99,235,0.2)]">
+                    DOMINANCE.
+                </span>
+            </h1>
+            
+            <p class="text-gray-400 text-base sm:text-lg md:text-xl max-w-2xl mx-auto mb-14 font-medium leading-relaxed px-2 md:px-0">
+                We bypass traditional marketing frameworks to turn mathematical algorithms into predictable enterprise revenue. <span class="text-white/80 font-semibold border-b border-blue-500/30 pb-0.5">ROI-driven performance execution</span> for high-scale digital brands.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-5 justify-center items-center w-full sm:w-auto px-4 sm:px-0">
+                <a href="#pricing" class="w-full sm:w-auto text-center bg-blue-600 hover:bg-blue-500 text-white px-12 py-5 rounded-full font-extrabold uppercase tracking-widest text-[11px] shadow-[0_10px_30px_rgba(37,99,235,0.3)] hover:shadow-[0_15px_35px_rgba(37,99,235,0.5)] transform hover:-translate-y-0.5 transition-all duration-300 group flex items-center justify-center gap-2">
+                    Launch Campaign 
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </a>
+                <a href="#enquire" class="w-full sm:w-auto text-center bg-white/[0.02] hover:bg-white/[0.06] text-gray-300 hover:text-white px-12 py-5 rounded-full font-extrabold uppercase tracking-widest text-[11px] border border-white/10 hover:border-white/20 backdrop-blur-md transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2">
+                    Strategy Call ⚡
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="enquire" class="py-24 px-6 max-w-7xl mx-auto border-t border-white/5">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div class="hidden md:block relative group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-red-600 to-blue-600 rounded-[2.5rem] blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                <div class="relative bg-black rounded-[2.5rem] overflow-hidden border border-white/10 h-[600px]">
+                    <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80" alt="Work Showcase" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <div>
+                    <p class="text-red-500 font-bold uppercase tracking-[0.3em] text-[10px] mb-4">Get Started</p>
+                    <h2 class="text-5xl font-black tracking-tighter text-white leading-tight">Let's book a call.</h2>
+                </div>
+
+                <form id="contactForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1">Full Name</label>
+                            <input type="text" id="formName" placeholder="Jane Smith" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-red-500/50 transition text-white text-sm" required>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1">Phone Number</label>
+                            <input type="tel" id="formPhone" placeholder="+91 98765 43210" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-red-500/50 transition text-white text-sm" required>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1">Email Address</label>
+                        <input type="email" id="formEmail" placeholder="jane@company.com" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-red-500/50 transition text-white text-sm" required>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1">Business Name</label>
+                            <input type="text" id="formBusiness" placeholder="Acme Inc." class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-red-500/50 transition text-white text-sm">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1">Monthly Budget</label>
+                            <select id="formBudget" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-red-500/50 transition text-gray-400 text-sm appearance-none">
+                                <option value="" disabled selected>Select range</option>
+                                <option value="below_50k">Below ₹50,000</option>
+                                <option value="50k_100k">₹50,000 - ₹1,00,000</option>
+                                <option value="100k_above">₹1,00,000+</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row gap-4 pt-4">
+                        <button type="submit" class="flex-1 bg-red-600 hover:bg-red-500 text-white py-5 rounded-2xl font-bold uppercase tracking-widest transition shadow-lg shadow-red-600/20 flex items-center justify-center gap-2">
+                            Submit <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                        </button>
+                        <a href="https://wa.me/917016163373" target="_blank" class="flex-1 bg-transparent border border-white/10 hover:bg-white/5 text-white py-5 rounded-2xl font-bold uppercase tracking-widest transition flex items-center justify-center gap-3">
+                            WhatsApp us
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="about" class="py-16 md:py-32 px-6 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+            <div class="md:col-span-8 glass-card p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] border-t border-blue-500/30">
+                <h2 class="text-blue-500 font-bold uppercase tracking-widest text-[10px] mb-4 italic">Performance Marketing</h2>
+                <h3 class="text-3xl md:text-5xl font-extrabold mb-6 md:mb-8 tracking-tight text-white">Meta Ads Management for High-Growth ROI.</h3>
+                <p class="text-gray-400 text-base md:text-lg leading-relaxed mb-8">
+                    We specialize in scaling Meta ad accounts from scratch to high-volume revenue. From precision audience targeting to scroll-stopping creatives, SNS ADS handles the full funnel.
+                </p>
+                <div class="flex flex-wrap gap-3">
+                    <span class="bg-white/5 px-3 py-2 rounded-lg text-[9px] font-bold uppercase text-gray-400 border border-white/5">Facebook Ads</span>
+                    <span class="bg-white/5 px-3 py-2 rounded-lg text-[9px] font-bold uppercase text-gray-400 border border-white/5">Instagram Growth</span>
+                    <span class="bg-white/5 px-3 py-2 rounded-lg text-[9px] font-bold uppercase text-gray-400 border border-white/5">Retargeting</span>
+                </div>
+            </div>
+
+            <div class="md:col-span-4 glass-card p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] bg-gradient-to-br from-blue-600/10 to-transparent border border-white/5">
+                <h3 class="text-2xl md:text-3xl font-bold mb-6 text-white">Google Ads Mastery</h3>
+                <p class="text-gray-400 text-sm leading-relaxed mb-8">
+                    Dominate Google Search and Display. We capture intent-driven leads with data-backed keyword strategies.
+                </p>
+                <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-600/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Grid -->
+    <section class="pb-32 px-6" id="pricing">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Starter -->
+            <div class="glass-card rounded-[2.5rem] p-10 flex flex-col hover:border-blue-500/30 transition-all duration-500 group text-center">
+                <div class="text-blue-500 font-bold text-xs uppercase tracking-widest mb-4">Starter</div>
+                <h3 class="text-2xl font-bold mb-6 text-white">Business Starter</h3>
+                <div class="mb-8">
+                    <span class="text-5xl font-black price-text text-white">₹6,000</span>
+                    <span class="text-gray-500 block mt-2 text-sm">+ 5% GST (₹300)</span>
+                </div>
+                <ul class="text-gray-400 space-y-4 mb-10 text-sm flex-grow text-left">
+                    <li>— Meta Ads Setup</li>
+                    <li>— 2 Ad Creatives</li>
+                </ul>
+                <button onclick="window.loginAndCheckout(6000, 'Business Starter')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition mb-3">Pay Now</button>
+                <button onclick="scrollToEnquire('Business Starter')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
+            </div>
+
+            <!-- Medium -->
+            <div class="glass-card rounded-[2.5rem] p-10 flex flex-col border-blue-500/50 relative transform md:-translate-y-4 scale-105 transition-all duration-500 text-center">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-6 py-1.5 rounded-full text-[10px] font-black uppercase tracking-tighter">Most Popular</div>
+                <div class="text-blue-400 font-bold text-xs uppercase tracking-widest mb-4">Growth</div>
+                <h3 class="text-2xl font-bold mb-6 text-white">Medium Business</h3>
+                <div class="mb-8 text-white">
+                    <span class="text-5xl font-black price-text text-white">₹8,000</span>
+                    <span class="text-gray-400 block mt-2 text-sm">+ 5% GST (₹400)</span>
+                </div>
+                <ul class="text-gray-300 space-y-4 mb-10 text-sm flex-grow text-left">
+                    <li>✓ Meta + Google Ads</li>
+                    <li>✓ 5 Custom Creatives</li>
+                </ul>
+                <button onclick="window.loginAndCheckout(8000, 'Medium Business')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-blue-600/30 mb-3">Get Started</button>
+                <button onclick="scrollToEnquire('Medium Business')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
+            </div>
+
+            <!-- Enterprise -->
+            <div class="glass-card rounded-[2.5rem] p-10 flex flex-col hover:border-blue-500/30 transition-all duration-500 text-center">
+                <div class="text-blue-500 font-bold text-xs uppercase tracking-widest mb-4">Scale</div>
+                <h3 class="text-2xl font-bold mb-6 text-white">Enterprise Level</h3>
+                <div class="mb-8">
+                    <span class="text-5xl font-black price-text text-white">₹14,000</span>
+                    <span class="text-gray-500 block mt-2 text-sm">+ 5% GST (₹700)</span>
+                </div>
+                <ul class="text-gray-400 space-y-4 mb-10 text-sm flex-grow text-left">
+                    <li>— Full Funnel Mastery</li>
+                    <li>— Priority 24/7 Support</li>
+                </ul>
+                <button onclick="window.loginAndCheckout(14000, 'Enterprise Level')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition mb-3">Scale Now</button>
+                <button onclick="scrollToEnquire('Enterprise Level')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-20 px-10 border-t border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
+            <div class="flex flex-col items-center md:items-start">
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="w-1.5 h-8 bg-blue-600 rounded-full"></div>
+                    <div class="text-3xl font-black tracking-tighter uppercase italic">SNS ADS</div>
+                </div>
+                <p class="text-[10px] text-gray-600 font-bold uppercase tracking-[0.4em] ml-5">Digital Growth Agency</p>
+            </div>
+            <div class="flex gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
+                <a href="#about" class="hover:text-blue-500 transition-all duration-300">Work</a>
+                <a href="#services" class="hover:text-blue-500 transition-all duration-300">Services</a>
+                <a href="#pricing" class="hover:text-blue-500 transition-all duration-300">About</a>
+                <a href="#enquire" class="hover:text-blue-500 transition-all duration-300">Results</a>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[9px] text-gray-600 font-bold uppercase tracking-widest gap-4">
+            <div>© 2026 SNS ADS. All rights reserved. Engineered with ❤️ by Harshit Sinha</div>
+        </div>
+    </footer>
+
+    <!-- NEW FIREBASE LOGIN GATE LOGIC -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB7W5HWVe1JYbqhpGdrguNrQOgU3DwW_44",
+            authDomain: "sns-ads.firebaseapp.com",
+            projectId: "sns-ads",
+            storageBucket: "sns-ads.firebasestorage.app",
+            messagingSenderId: "193364476047",
+            appId: "1:193364476047:web:d65e2412d13a42f701f0fa"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        let currentUserInstance = null;
+
+        // Listen for Authentication State
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUserInstance = user;
+                const pendingPlan = localStorage.getItem('pending_selected_plan');
+                const pendingAmount = localStorage.getItem('pending_selected_amount');
+                if (pendingPlan && pendingAmount) {
+                    proceedToCheckoutRedirect(pendingAmount, pendingPlan);
+                }
+            } else {
+                currentUserInstance = null;
+            }
+        });
+
+        // Main Checkout Interceptor
+        window.loginAndCheckout = function(amount, plan) {
+            if (currentUserInstance) {
+                proceedToCheckoutRedirect(amount, plan);
+            } else {
+                if (amount && plan) {
+                    localStorage.setItem('pending_selected_plan', plan);
+                    localStorage.setItem('pending_selected_amount', amount);
+                }
+                openLoginGateModal();
+            }
+        };
+
+        // Redirect Helper
+        function proceedToCheckoutRedirect(amount, plan) {
+            localStorage.removeItem('pending_selected_plan');
+            localStorage.removeItem('pending_selected_amount');
+            if(amount && plan) {
+                window.location.href = `checkout.html?amount=${amount}&plan=${encodeURIComponent(plan)}`;
+            } else {
+                window.location.href = "dashboard.html"; // If they just clicked "Portal Login"
+            }
+        }
+
+        // Modal Handlers
+        function openLoginGateModal() {
+            document.getElementById('loginGateModal').classList.remove('hidden');
+            document.getElementById('loginGateModal').classList.add('flex');
+        }
+        window.closeLoginGate = function() {
+            document.getElementById('loginGateModal').classList.add('hidden');
+            document.getElementById('loginGateModal').classList.remove('flex');
+        };
+
+        // Google Auth
+        window.loginWithGoogle = async function() {
+            try {
+                await signInWithPopup(auth, provider);
+                closeLoginGate();
+            } catch (error) { 
+                alert("Authentication Interrupted: " + error.message); 
+            }
+        };
+
+        // Email OTP Auth
+        window.triggerEmailOTP = async function() {
+            const emailInput = document.getElementById('gateEmail').value.trim();
+            if(!emailInput) return alert("Please enter your email!");
+
+            const btn = document.getElementById('sendEmailOtpBtn');
+            btn.disabled = true;
+            btn.innerText = "Sending Code...";
+
+            try {
+                const response = await fetch('https://sns-ads-project.onrender.com/api/send-otp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: emailInput, name: "Growth Partner" })
+                });
+
+                if(response.ok) {
+                    document.getElementById('emailOtpSection').classList.remove('hidden');
+                    btn.classList.add('hidden');
+                    alert("Verification code sent to your email!");
+                } else {
+                    throw new Error("Backend response failed");
+                }
+            } catch (error) {
+                alert("Delivery failed. Please retry.");
+                btn.disabled = false;
+                btn.innerText = "Send Verification Code";
+            }
+        };
+
+        window.verifyEmailOTP = async function() {
+            const emailInput = document.getElementById('gateEmail').value.trim();
+            const otpInput = document.getElementById('gateOtpInput').value.trim();
+
+            try {
+                const response = await fetch('https://sns-ads-project.onrender.com/api/verify-otp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: emailInput, otp: otpInput })
+                });
+
+                if (response.ok) {
+                    alert("Verified Successfully!");
+                    closeLoginGate();
+                    
+                    const pendingPlan = localStorage.getItem('pending_selected_plan') || "Business Starter";
+                    const pendingAmount = localStorage.getItem('pending_selected_amount') || "6000";
+                    proceedToCheckoutRedirect(pendingAmount, pendingPlan);
+                } else {
+                    alert("Incorrect Code!");
+                }
+            } catch (error) {
+                alert("Verification system error.");
+            }
+        };
+
+        // Contact Form Handling
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = {
+                name: document.getElementById('formName').value,
+                phone: document.getElementById('formPhone').value,
+                email: document.getElementById('formEmail').value,
+                business: document.getElementById('formBusiness').value,
+                budget: document.getElementById('formBudget').value,
+                date: new Date().toISOString()
+            };
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerText = "Sending...";
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch('https://sns-ads-project.onrender.com/api/enquiry', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                if (response.ok) {
+                    alert("Behtareen! Aapka message mil gaya hai. Hum jaldi call karenge.");
+                    document.getElementById('contactForm').reset();
+                } else {
+                    throw new Error("Server error");
+                }
+            } catch (error) {
+                alert("Bhai, kuch issue aa gaya. Ek baar refresh karke try karo.");
+            } finally {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-black/90', 'py-4');
+                nav.classList.remove('bg-black/40', 'py-6');
+            } else {
+                nav.classList.add('bg-black/40', 'py-6');
+                nav.classList.remove('bg-black/90', 'py-4');
+            }
+        });
+
+        window.scrollToEnquire = (plan) => {
+            document.getElementById('enquire').scrollIntoView({ behavior: 'smooth' });
+        };
+    </script>
+
+    <!-- NEW LOGIN GATE MODAL -->
+    <div id="loginGateModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/85 backdrop-blur-md p-6">
+        <div class="glass-card max-w-md w-full rounded-[2.5rem] p-8 shadow-2xl relative border border-white/10 bg-zinc-950/90 text-center">
+            
+            <button onclick="closeLoginGate()" class="absolute top-6 right-8 text-gray-500 hover:text-white text-2xl transition">&times;</button>
+            
+            <div class="mb-6 mt-2">
+                <div class="text-blue-500 font-bold text-[10px] uppercase tracking-[0.3em] mb-2">Security Verification</div>
+                <h2 class="text-3xl font-black tracking-tight text-white">Access Growth Portal</h2>
+                <p class="text-gray-400 text-xs mt-2 font-medium">Please authenticate your account to verify order credentials.</p>
+            </div>
+
+            <button onclick="window.loginWithGoogle()" class="w-full bg-white text-black hover:bg-gray-200 py-4 rounded-xl font-bold text-xs uppercase tracking-widest transition flex items-center justify-center gap-3 shadow-lg shadow-white/5">
+                <svg class="w-4 h-4" viewBox="0 0 24 24">
+                    <path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.859-3.578-7.859-8s3.53-8 7.859-8c2.46 0 4.105 1.025 5.047 1.926l3.257-3.133C18.422 1.21 15.6 0 12.24 0 5.58 0 0 5.37 0 12s5.58 12 12.24 12c6.96 0 11.57-4.83 11.57-11.79 0-.795-.085-1.4-.195-1.925H12.24z"/>
+                </svg>
+                Continue with Google
+            </button>
+
+            <div class="relative my-8">
+                <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-white/10"></div></div>
+                <div class="relative text-[9px] uppercase tracking-[0.3em] font-bold text-gray-500 bg-zinc-950 px-4 inline-block">Or via Secure Email</div>
+            </div>
+
+            <div class="space-y-4 text-left">
+                <div>
+                    <label class="text-[9px] font-bold uppercase tracking-widest text-gray-500 ml-1">Business Email</label>
+                    <input type="email" id="gateEmail" placeholder="name@company.com" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition text-white text-sm mt-1.5">
+                </div>
+                
+                <button id="sendEmailOtpBtn" onclick="window.triggerEmailOTP()" class="w-full bg-blue-600/10 hover:bg-blue-600/20 border border-blue-500/30 text-blue-400 py-3 rounded-xl font-bold text-[10px] uppercase tracking-widest transition">
+                    Send Verification Code
+                </button>
+            </div>
+
+            <div id="emailOtpSection" class="hidden space-y-4 mt-6 border-t border-white/10 pt-6 text-left">
+                <label class="text-[9px] font-bold uppercase tracking-widest text-gray-500 ml-1">6-Digit Verification Code</label>
+                <input type="text" id="gateOtpInput" placeholder="000000" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 transition text-white text-center tracking-[0.5em] font-bold text-lg">
+                
+                <button onclick="window.verifyEmailOTP()" class="w-full bg-blue-600 hover:bg-blue-500 py-4 rounded-xl font-bold uppercase tracking-widest transition shadow-lg shadow-blue-600/20 text-white text-xs">
+                    Verify & Open Checkout
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
-
-<!-- Final Elite Footer -->
-
-<footer class="bg-black text-white py-20 px-10 border-t border-white/5">
-
-<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
-
-
-<!-- Left: Logo & Branding -->
-
-<div class="flex flex-col items-center md:items-start">
-
-<div class="flex items-center gap-3 mb-2">
-
-<div class="w-1.5 h-8 bg-blue-600 rounded-full"></div>
-
-<div class="text-3xl font-black tracking-tighter uppercase italic">SNS ADS</div>
-
-</div>
-
-<p class="text-[10px] text-gray-600 font-bold uppercase tracking-[0.4em] ml-5">Digital Growth Agency</p>
-
-</div>
-
-
-
-<!-- Center: Quick Links -->
-
-<div class="flex gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
-
-<a href="#about" class="hover:text-blue-500 transition-all duration-300">Work</a>
-
-<a href="#services" class="hover:text-blue-500 transition-all duration-300">Services</a>
-
-<a href="#pricing" class="hover:text-blue-500 transition-all duration-300">About</a>
-
-<a href="#enquire" class="hover:text-blue-500 transition-all duration-300">Results</a>
-
-</div>
-
-
-
-<!-- Right: Social Icons -->
-
-<div class="flex gap-5">
-
-<a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-500">
-
-<i class="fab fa-instagram text-xs"></i>
-
-</a>
-
-<a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-500">
-
-<i class="fab fa-linkedin-in text-xs"></i>
-
-</a>
-
-<a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-500">
-
-<i class="fab fa-facebook-f text-xs"></i>
-
-</a>
-
-<a href="https://wa.me/917016163373" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-green-500 hover:text-white transition-all duration-500">
-
-<i class="fab fa-whatsapp text-xs"></i>
-
-</a>
-
-</div>
-
-</div>
-
-
-
-<!-- Bottom Copyright -->
-
-<div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[9px] text-gray-600 font-bold uppercase tracking-widest gap-4">
-
-<div>© 2026 SNS ADS. All rights reserved. Engineered with ❤️ by Harshit Sinha</div>
-
-<div class="flex gap-8">
-
-<a href="#" class="hover:text-white transition">Privacy Policy</a>
-
-<a href="#" class="hover:text-white transition">Terms of Service</a>
-
-</div>
-
-</div>
-
-</footer>
-
 </html>
