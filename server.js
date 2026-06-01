@@ -2,15 +2,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const Razorpay = require('razorpay');
-const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 const app = express();
 app.use(express.json());
 
-// --- CORS Setup (Open for Pitch & Production) ---
+// --- CORS Setup ---
 app.use(cors({
-    origin: '*', // Pitch ke liye open rakha hai taaki koi blockage na ho
+    origin: '*', 
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type']
 }));
@@ -38,25 +37,45 @@ const leadSchema = new mongoose.Schema({
 });
 const Lead = mongoose.model('Lead', leadSchema);
 
-// --- Nodemailer Transporter (Aapki ID aur App Password ke saath) ---
-const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true, // Port 465 ke liye true rahega
-    auth: {
-        user: 'sinhahaharshit67@gmail.com',
-        pass: 'mkadlbglunwoihdj'
-    },
-    tls: {
-        rejectUnauthorized: false // Isse connection timeout ke chances kam ho jate hain
+// ==========================================
+// BREVO API HELPER FUNCTION (Secured via .env)
+// ==========================================
+async function sendEmailViaBrevo(toEmail, toName, subject, htmlContent) {
+    const BREVO_API_KEY = process.env.BREVO_API_KEY; 
+
+    if (!BREVO_API_KEY) {
+        console.error("Missing Brevo API Key in Environment Variables");
+        throw new Error("Server config error");
     }
-});
+
+    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+        method: 'POST',
+        headers: {
+            'accept': 'application/json',
+            'api-key': BREVO_API_KEY,
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            sender: { name: "SNS ADS Portal", email: "sinhahaharshit67@gmail.com" },
+            to: [{ email: toEmail, name: toName || "Client" }],
+            subject: subject,
+            htmlContent: htmlContent
+        })
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Brevo Validation Error:", errorData);
+        throw new Error("Email dispatch rejected by Brevo API");
+    }
+    return response;
+}
 
 // Temporary memory store for OTPs
 let otpStore = {}; 
 
 // ==========================================
-// 1. OTP ROUTES (Login Gate ke liye)
+// 1. OTP ROUTES
 // ==========================================
 
 app.post('/api/send-otp', async (req, res) => {
@@ -64,26 +83,22 @@ app.post('/api/send-otp', async (req, res) => {
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     otpStore[email] = otp; 
 
-    const mailOptions = {
-        from: '"SNS ADS Support" <sinhahaharshit67@gmail.com>',
-        to: email,
-        subject: 'Verify Your SNS ADS Account 🔐',
-        html: `
-            <div style="padding: 30px; background: #0f172a; color: white; border-radius: 10px; text-align: center; font-family: sans-serif;">
-                 <h2 style="color: #3b82f6; text-transform: uppercase; letter-spacing: 2px;">SNS ADS Portal</h2>
-                 <p style="color: #cbd5e1;">Hello ${name || 'Growth Partner'}, your secure verification code is:</p>
-                 <h1 style="font-size: 45px; letter-spacing: 8px; color: #ffffff; margin: 20px 0;">${otp}</h1>
-                 <p style="color: #64748b; font-size: 12px;">Do not share this code with anyone.</p>
-            </div>
-        `
-    };
+    const subject = 'Verify Your SNS ADS Account 🔐';
+    const htmlContent = `
+        <div style="padding: 30px; background: #0f172a; color: white; border-radius: 10px; text-align: center; font-family: sans-serif;">
+             <h2 style="color: #3b82f6; text-transform: uppercase; letter-spacing: 2px;">SNS ADS Portal</h2>
+             <p style="color: #cbd5e1;">Hello ${name || 'Growth Partner'}, your secure verification code is:</p>
+             <h1 style="font-size: 45px; letter-spacing: 8px; color: #ffffff; margin: 20px 0;">${otp}</h1>
+             <p style="color: #64748b; font-size: 12px;">Do not share this code with anyone.</p>
+        </div>
+    `;
 
     try {
-        await transporter.sendMail(mailOptions);
-        console.log(`OTP Email sent to ${email}`);
-        res.status(200).json({ message: "OTP Sent" });
+        await sendEmailViaBrevo(email, name, subject, htmlContent);
+        console.log(`OTP API Call successful for ${email}`);
+        res.status(200).json({ message: "OTP Sent Successfully" });
     } catch (err) {
-        console.error("Nodemailer Error:", err);
+        console.error("Brevo OTP Delivery Error:", err);
         res.status(500).json({ error: "Email failure", detail: err.message });
     }
 });
@@ -91,7 +106,7 @@ app.post('/api/send-otp', async (req, res) => {
 app.post('/api/verify-otp', (req, res) => {
     const { email, otp } = req.body;
     if (otpStore[email] && otpStore[email] === otp) {
-        delete otpStore[email]; // Security ke liye verify hone ke baad delete
+        delete otpStore[email]; 
         res.status(200).json({ message: "Verified" });
     } else {
         res.status(400).json({ error: "Invalid OTP" });
@@ -99,32 +114,27 @@ app.post('/api/verify-otp', (req, res) => {
 });
 
 // ==========================================
-// 2. CONTACT FORM ROUTE (Newly Added for index.html)
+// 2. CONTACT FORM ROUTE
 // ==========================================
 
 app.post('/api/enquiry', async (req, res) => {
     const { name, phone, email, business, budget, date } = req.body;
 
-    const mailOptions = {
-        from: '"SNS ADS Leads" <sinhahaharshit67@gmail.com>',
-        to: 'sinhahaharshit67@gmail.com', // Form bharne par alert is email par aayega
-        subject: `🚀 New Strategy Call Request: ${name}`,
-        html: `
-            <div style="font-family: Arial; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
-                <h2 style="color: #d97706;">New Client Enquiry Received!</h2>
-                <p><strong>Name:</strong> ${name}</p>
-                <p><strong>Phone:</strong> ${phone}</p>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>Business Name:</strong> ${business || 'N/A'}</p>
-                <p><strong>Monthly Budget:</strong> ${budget || 'N/A'}</p>
-                <p><strong>Submission Time:</strong> ${new Date(date).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</p>
-            </div>
-        `
-    };
+    const subject = `🚀 New Strategy Call Request: ${name}`;
+    const htmlContent = `
+        <div style="font-family: Arial; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+            <h2 style="color: #d97706;">New Client Enquiry Received!</h2>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Phone:</strong> ${phone}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Business Name:</strong> ${business || 'N/A'}</p>
+            <p><strong>Monthly Budget:</strong> ${budget || 'N/A'}</p>
+            <p><strong>Time:</strong> ${new Date(date).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</p>
+        </div>
+    `;
 
     try {
-        await transporter.sendMail(mailOptions);
-        console.log("Enquiry lead sent via Email");
+        await sendEmailViaBrevo('sinhahaharshit67@gmail.com', 'Admin', subject, htmlContent);
         res.status(200).json({ message: "Enquiry received successfully" });
     } catch (err) {
         console.error("Enquiry Email Error:", err);
@@ -140,15 +150,14 @@ app.post('/api/create-order', async (req, res) => {
     try {
         const { amount } = req.body;
         const options = {
-            amount: Math.round(amount * 100), // Paise mein convert karna zaroori hai
+            amount: Math.round(amount * 100),
             currency: "INR",
             receipt: `receipt_${Date.now()}`
         };
         const order = await razorpay.orders.create(options);
         res.status(200).json(order);
     } catch (err) {
-        console.error("Razorpay Order Error:", err);
-        res.status(500).json({ error: "Razorpay order fail ho gaya", detail: err.message });
+        res.status(500).json({ error: "Razorpay order failed", detail: err.message });
     }
 });
 
@@ -156,35 +165,29 @@ app.post('/api/payment-success', async (req, res) => {
     try {
         const { name, email, service, amount, paymentId, orderId } = req.body;
         
-        // MongoDB mein lead save karna
         const newLead = new Lead({
             name, email, service,
-            amount: amount / 100, // Wapas Rupees mein save karne ke liye
+            amount: amount / 100, 
             paymentId, orderId,
             paymentStatus: 'Paid'
         });
         await newLead.save();
 
-        // Confirmation Email (Background mein user ko jayega)
-        const mailOptions = {
-            from: '"SNS ADS Growth" <sinhahaharshit67@gmail.com>',
-            to: email,
-            subject: 'Order Confirmed - Welcome to SNS ADS 🚀',
-            html: `
-                <div style="font-family: Arial; padding: 20px;">
-                    <h2 style="color: #16a34a;">Dhanyawad ${name}!</h2>
-                    <p>Aapka payment successful raha for <strong>${service}</strong>.</p>
-                    <p>Amount Paid: ₹${amount / 100}</p>
-                    <p>Humari team jald hi aapke onboarding ke liye contact karegi.</p>
-                </div>
-            `
-        };
-        transporter.sendMail(mailOptions).catch(e => console.log("Email send fail (silent):", e.message));
+        const subject = 'Order Confirmed - Welcome to SNS ADS 🚀';
+        const htmlContent = `
+            <div style="font-family: Arial; padding: 20px;">
+                <h2 style="color: #16a34a;">Dhanyawad ${name}!</h2>
+                <p>Aapka payment successful raha for <strong>${service}</strong>.</p>
+                <p>Amount Paid: ₹${amount / 100}</p>
+                <p>Humari team jald hi aapke onboarding ke liye contact karegi.</p>
+            </div>
+        `;
+        
+        sendEmailViaBrevo(email, name, subject, htmlContent).catch(e => console.log("Silent Email Fail:", e.message));
 
         res.status(200).json({ message: "Lead saved successfully" });
     } catch (err) {
-        console.error("Database Save Error:", err);
-        res.status(500).json({ error: "Data save nahi ho paya" });
+        res.status(500).json({ error: "Data save failed" });
     }
 });
 
@@ -194,7 +197,6 @@ app.post('/api/payment-success', async (req, res) => {
 
 app.get('/api/admin/leads', async (req, res) => {
     try {
-        // MongoDB se saari leads nikaalo (latest orders upar aayenge)
         const leads = await Lead.find().sort({ date: -1 });
         res.status(200).json(leads);
     } catch (err) {
