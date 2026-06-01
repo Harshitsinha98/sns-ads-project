@@ -37,30 +37,25 @@
 </head>
 <body class="hero-gradient text-white min-h-screen">
 
-    <!-- Navbar -->
     <nav class="fixed top-0 left-0 w-full z-[100] bg-black/60 backdrop-blur-md border-b border-white/5 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 md:px-10 py-5 flex justify-between items-center">
             
-            <!-- Brand Logo -->
             <a href="index.html" class="flex items-center gap-3">
                 <div class="h-10 w-1 bg-blue-600 rounded-full"></div>
                 <div class="text-2xl font-black tracking-tight text-white uppercase">SNS ADS</div>
             </a>
 
-            <!-- Menu Links -->
             <div class="hidden md:flex items-center gap-12">
                 <div class="flex gap-10 text-[11px] font-bold text-gray-400 uppercase tracking-[0.25em]">
                     <a href="#about" class="hover:text-blue-500 transition">Strategy</a>
                     <a href="#pricing" class="hover:text-blue-500 transition">Plans</a>
                     <a href="#enquire" class="hover:text-blue-500 transition">Contact</a>
                 </div>
-                <!-- Dynamic Login/Portal Button -->
                 <button onclick="window.loginAndCheckout(null, null)" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition shadow-lg shadow-blue-600/20">
                     Portal Login
                 </button>
             </div>
 
-            <!-- Mobile Menu Icon -->
             <div class="md:hidden text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
@@ -69,15 +64,11 @@
         </div>
     </nav>
 
-    <!-- Spacer -->
     <div class="h-20"></div>
 
-    <!-- ================= ELITE HIGH-END HERO SECTION WITH VIDEO ================= -->
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden py-24 md:py-32">
-        <!-- Background Core Layer -->
         <div class="absolute inset-0 z-0">
             <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-[0.22] scale-105 transition-transform duration-[10000ms] ease-out">
-                <!-- Local Video Path mapped for your setup -->
                 <source src="assets/hero-bg.mp4" type="video/mp4">
             </video>
             <div class="absolute inset-0 bg-gradient-to-b from-black via-slate-950/40 to-black"></div>
@@ -88,7 +79,6 @@
         <div class="absolute top-1/4 left-1/10 w-72 h-72 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none animate-pulse hidden md:block"></div>
         <div class="absolute bottom-1/4 right-1/10 w-96 h-96 bg-red-600/5 rounded-full blur-[150px] pointer-events-none hidden md:block"></div>
 
-        <!-- Main Interface -->
         <div class="relative z-10 text-center px-6 max-w-6xl mx-auto flex flex-col items-center">
             <div class="inline-flex items-center gap-3 bg-white/[0.02] border border-white/10 backdrop-blur-md px-5 py-2.5 rounded-full mb-10 transform hover:scale-102 transition duration-300 shadow-[0_0_30px_rgba(37,99,235,0.05)] group">
                 <span class="relative flex h-2 w-2">
@@ -125,7 +115,6 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
     <section id="enquire" class="py-24 px-6 max-w-7xl mx-auto border-t border-white/5">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             <div class="hidden md:block relative group">
@@ -188,8 +177,7 @@
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section id="about" class="py-16 md:py-32 px-6 max-w-7xl mx-auto">
+    <section id="about" class="py-16 md:py-32 px-6 max-w-7xl mx-auto border-t border-white/5">
         <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
             <div class="md:col-span-8 glass-card p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] border-t border-blue-500/30">
                 <h2 class="text-blue-500 font-bold uppercase tracking-widest text-[10px] mb-4 italic">Performance Marketing</h2>
@@ -218,10 +206,8 @@
         </div>
     </section>
 
-    <!-- Pricing Grid -->
     <section class="pb-32 px-6" id="pricing">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Starter -->
             <div class="glass-card rounded-[2.5rem] p-10 flex flex-col hover:border-blue-500/30 transition-all duration-500 group text-center">
                 <div class="text-blue-500 font-bold text-xs uppercase tracking-widest mb-4">Starter</div>
                 <h3 class="text-2xl font-bold mb-6 text-white">Business Starter</h3>
@@ -234,10 +220,9 @@
                     <li>— 2 Ad Creatives</li>
                 </ul>
                 <button onclick="window.loginAndCheckout(6000, 'Business Starter')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition mb-3">Pay Now</button>
-                <button onclick="scrollToEnquire('Business Starter')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
+                <button onclick="window.scrollToEnquire('Business Starter')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
             </div>
 
-            <!-- Medium -->
             <div class="glass-card rounded-[2.5rem] p-10 flex flex-col border-blue-500/50 relative transform md:-translate-y-4 scale-105 transition-all duration-500 text-center">
                 <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-6 py-1.5 rounded-full text-[10px] font-black uppercase tracking-tighter">Most Popular</div>
                 <div class="text-blue-400 font-bold text-xs uppercase tracking-widest mb-4">Growth</div>
@@ -251,10 +236,9 @@
                     <li>✓ 5 Custom Creatives</li>
                 </ul>
                 <button onclick="window.loginAndCheckout(8000, 'Medium Business')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-blue-600/30 mb-3">Get Started</button>
-                <button onclick="scrollToEnquire('Medium Business')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
+                <button onclick="window.scrollToEnquire('Medium Business')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
             </div>
 
-            <!-- Enterprise -->
             <div class="glass-card rounded-[2.5rem] p-10 flex flex-col hover:border-blue-500/30 transition-all duration-500 text-center">
                 <div class="text-blue-500 font-bold text-xs uppercase tracking-widest mb-4">Scale</div>
                 <h3 class="text-2xl font-bold mb-6 text-white">Enterprise Level</h3>
@@ -267,12 +251,77 @@
                     <li>— Priority 24/7 Support</li>
                 </ul>
                 <button onclick="window.loginAndCheckout(14000, 'Enterprise Level')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition mb-3">Scale Now</button>
-                <button onclick="scrollToEnquire('Enterprise Level')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
+                <button onclick="window.scrollToEnquire('Enterprise Level')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <section class="py-32 px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-20">
+            <p class="text-blue-500 font-bold uppercase tracking-[0.3em] text-[10px] mb-4">Success Stories</p>
+            <h2 class="text-4xl md:text-6xl font-black tracking-tighter">What our clients say.</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-card p-8 rounded-[2.5rem] hover:border-blue-500/30 transition-all duration-500">
+                <div class="flex gap-1 text-yellow-500 mb-6 text-xs">★★★★★</div>
+                <p class="text-gray-300 italic mb-8 leading-relaxed text-sm">"SNS ADS ne hamare Meta ads ka ROI 3 guna kar diya sirf 2 mahine mein. Inki strategy ekdum focused aur data-driven hai."</p>
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center font-bold text-xs text-white">RK</div>
+                    <div>
+                        <h4 class="font-bold text-sm">Rahul Kapoor</h4>
+                        <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Founder, TechGadgets</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card p-8 rounded-[2.5rem] hover:border-blue-500/30 transition-all duration-500">
+                <div class="flex gap-1 text-yellow-500 mb-6 text-xs">★★★★★</div>
+                <p class="text-gray-300 italic mb-8 leading-relaxed text-sm">"Working with Harshit and his team was the best decision for our Google Ads campaigns. Genuine leads aur transparency bhot pasand aayi."</p>
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center font-bold text-xs text-white">AS</div>
+                    <div>
+                        <h4 class="font-bold text-sm">Anjali Sharma</h4>
+                        <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">CEO, Luxe Decor</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card p-8 rounded-[2.5rem] hover:border-blue-500/30 transition-all duration-500">
+                <div class="flex gap-1 text-yellow-500 mb-6 text-xs">★★★★★</div>
+                <p class="text-gray-300 italic mb-8 leading-relaxed text-sm">"Inka client portal bhot helpful hai. Saara progress real-time dikhta hai. Creative ads ne hamare brand ko bhot help ki."</p>
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center font-bold text-xs text-white">VP</div>
+                    <div>
+                        <h4 class="font-bold text-sm">Vikram Pratap</h4>
+                        <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Marketing Head, FitLife</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-[#ff2020] py-32 px-6 text-center text-white">
+        <div class="max-w-4xl mx-auto">
+            <p class="text-[10px] font-black uppercase tracking-[0.4em] mb-8 opacity-80">Ready to Grow?</p>
+            <h2 class="text-6xl md:text-8xl font-black tracking-tighter leading-none mb-10">
+                Let's build <br> something great.
+            </h2>
+            <p class="text-white/80 text-lg md:text-xl mb-12 max-w-2xl mx-auto font-medium">
+                Book a free strategy call. We'll audit your current marketing, identify gaps, and show you exactly how we'd scale your brand.
+            </p>
+            
+            <div class="flex flex-col md:flex-row justify-center items-center gap-6">
+                <a href="#enquire" class="bg-white text-black px-12 py-6 rounded-full font-black uppercase tracking-widest text-xs hover:bg-black hover:text-white transition-all shadow-2xl">
+                    Book a call ↗
+                </a>
+                <a href="mailto:sinha.harshit@gmail.com" class="bg-transparent border border-white/30 text-white px-12 py-6 rounded-full font-black uppercase tracking-widest text-xs hover:bg-white hover:text-black transition-all">
+                    sinha.harshit@gmail.com
+                </a>
+            </div>
+        </div>
+    </section>
+
     <footer class="bg-black text-white py-20 px-10 border-t border-white/5">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
             <div class="flex flex-col items-center md:items-start">
@@ -294,7 +343,6 @@
         </div>
     </footer>
 
-    <!-- NEW FIREBASE LOGIN GATE LOGIC -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -314,15 +362,11 @@
 
         let currentUserInstance = null;
 
-        // Listen for Authentication State
+        // Listen for Auth State 
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 currentUserInstance = user;
-                const pendingPlan = localStorage.getItem('pending_selected_plan');
-                const pendingAmount = localStorage.getItem('pending_selected_amount');
-                if (pendingPlan && pendingAmount) {
-                    proceedToCheckoutRedirect(pendingAmount, pendingPlan);
-                }
+                // Auto-redirect hataya gaya hai taaki loop na bane
             } else {
                 currentUserInstance = null;
             }
@@ -336,27 +380,32 @@
                 if (amount && plan) {
                     localStorage.setItem('pending_selected_plan', plan);
                     localStorage.setItem('pending_selected_amount', amount);
+                } else {
+                    localStorage.removeItem('pending_selected_plan');
+                    localStorage.removeItem('pending_selected_amount');
                 }
                 openLoginGateModal();
             }
         };
 
-        // Redirect Helper
-        function proceedToCheckoutRedirect(amount, plan) {
+        // Strict Redirect Helper
+        window.proceedToCheckoutRedirect = function(amount, plan) {
             localStorage.removeItem('pending_selected_plan');
             localStorage.removeItem('pending_selected_amount');
-            if(amount && plan) {
+            
+            // Checking strictly against null values
+            if(amount && plan && amount !== 'null' && plan !== 'null' && amount !== 'undefined') {
                 window.location.href = `checkout.html?amount=${amount}&plan=${encodeURIComponent(plan)}`;
             } else {
-                window.location.href = "dashboard.html"; // If they just clicked "Portal Login"
+                window.location.href = "dashboard.html"; // Ensure your file is named dashboard.html lowercase
             }
-        }
+        };
 
         // Modal Handlers
-        function openLoginGateModal() {
+        window.openLoginGateModal = function() {
             document.getElementById('loginGateModal').classList.remove('hidden');
             document.getElementById('loginGateModal').classList.add('flex');
-        }
+        };
         window.closeLoginGate = function() {
             document.getElementById('loginGateModal').classList.add('hidden');
             document.getElementById('loginGateModal').classList.remove('flex');
@@ -367,6 +416,10 @@
             try {
                 await signInWithPopup(auth, provider);
                 closeLoginGate();
+                // Manually trigger redirect after successful login
+                const pendingPlan = localStorage.getItem('pending_selected_plan');
+                const pendingAmount = localStorage.getItem('pending_selected_amount');
+                window.proceedToCheckoutRedirect(pendingAmount, pendingPlan);
             } catch (error) { 
                 alert("Authentication Interrupted: " + error.message); 
             }
@@ -417,9 +470,9 @@
                     alert("Verified Successfully!");
                     closeLoginGate();
                     
-                    const pendingPlan = localStorage.getItem('pending_selected_plan') || "Business Starter";
-                    const pendingAmount = localStorage.getItem('pending_selected_amount') || "6000";
-                    proceedToCheckoutRedirect(pendingAmount, pendingPlan);
+                    const pendingPlan = localStorage.getItem('pending_selected_plan');
+                    const pendingAmount = localStorage.getItem('pending_selected_amount');
+                    window.proceedToCheckoutRedirect(pendingAmount, pendingPlan);
                 } else {
                     alert("Incorrect Code!");
                 }
@@ -481,11 +534,10 @@
         };
     </script>
 
-    <!-- NEW LOGIN GATE MODAL -->
     <div id="loginGateModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/85 backdrop-blur-md p-6">
         <div class="glass-card max-w-md w-full rounded-[2.5rem] p-8 shadow-2xl relative border border-white/10 bg-zinc-950/90 text-center">
             
-            <button onclick="closeLoginGate()" class="absolute top-6 right-8 text-gray-500 hover:text-white text-2xl transition">&times;</button>
+            <button onclick="window.closeLoginGate()" class="absolute top-6 right-8 text-gray-500 hover:text-white text-2xl transition">&times;</button>
             
             <div class="mb-6 mt-2">
                 <div class="text-blue-500 font-bold text-[10px] uppercase tracking-[0.3em] mb-2">Security Verification</div>
