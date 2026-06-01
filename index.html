@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SNS ADS | Premium Growth Agency</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
@@ -25,7 +26,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
         /* Mobile optimization for large headings */
         @media (max-width: 768px) {
             h1 { font-size: 3.5rem !important; line-height: 1 !important; }
@@ -38,8 +38,7 @@
 <body class="hero-gradient text-white min-h-screen">
 
     <nav class="fixed top-0 left-0 w-full z-[100] bg-black/60 backdrop-blur-md border-b border-white/5 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-6 md:px-10 py-5 flex justify-between items-center">
-            
+        <div class="max-w-7xl mx-auto px-10 py-5 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-3">
                 <div class="h-10 w-1 bg-blue-600 rounded-full"></div>
                 <div class="text-2xl font-black tracking-tight text-white uppercase">SNS ADS</div>
@@ -55,7 +54,7 @@
                     Portal Login
                 </button>
             </div>
-
+            
             <div class="md:hidden text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
@@ -98,23 +97,19 @@
             </h1>
             
             <p class="text-gray-400 text-base sm:text-lg md:text-xl max-w-2xl mx-auto mb-14 font-medium leading-relaxed px-2 md:px-0">
-                We bypass traditional marketing frameworks to turn mathematical algorithms into predictable enterprise revenue. <span class="text-white/80 font-semibold border-b border-blue-500/30 pb-0.5">ROI-driven performance execution</span> for high-scale digital brands.
+                We turn algorithms into revenue machines. ROI-driven growth for ambitious brands.
             </p>
 
             <div class="flex flex-col sm:flex-row gap-5 justify-center items-center w-full sm:w-auto px-4 sm:px-0">
-                <a href="#pricing" class="w-full sm:w-auto text-center bg-blue-600 hover:bg-blue-500 text-white px-12 py-5 rounded-full font-extrabold uppercase tracking-widest text-[11px] shadow-[0_10px_30px_rgba(37,99,235,0.3)] hover:shadow-[0_15px_35px_rgba(37,99,235,0.5)] transform hover:-translate-y-0.5 transition-all duration-300 group flex items-center justify-center gap-2">
+                <a href="#pricing" class="w-full sm:w-auto text-center bg-blue-600 hover:bg-blue-500 text-white px-12 py-5 rounded-full font-extrabold uppercase tracking-widest text-[11px] shadow-[0_10px_30px_rgba(37,99,235,0.3)] transform transition-all duration-300 group">
                     Launch Campaign 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
                 </a>
-                <a href="#enquire" class="w-full sm:w-auto text-center bg-white/[0.02] hover:bg-white/[0.06] text-gray-300 hover:text-white px-12 py-5 rounded-full font-extrabold uppercase tracking-widest text-[11px] border border-white/10 hover:border-white/20 backdrop-blur-md transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2">
+                <a href="#enquire" class="w-full sm:w-auto text-center bg-white/[0.02] hover:bg-white/[0.06] text-gray-300 hover:text-white px-12 py-5 rounded-full font-extrabold uppercase tracking-widest text-[11px] border border-white/10 backdrop-blur-md transform transition-all duration-300">
                     Strategy Call ⚡
                 </a>
             </div>
         </div>
     </section>
-
     <section id="enquire" class="py-24 px-6 max-w-7xl mx-auto border-t border-white/5">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             <div class="hidden md:block relative group">
@@ -142,12 +137,10 @@
                             <input type="tel" id="formPhone" placeholder="+91 98765 43210" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-red-500/50 transition text-white text-sm" required>
                         </div>
                     </div>
-
                     <div class="space-y-2">
                         <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1">Email Address</label>
                         <input type="email" id="formEmail" placeholder="jane@company.com" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-red-500/50 transition text-white text-sm" required>
                     </div>
-
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-2">
                             <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1">Business Name</label>
@@ -163,12 +156,12 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="flex flex-col md:flex-row gap-4 pt-4">
                         <button type="submit" class="flex-1 bg-red-600 hover:bg-red-500 text-white py-5 rounded-2xl font-bold uppercase tracking-widest transition shadow-lg shadow-red-600/20 flex items-center justify-center gap-2">
                             Submit <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                         </button>
                         <a href="https://wa.me/917016163373" target="_blank" class="flex-1 bg-transparent border border-white/10 hover:bg-white/5 text-white py-5 rounded-2xl font-bold uppercase tracking-widest transition flex items-center justify-center gap-3">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                             WhatsApp us
                         </a>
                     </div>
@@ -177,7 +170,7 @@
         </div>
     </section>
 
-    <section id="about" class="py-16 md:py-32 px-6 max-w-7xl mx-auto border-t border-white/5">
+    <section id="about" class="py-16 md:py-32 px-6 max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
             <div class="md:col-span-8 glass-card p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] border-t border-blue-500/30">
                 <h2 class="text-blue-500 font-bold uppercase tracking-widest text-[10px] mb-4 italic">Performance Marketing</h2>
@@ -202,6 +195,49 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-32 px-6 max-w-7xl mx-auto border-t border-white/5">
+        <div class="mb-16">
+            <p class="text-red-500 font-bold uppercase tracking-[0.3em] text-[10px] mb-4">What We Do</p>
+            <h2 class="text-5xl md:text-7xl font-black tracking-tighter leading-tight">
+                Everything your brand <br>
+                <span class="text-gray-500">needs to Grow.</span>
+            </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 border border-white/10 rounded-[2.5rem] overflow-hidden bg-white/5 backdrop-blur-sm">
+            <div class="p-12 border-b border-r border-white/10 hover:bg-white/5 transition-all group relative">
+                <span class="text-red-500 font-black text-xs">01</span>
+                <h4 class="text-2xl font-bold mt-6 mb-4">Social Media Marketing</h4>
+                <p class="text-gray-400 text-sm leading-relaxed">Hyper-targeted campaigns built for engagement, reach, and conversion across every major platform.</p>
+            </div>
+            <div class="p-12 border-b border-r border-white/10 hover:bg-white/5 transition-all group relative">
+                <span class="text-red-500 font-black text-xs">02</span>
+                <h4 class="text-2xl font-bold mt-6 mb-4">Brand Strategy</h4>
+                <p class="text-gray-400 text-sm leading-relaxed">From identity to narrative — we architect brands that command attention and earn loyalty.</p>
+            </div>
+            <div class="p-12 border-b border-white/10 hover:bg-white/5 transition-all group relative">
+                <span class="text-red-500 font-black text-xs">03</span>
+                <h4 class="text-2xl font-bold mt-6 mb-4">Content Creation</h4>
+                <p class="text-gray-400 text-sm leading-relaxed">High-impact visuals, video, and copy that stop the scroll and start the conversation.</p>
+            </div>
+            <div class="p-12 border-r border-white/10 hover:bg-white/5 transition-all group relative">
+                <span class="text-red-500 font-black text-xs">04</span>
+                <h4 class="text-2xl font-bold mt-6 mb-4">Paid Advertising</h4>
+                <p class="text-gray-400 text-sm leading-relaxed">Performance-driven media buying that maximises every dollar across Meta, Google, LinkedIn, and beyond.</p>
+            </div>
+            <div class="p-12 border-r border-white/10 hover:bg-white/5 transition-all group relative">
+                <span class="text-red-500 font-black text-xs">05</span>
+                <h4 class="text-2xl font-bold mt-6 mb-4">SEO & Growth</h4>
+                <p class="text-gray-400 text-sm leading-relaxed">Organic visibility strategies that compound over time and reduce your reliance on paid channels.</p>
+            </div>
+            <div class="p-12 hover:bg-white/5 transition-all group relative">
+                <span class="text-red-500 font-black text-xs">06</span>
+                <h4 class="text-2xl font-bold mt-6 mb-4">Analytics & Reporting</h4>
+                <p class="text-gray-400 text-sm leading-relaxed">Crystal-clear dashboards and insights that tie marketing activity directly to revenue.</p>
             </div>
         </div>
     </section>
@@ -267,7 +303,7 @@
                 <div class="flex gap-1 text-yellow-500 mb-6 text-xs">★★★★★</div>
                 <p class="text-gray-300 italic mb-8 leading-relaxed text-sm">"SNS ADS ne hamare Meta ads ka ROI 3 guna kar diya sirf 2 mahine mein. Inki strategy ekdum focused aur data-driven hai."</p>
                 <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center font-bold text-xs text-white">RK</div>
+                    <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center font-bold text-xs">RK</div>
                     <div>
                         <h4 class="font-bold text-sm">Rahul Kapoor</h4>
                         <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Founder, TechGadgets</p>
@@ -279,7 +315,7 @@
                 <div class="flex gap-1 text-yellow-500 mb-6 text-xs">★★★★★</div>
                 <p class="text-gray-300 italic mb-8 leading-relaxed text-sm">"Working with Harshit and his team was the best decision for our Google Ads campaigns. Genuine leads aur transparency bhot pasand aayi."</p>
                 <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center font-bold text-xs text-white">AS</div>
+                    <div class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center font-bold text-xs">AS</div>
                     <div>
                         <h4 class="font-bold text-sm">Anjali Sharma</h4>
                         <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">CEO, Luxe Decor</p>
@@ -291,7 +327,7 @@
                 <div class="flex gap-1 text-yellow-500 mb-6 text-xs">★★★★★</div>
                 <p class="text-gray-300 italic mb-8 leading-relaxed text-sm">"Inka client portal bhot helpful hai. Saara progress real-time dikhta hai. Creative ads ne hamare brand ko bhot help ki."</p>
                 <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center font-bold text-xs text-white">VP</div>
+                    <div class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center font-bold text-xs">VP</div>
                     <div>
                         <h4 class="font-bold text-sm">Vikram Pratap</h4>
                         <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Marketing Head, FitLife</p>
@@ -310,7 +346,6 @@
             <p class="text-white/80 text-lg md:text-xl mb-12 max-w-2xl mx-auto font-medium">
                 Book a free strategy call. We'll audit your current marketing, identify gaps, and show you exactly how we'd scale your brand.
             </p>
-            
             <div class="flex flex-col md:flex-row justify-center items-center gap-6">
                 <a href="#enquire" class="bg-white text-black px-12 py-6 rounded-full font-black uppercase tracking-widest text-xs hover:bg-black hover:text-white transition-all shadow-2xl">
                     Book a call ↗
@@ -337,9 +372,19 @@
                 <a href="#pricing" class="hover:text-blue-500 transition-all duration-300">About</a>
                 <a href="#enquire" class="hover:text-blue-500 transition-all duration-300">Results</a>
             </div>
+            <div class="flex gap-5">
+                <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-500"><i class="fab fa-instagram text-xs"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-500"><i class="fab fa-linkedin-in text-xs"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-500"><i class="fab fa-facebook-f text-xs"></i></a>
+                <a href="https://wa.me/917016163373" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-green-500 hover:text-white transition-all duration-500"><i class="fab fa-whatsapp text-xs"></i></a>
+            </div>
         </div>
         <div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[9px] text-gray-600 font-bold uppercase tracking-widest gap-4">
             <div>© 2026 SNS ADS. All rights reserved. Engineered with ❤️ by Harshit Sinha</div>
+            <div class="flex gap-8">
+                <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                <a href="#" class="hover:text-white transition">Terms of Service</a>
+            </div>
         </div>
     </footer>
 
@@ -362,20 +407,18 @@
 
         let currentUserInstance = null;
 
-        // Listen for Auth State 
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 currentUserInstance = user;
-                // Auto-redirect hataya gaya hai taaki loop na bane
             } else {
                 currentUserInstance = null;
             }
         });
 
-        // Main Checkout Interceptor
+        // 1. Pricing Button Click Interceptor
         window.loginAndCheckout = function(amount, plan) {
             if (currentUserInstance) {
-                proceedToCheckoutRedirect(amount, plan);
+                window.proceedToCheckoutRedirect(amount, plan);
             } else {
                 if (amount && plan) {
                     localStorage.setItem('pending_selected_plan', plan);
@@ -384,24 +427,23 @@
                     localStorage.removeItem('pending_selected_plan');
                     localStorage.removeItem('pending_selected_amount');
                 }
-                openLoginGateModal();
+                window.openLoginGateModal();
             }
         };
 
-        // Strict Redirect Helper
+        // 2. Exact Redirect Logic (404 fix - ensure lower case checkout.html & dashboard.html in your folder)
         window.proceedToCheckoutRedirect = function(amount, plan) {
             localStorage.removeItem('pending_selected_plan');
             localStorage.removeItem('pending_selected_amount');
             
-            // Checking strictly against null values
             if(amount && plan && amount !== 'null' && plan !== 'null' && amount !== 'undefined') {
                 window.location.href = `checkout.html?amount=${amount}&plan=${encodeURIComponent(plan)}`;
             } else {
-                window.location.href = "dashboard.html"; // Ensure your file is named dashboard.html lowercase
+                window.location.href = "dashboard.html"; 
             }
         };
 
-        // Modal Handlers
+        // 3. Modal Toggles
         window.openLoginGateModal = function() {
             document.getElementById('loginGateModal').classList.remove('hidden');
             document.getElementById('loginGateModal').classList.add('flex');
@@ -411,12 +453,11 @@
             document.getElementById('loginGateModal').classList.remove('flex');
         };
 
-        // Google Auth
+        // 4. Google Login
         window.loginWithGoogle = async function() {
             try {
                 await signInWithPopup(auth, provider);
-                closeLoginGate();
-                // Manually trigger redirect after successful login
+                window.closeLoginGate();
                 const pendingPlan = localStorage.getItem('pending_selected_plan');
                 const pendingAmount = localStorage.getItem('pending_selected_amount');
                 window.proceedToCheckoutRedirect(pendingAmount, pendingPlan);
@@ -425,7 +466,7 @@
             }
         };
 
-        // Email OTP Auth
+        // 5. OTP Login
         window.triggerEmailOTP = async function() {
             const emailInput = document.getElementById('gateEmail').value.trim();
             if(!emailInput) return alert("Please enter your email!");
@@ -468,7 +509,7 @@
 
                 if (response.ok) {
                     alert("Verified Successfully!");
-                    closeLoginGate();
+                    window.closeLoginGate();
                     
                     const pendingPlan = localStorage.getItem('pending_selected_plan');
                     const pendingAmount = localStorage.getItem('pending_selected_amount');
@@ -481,7 +522,7 @@
             }
         };
 
-        // Contact Form Handling
+        // 6. Contact Form Submission (Retained as requested)
         document.getElementById('contactForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const formData = {
@@ -517,7 +558,7 @@
             }
         });
 
-        // Navbar Scroll Effect
+        // 7. Navbar scroll & anchor jumps
         window.addEventListener('scroll', function() {
             const nav = document.querySelector('nav');
             if (window.scrollY > 50) {
