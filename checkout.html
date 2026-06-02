@@ -22,34 +22,33 @@
         <h2 class="text-3xl font-bold mb-6 text-blue-400">Complete Your Order</h2>
         
         <div id="checkoutForm" class="space-y-5">
-            <!-- Basic Details -->
             <input type="text" id="custName" placeholder="Full Name" class="input-style">
             
-            <!-- Email Block -->
             <div>
                 <div class="flex gap-2">
                     <input type="email" id="custEmail" placeholder="Business Email" class="input-style">
-                    <button id="emailBtn" onclick="handleEmail()" class="bg-blue-600 px-5 rounded-xl font-bold hover:bg-blue-500 whitespace-nowrap transition">Verify</button>
+                    <button id="emailBtn" onclick="window.handleEmail()" class="bg-blue-600 px-5 rounded-xl font-bold hover:bg-blue-500 whitespace-nowrap transition">Verify</button>
                 </div>
                 <div id="emailOtpGroup" class="hidden mt-2 flex gap-2">
                     <input type="text" id="emailOtp" placeholder="Enter Email OTP" class="input-style">
-                    <button onclick="verifyEmailOTP()" class="bg-green-600 px-5 rounded-xl font-bold transition">Confirm</button>
+                    <button onclick="window.verifyEmailOTP()" class="bg-green-600 px-5 rounded-xl font-bold transition">Confirm</button>
                 </div>
             </div>
 
-            <!-- Phone Block -->
             <div>
                 <div class="flex gap-2">
                     <input type="tel" id="custPhone" placeholder="Mobile Number" class="input-style">
-                    <button id="phoneBtn" onclick="handlePhone()" class="bg-blue-600 px-5 rounded-xl font-bold hover:bg-blue-500 whitespace-nowrap transition">Verify</button>
+                    <button id="phoneBtn" onclick="window.handlePhone()" class="bg-blue-600 px-5 rounded-xl font-bold hover:bg-blue-500 whitespace-nowrap transition">Verify</button>
                 </div>
+                
+                <div id="recaptcha-container" class="my-2"></div>
+
                 <div id="phoneOtpGroup" class="hidden mt-2 flex gap-2">
                     <input type="text" id="phoneOtp" placeholder="Enter Phone OTP" class="input-style">
-                    <button onclick="verifyPhoneOTP()" class="bg-green-600 px-5 rounded-xl font-bold transition">Confirm</button>
+                    <button onclick="window.verifyPhoneOTP()" class="bg-green-600 px-5 rounded-xl font-bold transition">Confirm</button>
                 </div>
             </div>
 
-            <!-- Address Block (State & City) -->
             <div class="flex gap-4">
                 <select id="custState" class="input-style flex-1 bg-[#0f172a]">
                     <option value="" disabled selected>Select State</option>
@@ -57,14 +56,12 @@
                     <option value="Bihar">Bihar</option>
                     <option value="Delhi">Delhi</option>
                     <option value="Maharashtra">Maharashtra</option>
-                    <!-- Add more states as needed -->
                 </select>
                 <input type="text" id="custCity" placeholder="City" class="input-style flex-1">
             </div>
             
             <textarea id="custAddress" placeholder="Full Address (Optional)" class="input-style h-20 resize-none"></textarea>
 
-            <!-- Order Summary -->
             <div class="p-5 bg-blue-900/20 rounded-xl border border-blue-500/30">
                 <p class="text-sm text-gray-300">Selected Service:</p>
                 <p id="planDisplay" class="text-xl font-bold text-white mb-2">Loading...</p>
@@ -75,28 +72,41 @@
                 </div>
             </div>
 
-            <button id="payBtn" disabled onclick="startPayment()" class="w-full bg-blue-600 py-4 rounded-xl font-bold text-lg uppercase tracking-wider transition disabled:opacity-30 disabled:bg-gray-600">
+            <button id="payBtn" disabled onclick="window.startPayment()" class="w-full bg-blue-600 py-4 rounded-xl font-bold text-lg uppercase tracking-wider transition disabled:opacity-30 disabled:bg-gray-600">
                 Pay Now
             </button>
         </div>
     </div>
 
-    <script>
-        let emailVerified = false;
-        let phoneVerified = false;
-        let finalAmount = 0;
-        let selectedPlan = "";
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = { 
+            apiKey: "AIzaSyB7W5HWVe1JYbqhpGdrguNrQOgU3DwW_44", 
+            authDomain: "sns-ads.firebaseapp.com", 
+            projectId: "sns-ads", 
+            storageBucket: "sns-ads.firebasestorage.app", 
+            messagingSenderId: "193364476047", 
+            appId: "1:193364476047:web:d65e2412d13a42f701f0fa" 
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        window.emailVerified = false;
+        window.phoneVerified = false;
+        window.finalAmount = 0;
+        window.selectedPlan = "";
 
         // 1. URL parsing & Form Initialization
         window.onload = () => {
             const params = new URLSearchParams(window.location.search);
-            selectedPlan = params.get('plan') || "Custom Service";
-            finalAmount = params.get('amount') || "0";
+            window.selectedPlan = params.get('plan') || "Custom Service";
+            window.finalAmount = params.get('amount') || "0";
             
-            document.getElementById('planDisplay').innerText = selectedPlan;
-            document.getElementById('totalAmt').innerText = finalAmount;
+            document.getElementById('planDisplay').innerText = window.selectedPlan;
+            document.getElementById('totalAmt').innerText = window.finalAmount;
 
-            // Check if user previously verified (LocalStorage)
             const savedEmail = localStorage.getItem('userEmail');
             const savedPhone = localStorage.getItem('userPhone');
             
@@ -105,74 +115,95 @@
                 document.getElementById('custEmail').readOnly = true;
                 document.getElementById('emailBtn').innerText = "Verified ✅";
                 document.getElementById('emailBtn').disabled = true;
-                emailVerified = true;
+                document.getElementById('emailOtpGroup').classList.add('hidden');
+                window.emailVerified = true;
             }
             if(savedPhone) {
                 document.getElementById('custPhone').value = savedPhone;
                 document.getElementById('custPhone').readOnly = true;
                 document.getElementById('phoneBtn').innerText = "Verified ✅";
                 document.getElementById('phoneBtn').disabled = true;
-                phoneVerified = true;
+                document.getElementById('phoneOtpGroup').classList.add('hidden');
+                window.phoneVerified = true;
             }
-            checkReady();
+            window.checkReady();
         };
 
-        function checkReady() {
-            if(emailVerified && phoneVerified) {
+        window.checkReady = function() {
+            if(window.emailVerified && window.phoneVerified) {
                 document.getElementById('payBtn').disabled = false;
             }
-        }
+        };
 
-        // 2. Email OTP Logic
-        async function handleEmail() {
+        // 2. Email OTP Logic (Backend se chalega)
+        window.handleEmail = async function() {
             const email = document.getElementById('custEmail').value;
             if(!email) return alert("Enter email first");
             await fetch('https://sns-ads-project.onrender.com/api/send-otp', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ email }) });
             document.getElementById('emailOtpGroup').classList.remove('hidden');
-        }
+        };
 
-        async function verifyEmailOTP() {
+        window.verifyEmailOTP = async function() {
             const email = document.getElementById('custEmail').value;
             const otp = document.getElementById('emailOtp').value;
             const res = await fetch('https://sns-ads-project.onrender.com/api/verify-otp', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ email, otp }) });
             
             if(res.ok) {
-                emailVerified = true;
-                localStorage.setItem('userEmail', email); // Save for future
+                window.emailVerified = true;
+                localStorage.setItem('userEmail', email); 
                 document.getElementById('emailOtpGroup').classList.add('hidden');
                 document.getElementById('custEmail').readOnly = true;
                 document.getElementById('emailBtn').innerText = "Verified ✅";
                 document.getElementById('emailBtn').disabled = true;
-                checkReady();
+                window.checkReady();
             } else alert("Invalid Email OTP");
-        }
+        };
 
-        // 3. Phone OTP Logic
-        async function handlePhone() {
-            const phone = document.getElementById('custPhone').value;
-            if(!phone) return alert("Enter phone first");
-            await fetch('https://sns-ads-project.onrender.com/api/send-phone-otp', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ phone }) });
-            document.getElementById('phoneOtpGroup').classList.remove('hidden');
-        }
+        // 3. Phone OTP Logic (Ab Firebase se chalega)
+        window.handlePhone = async function() {
+            const phoneInput = document.getElementById('custPhone').value.trim();
+            if(!phoneInput) return alert("Enter phone first");
 
-        async function verifyPhoneOTP() {
-            const phone = document.getElementById('custPhone').value;
-            const otp = document.getElementById('phoneOtp').value;
-            const res = await fetch('https://sns-ads-project.onrender.com/api/verify-phone-otp', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ phone, otp }) });
-            
-            if(res.ok) {
-                phoneVerified = true;
-                localStorage.setItem('userPhone', phone); // Save for future
+            const phoneNumber = phoneInput.startsWith('+') ? phoneInput : '+91' + phoneInput;
+            const btn = document.getElementById('phoneBtn');
+            btn.innerText = "Sending...";
+            btn.disabled = true;
+
+            try {
+                if(!window.recaptchaVerifier) {
+                    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+                        'size': 'invisible'
+                    });
+                }
+                window.confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier);
+                document.getElementById('phoneOtpGroup').classList.remove('hidden');
+            } catch (error) {
+                alert("SMS Error: " + error.message);
+                btn.innerText = "Verify";
+                btn.disabled = false;
+            }
+        };
+
+        window.verifyPhoneOTP = async function() {
+            const code = document.getElementById('phoneOtp').value.trim();
+            if(!code) return alert("Enter SMS Code");
+
+            try {
+                await window.confirmationResult.confirm(code);
+                window.phoneVerified = true;
+                localStorage.setItem('userPhone', document.getElementById('custPhone').value);
                 document.getElementById('phoneOtpGroup').classList.add('hidden');
                 document.getElementById('custPhone').readOnly = true;
                 document.getElementById('phoneBtn').innerText = "Verified ✅";
                 document.getElementById('phoneBtn').disabled = true;
-                checkReady();
-            } else alert("Invalid Phone OTP");
-        }
+                window.checkReady();
+            } catch (error) {
+                alert("Invalid SMS OTP");
+            }
+        };
 
         // 4. Payment Logic
-        async function startPayment() {
+        window.startPayment = async function() {
             const name = document.getElementById('custName').value;
             const email = document.getElementById('custEmail').value;
             const phone = document.getElementById('custPhone').value;
@@ -182,41 +213,38 @@
             if(!name || !state || !city) return alert("Please fill Name, State and City!");
 
             try {
-                // Change button state
                 const payBtn = document.getElementById('payBtn');
                 payBtn.innerText = "Processing...";
                 payBtn.disabled = true;
 
-                // Create Order in backend
                 const res = await fetch('https://sns-ads-project.onrender.com/api/create-order', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ amount: finalAmount }) 
+                    body: JSON.stringify({ amount: window.finalAmount }) 
                 });
                 const order = await res.json();
 
                 const options = {
-                    "key": "rzp_test_SkanzCNHx8h7vh", // Test key, change in production
+                    "key": "rzp_test_SkanzCNHx8h7vh", 
                     "amount": order.amount,
                     "currency": "INR",
                     "name": "SNS ADS",
-                    "description": selectedPlan,
+                    "description": window.selectedPlan,
                     "order_id": order.id,
                     "handler": async function (response) {
-                        // Save Data to Database
                         await fetch('https://sns-ads-project.onrender.com/api/payment-success', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
                                 name, email, 
-                                service: `${selectedPlan} (State: ${state}, City: ${city})`,
-                                amount: finalAmount * 100, // Pass in paise
+                                service: `${window.selectedPlan} (State: ${state}, City: ${city})`,
+                                amount: window.finalAmount * 100, 
                                 paymentId: response.razorpay_payment_id, 
                                 orderId: response.razorpay_order_id
                             })
                         });
                         alert("Payment Success! Welcome to SNS ADS."); 
-                        window.location.href = "index.html"; // Yahan future me dashboard redirect hoga
+                        window.location.href = "index.html"; 
                     },
                     "prefill": { "name": name, "email": email, "contact": phone },
                     "theme": { "color": "#2563eb" },
@@ -233,51 +261,7 @@
                 document.getElementById('payBtn').innerText = "Pay Now";
                 document.getElementById('payBtn').disabled = false;
             }
-        }
-
-        window.onload = () => {
-    // 1. Fetch Plan details from URL
-    const params = new URLSearchParams(window.location.search);
-    selectedPlan = params.get('plan') || "Custom Service";
-    finalAmount = params.get('amount') || "0";
-    
-    document.getElementById('planDisplay').innerText = selectedPlan;
-    document.getElementById('totalAmt').innerText = finalAmount;
-
-    // 2. Fetch Verified Credentials from LocalStorage
-    const savedEmail = localStorage.getItem('userEmail');
-    const savedPhone = localStorage.getItem('userPhone');
-    
-    // Logic 1: Agar Email / Google se login kiya hai
-    if(savedEmail) {
-        // Email lock karo
-        document.getElementById('custEmail').value = savedEmail;
-        document.getElementById('custEmail').readOnly = true;
-        document.getElementById('emailBtn').innerText = "Verified ✅";
-        document.getElementById('emailBtn').disabled = true;
-        document.getElementById('emailOtpGroup').classList.add('hidden'); // Hide OTP box
-        emailVerified = true;
-        
-        // Phone khula rakhna padega taaki user daal sake
-        phoneVerified = false; 
-    } 
-    
-    // Logic 2: Agar Phone se login kiya hai
-    if(savedPhone) {
-        // Phone lock karo
-        document.getElementById('custPhone').value = savedPhone;
-        document.getElementById('custPhone').readOnly = true;
-        document.getElementById('phoneBtn').innerText = "Verified ✅";
-        document.getElementById('phoneBtn').disabled = true;
-        document.getElementById('phoneOtpGroup').classList.add('hidden'); // Hide OTP box
-        phoneVerified = true;
-        
-        // Email khula rakhna padega
-        emailVerified = false;
-    }
-
-    checkReady(); // Check if both are verified to enable Pay Now
-};
+        };
     </script>
 </body>
 </html>
