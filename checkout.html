@@ -1,4 +1,84 @@
-<script type="module">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Checkout | SNS ADS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        body { background: radial-gradient(circle at top right, #1e3a8a, #020617, #000000); color: white; }
+        .glass-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .input-style { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); width: 100%; padding: 14px; border-radius: 12px; color: white; outline: none; }
+        .input-style:focus { border-color: #3b82f6; }
+        .input-style:disabled, .input-style[readonly] { opacity: 0.6; cursor: not-allowed; }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="glass-card max-w-lg w-full rounded-[2rem] p-8 shadow-2xl relative">
+        <a href="index.html" class="absolute top-6 right-6 text-gray-400 hover:text-white text-3xl leading-none">&times;</a>
+        
+        <h2 class="text-3xl font-bold mb-6 text-blue-400">Complete Your Order</h2>
+        
+        <div id="checkoutForm" class="space-y-5">
+            <input type="text" id="custName" placeholder="Full Name" class="input-style">
+            
+            <div>
+                <div class="flex gap-2">
+                    <input type="email" id="custEmail" placeholder="Business Email" class="input-style">
+                    <button id="emailBtn" onclick="window.handleEmail()" class="bg-blue-600 px-5 rounded-xl font-bold hover:bg-blue-500 whitespace-nowrap transition">Verify</button>
+                </div>
+                <div id="emailOtpGroup" class="hidden mt-2 flex gap-2">
+                    <input type="text" id="emailOtp" placeholder="Enter Email OTP" class="input-style">
+                    <button onclick="window.verifyEmailOTP()" class="bg-green-600 px-5 rounded-xl font-bold transition">Confirm</button>
+                </div>
+            </div>
+
+            <div>
+                <div class="flex gap-2">
+                    <input type="tel" id="custPhone" placeholder="Mobile Number" class="input-style">
+                    <button id="phoneBtn" onclick="window.handlePhone()" class="bg-blue-600 px-5 rounded-xl font-bold hover:bg-blue-500 whitespace-nowrap transition">Verify</button>
+                </div>
+                
+                <div id="recaptcha-container" class="my-2"></div>
+
+                <div id="phoneOtpGroup" class="hidden mt-2 flex gap-2">
+                    <input type="text" id="phoneOtp" placeholder="Enter Phone OTP" class="input-style">
+                    <button onclick="window.verifyPhoneOTP()" class="bg-green-600 px-5 rounded-xl font-bold transition">Confirm</button>
+                </div>
+            </div>
+
+            <div class="flex gap-4">
+                <select id="custState" class="input-style flex-1 bg-[#0f172a]">
+                    <option value="" disabled selected>Select State</option>
+                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                    <option value="Bihar">Bihar</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Maharashtra">Maharashtra</option>
+                </select>
+                <input type="text" id="custCity" placeholder="City" class="input-style flex-1">
+            </div>
+            
+            <textarea id="custAddress" placeholder="Full Address (Optional)" class="input-style h-20 resize-none"></textarea>
+
+            <div class="p-5 bg-blue-900/20 rounded-xl border border-blue-500/30">
+                <p class="text-sm text-gray-300">Selected Service:</p>
+                <p id="planDisplay" class="text-xl font-bold text-white mb-2">Loading...</p>
+                <div class="w-full h-px bg-white/10 my-2"></div>
+                <div class="flex justify-between items-center mt-2">
+                    <span class="text-lg">Total Amount:</span>
+                    <span class="text-2xl font-black text-green-400">₹<span id="totalAmt">0</span></span>
+                </div>
+            </div>
+
+            <button id="payBtn" disabled onclick="window.startPayment()" class="w-full bg-blue-600 py-4 rounded-xl font-bold text-lg uppercase tracking-wider transition disabled:opacity-30 disabled:bg-gray-600">
+                Pay Now
+            </button>
+        </div>
+    </div>
+
+    <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
@@ -18,7 +98,6 @@
         window.finalAmount = 0;
         window.selectedPlan = "";
 
-        // 1. URL parsing & Form Initialization
         window.onload = () => {
             const params = new URLSearchParams(window.location.search);
             window.selectedPlan = params.get('plan') || "Custom Service";
@@ -55,7 +134,6 @@
             }
         };
 
-        // 2. Email OTP Logic 
         window.handleEmail = async function() {
             const email = document.getElementById('custEmail').value;
             if(!email) return alert("Enter email first");
@@ -96,7 +174,6 @@
             } else alert("Invalid Email OTP");
         };
 
-        // 3. Phone OTP Logic (FIXED)
         window.handlePhone = async function() {
             const phoneInput = document.getElementById('custPhone').value.trim();
             if(!phoneInput) return alert("Enter phone first");
@@ -107,7 +184,6 @@
             btn.disabled = true;
 
             try {
-                // IMPORTANT: Bind reCAPTCHA directly to the button id ('phoneBtn')
                 if(!window.recaptchaVerifier) {
                     window.recaptchaVerifier = new RecaptchaVerifier(auth, 'phoneBtn', {
                         'size': 'invisible'
@@ -115,7 +191,6 @@
                 }
                 
                 window.confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier);
-                
                 document.getElementById('phoneOtpGroup').classList.remove('hidden');
                 btn.innerText = "OTP Sent";
                 
@@ -124,8 +199,6 @@
                 alert("SMS Error: " + error.message);
                 btn.innerText = "Verify";
                 btn.disabled = false;
-                
-                // Clear the corrupted recaptcha so user can try again
                 if (window.recaptchaVerifier) {
                     window.recaptchaVerifier.clear();
                     window.recaptchaVerifier = null;
@@ -151,7 +224,6 @@
             }
         };
 
-        // 4. Payment Logic
         window.startPayment = async function() {
             const name = document.getElementById('custName').value;
             const email = document.getElementById('custEmail').value;
@@ -174,7 +246,7 @@
                 const order = await res.json();
 
                 const options = {
-                    "key": "rzp_test_SkanzCNHx8h7vh", 
+                    "key": "rzp_test_SwfcWLGaYQOkKJ", // UPDATED KEY ID HERE
                     "amount": order.amount,
                     "currency": "INR",
                     "name": "SNS ADS",
@@ -193,7 +265,7 @@
                             })
                         });
                         alert("Payment Success! Welcome to SNS ADS."); 
-                        window.location.href = "index.html"; 
+                        window.location.href = "dashboard.html"; // Ab seedha naye dashboard par bhejenge
                     },
                     "prefill": { "name": name, "email": email, "contact": phone },
                     "theme": { "color": "#2563eb" },
@@ -212,3 +284,5 @@
             }
         };
     </script>
+</body>
+</html>

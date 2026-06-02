@@ -3,168 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Dashboard | SNS ADS</title>
+    <title>Client Portal | SNS ADS</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .hero-gradient {
-            background: radial-gradient(circle at top right, #1e3a8a, #0f172a, #000000);
-        }
-        /* Smooth progress bar transition */
-        #progressBar { transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        body { background: #020617; color: white; font-family: 'Inter', sans-serif; }
+        .glass-panel { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); }
+        .hero-glow { background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.15), transparent 40%); }
     </style>
 </head>
-<body class="hero-gradient text-white min-h-screen">
+<body class="min-h-screen hero-glow flex flex-col">
 
-    <!-- Navbar -->
-    <nav class="p-6 border-b border-white/5 bg-black/20 backdrop-blur-lg">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="text-2xl font-black tracking-tighter text-blue-500 underline decoration-blue-500/30">SNS ADS</div>
-            <button onclick="logout()" class="text-[10px] font-bold text-gray-400 uppercase tracking-widest hover:text-red-400 transition border border-white/10 px-4 py-2 rounded-xl">Logout</button>
+    <!-- Top Navigation -->
+    <nav class="w-full border-b border-white/5 bg-black/40 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="h-8 w-1 bg-blue-600 rounded-full"></div>
+                <div class="text-xl font-black tracking-tight text-white uppercase">SNS ADS Portal</div>
+            </div>
+            <div class="flex items-center gap-6">
+                <span id="userDisplay" class="text-xs font-bold text-gray-400 uppercase tracking-widest hidden md:block"></span>
+                <button onclick="logout()" class="text-xs font-bold text-red-500 hover:text-red-400 uppercase tracking-widest transition">Logout</button>
+            </div>
         </div>
     </nav>
 
-    <main class="max-w-5xl mx-auto py-16 px-6">
-        <!-- Header -->
-        <div class="mb-12">
-            <h1 class="text-5xl font-extrabold mb-2 tracking-tight">Welcome Back, <span id="userName" class="text-blue-500 italic">...</span></h1>
-            <p class="text-gray-400 font-medium">Manage your growth strategy and active subscriptions.</p>
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl mx-auto w-full px-6 py-12">
+        
+        <div class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+                <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-2">My Services</h1>
+                <p class="text-gray-400 text-sm">Manage your active plans and track billing history.</p>
+            </div>
+            <a href="https://wa.me/917016163373" target="_blank" class="bg-blue-600/10 border border-blue-500/30 text-blue-400 hover:bg-blue-600 hover:text-white px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition flex items-center justify-center gap-2">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884"/></svg>
+                Contact Support
+            </a>
         </div>
 
-        <!-- Stats Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div class="glass-card p-8 rounded-3xl border-l-4 border-l-blue-500">
-                <p class="text-gray-500 text-[10px] uppercase font-black tracking-widest mb-2">Active Plans</p>
-                <h3 id="activeCount" class="text-4xl font-bold">0</h3>
-            </div>
-            <div class="glass-card p-8 rounded-3xl">
-                <p class="text-gray-500 text-[10px] uppercase font-black tracking-widest mb-2">Total Investment</p>
-                <h3 id="totalSpent" class="text-4xl font-bold">₹0</h3>
-            </div>
-            <div class="glass-card p-8 rounded-3xl">
-                <p class="text-gray-500 text-[10px] uppercase font-black tracking-widest mb-2">Account Status</p>
-                <h3 class="text-3xl font-bold text-green-500 flex items-center gap-2">
-                    Verified <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg>
-                </h3>
-            </div>
+        <div id="loadingIndicator" class="text-gray-500 font-bold text-sm tracking-widest uppercase animate-pulse">
+            Fetching your data...
         </div>
 
-        <!-- Live Campaign Progress (NEW & DYNAMIC) -->
-        <div class="glass-card p-10 rounded-[2.5rem] mb-12 border border-blue-500/20">
-            <div class="flex justify-between items-end mb-6">
-                <div>
-                    <h3 class="text-2xl font-bold mb-1">Live Campaign Progress</h3>
-                    <p id="statusUpdate" class="text-blue-400 text-sm font-medium italic">Connecting to growth engine...</p>
-                </div>
-                <div id="progressText" class="text-3xl font-black text-white">0%</div>
-            </div>
-            <div class="w-full bg-white/5 rounded-full h-4 overflow-hidden border border-white/5">
-                <div id="progressBar" class="bg-gradient-to-r from-blue-600 to-blue-400 h-full rounded-full shadow-[0_0_20px_rgba(37,99,235,0.4)]" style="width: 0%"></div>
-            </div>
+        <!-- Orders Grid -->
+        <div id="ordersList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Data will inject here -->
         </div>
 
-        <!-- Order List -->
-        <div class="glass-card rounded-[2.5rem] p-10">
-            <h2 class="text-xl font-bold mb-8 flex items-center gap-3">
-                <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
-                Your Subscription History
-            </h2>
-            <div id="ordersList" class="space-y-4 text-center">
-                <p class="text-gray-500 italic py-10">Syncing with cloud database...</p>
-            </div>
-        </div>
     </main>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    <script>
+        window.onload = async () => {
+            const email = localStorage.getItem('userEmail');
+            const phone = localStorage.getItem('userPhone');
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyB7W5HWVe1JYbqhpGdrguNrQOgU3DwW_44",
-            authDomain: "sns-ads.firebaseapp.com",
-            projectId: "sns-ads",
-            storageBucket: "sns-ads.firebasestorage.app",
-            messagingSenderId: "193364476047",
-            appId: "1:193364476047:web:d65e2412d13a42f701f0fa"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                // REAL-TIME LISTENER: Admin kuch bhi badlega, yahan turant dikhega
-                const unsub = onSnapshot(doc(db, "customers", user.email), (snapshot) => {
-                    if (snapshot.exists()) {
-                        const data = snapshot.data();
-                        
-                        // 1. Update Name
-                        document.getElementById('userName').innerText = data.name || "Growth Partner";
-                        
-                        // 2. Update Progress Bar & Text
-                        const prog = data.progress || "0%";
-                        document.getElementById('progressBar').style.width = prog;
-                        document.getElementById('progressText').innerText = prog;
-                        
-                        // 3. Update Manual Status Message
-                        document.getElementById('statusUpdate').innerText = data.manualUpdate || "We are analyzing your business goals...";
-                        
-                        // 4. Render Orders List
-                        renderOrders(data.orders || []);
-                    } else {
-                        document.getElementById('ordersList').innerHTML = `<p class="text-gray-500 py-10">Welcome! Your first campaign details will appear here after checkout.</p>`;
-                    }
-                });
-            } else {
+            // Agar koi login data nahi hai toh redirect back to home
+            if (!email && !phone) {
                 window.location.href = "index.html";
-            }
-        });
-
-        function renderOrders(orders) {
-            const list = document.getElementById('ordersList');
-            const activeCount = document.getElementById('activeCount');
-            const totalSpent = document.getElementById('totalSpent');
-            
-            if (orders.length === 0) {
-                list.innerHTML = `<p class="text-gray-500 py-10">No active plans found.</p>`;
                 return;
             }
 
-            list.innerHTML = "";
-            let spent = 0;
-            orders.forEach(order => {
-                spent += order.amount;
-                list.innerHTML += `
-                    <div class="flex flex-col md:flex-row justify-between items-center p-6 bg-white/5 border border-white/5 rounded-2xl hover:bg-white/10 transition">
-                        <div class="text-left">
-                            <h4 class="font-bold text-lg text-blue-400">${order.plan}</h4>
-                            <p class="text-[10px] text-gray-500 uppercase font-bold mt-1">ID: ${order.orderId}</p>
-                        </div>
-                        <div class="text-right mt-4 md:mt-0 flex items-center gap-6">
-                            <div class="text-right">
-                                <p class="font-black text-xl">₹${order.amount.toLocaleString()}</p>
-                                <p class="text-[10px] text-gray-500 uppercase font-bold">${order.date ? new Date(order.date).toLocaleDateString() : 'Active'}</p>
-                            </div>
-                            <span class="bg-blue-500/20 text-blue-400 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-tighter border border-blue-500/20">${order.status}</span>
-                        </div>
-                    </div>
-                `;
-            });
-            activeCount.innerText = orders.length;
-            totalSpent.innerText = "₹" + spent.toLocaleString();
-        }
+            // UI Display
+            document.getElementById('userDisplay').innerText = `Logged in as: ${email || phone}`;
 
-        window.logout = () => {
-            signOut(auth).then(() => window.location.href = "index.html");
+            try {
+                // Backend API call
+                let url = new URL('https://sns-ads-project.onrender.com/api/my-orders');
+                if (email) url.searchParams.append('email', email);
+                if (phone) url.searchParams.append('phone', phone);
+
+                const res = await fetch(url);
+                const orders = await res.json();
+
+                document.getElementById('loadingIndicator').style.display = 'none';
+                const ordersDiv = document.getElementById('ordersList');
+
+                if (!orders || orders.length === 0) {
+                    ordersDiv.innerHTML = `
+                        <div class="col-span-full glass-panel rounded-[2rem] p-12 text-center border-dashed border-white/20">
+                            <h3 class="text-xl font-bold text-gray-300 mb-4">No active plans found.</h3>
+                            <p class="text-gray-500 text-sm mb-6">Looks like you haven't started any campaigns with us yet.</p>
+                            <a href="index.html#pricing" class="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-blue-600/20">View Services</a>
+                        </div>`;
+                    return;
+                }
+
+                let html = "";
+                orders.forEach(o => {
+                    const statusColor = o.paymentStatus === 'Paid' ? 'text-green-400 bg-green-400/10' : 'text-yellow-400 bg-yellow-400/10';
+                    const formattedDate = new Date(o.date).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
+
+                    html += `
+                        <div class="glass-panel p-8 rounded-3xl hover:border-blue-500/30 transition-colors relative group">
+                            <div class="absolute top-6 right-6 ${statusColor} px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">${o.paymentStatus}</div>
+                            
+                            <h3 class="text-2xl font-bold text-white mb-2 pr-20">${o.service.split(' (')[0]}</h3>
+                            <p class="text-xs text-gray-500 uppercase tracking-widest font-bold mb-6">${formattedDate}</p>
+                            
+                            <div class="space-y-3 border-t border-white/5 pt-6 mt-6">
+                                <div class="flex justify-between items-center text-sm">
+                                    <span class="text-gray-400">Total Billed</span>
+                                    <span class="font-bold text-white">₹${o.amount}</span>
+                                </div>
+                                <div class="flex justify-between items-center text-sm">
+                                    <span class="text-gray-400">Order ID</span>
+                                    <span class="font-mono text-xs text-gray-500 truncate max-w-[120px]" title="${o.orderId || 'N/A'}">${o.orderId ? o.orderId.substring(0,10)+'...' : 'N/A'}</span>
+                                </div>
+                            </div>
+                        </div>`;
+                });
+                
+                ordersDiv.innerHTML = html;
+
+            } catch (e) {
+                document.getElementById('loadingIndicator').innerText = "Failed to load data. Please try again.";
+                console.error(e);
+            }
         };
+
+        function logout() {
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userPhone');
+            window.location.href = "index.html";
+        }
     </script>
 </body>
 </html>
