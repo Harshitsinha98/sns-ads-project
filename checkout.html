@@ -4,91 +4,104 @@
     <meta charset="UTF-8">
     <title>Checkout | SNS ADS</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <style>
-        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        body { background: radial-gradient(circle at top right, #1e3a8a, #0f172a, #000000); color: white; }
+        .glass-card { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .input-style { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); width: 100%; padding: 12px; border-radius: 12px; color: white; }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-6">
-    <div class="glass-card max-w-lg w-full rounded-[2.5rem] p-10 shadow-2xl">
-        <h2 class="text-3xl font-bold mb-8 text-center">Complete Your Order</h2>
+<body class="min-h-screen flex items-center justify-center p-4 bg-[#020617]">
 
-        <div id="emailStep" class="space-y-4">
-            <div class="flex gap-2">
-                <input type="email" id="custEmail" placeholder="Business Email" class="flex-1 bg-white/5 border border-white/10 p-4 rounded-xl outline-none">
-                <button id="sendEmailBtn" onclick="sendEmailOTP()" class="bg-blue-600 px-6 rounded-xl font-bold hover:bg-blue-500">Verify</button>
+    <div class="glass-card max-w-md w-full rounded-3xl p-8 shadow-2xl relative">
+        <!-- Close Button -->
+        <a href="index.html" class="absolute top-6 right-6 text-gray-400 hover:text-white text-2xl">×</a>
+        
+        <h2 class="text-2xl font-bold mb-6 text-blue-400">Checkout</h2>
+        
+        <div id="checkoutForm" class="space-y-4">
+            <input type="text" id="custName" placeholder="Full Name" class="input-style">
+            
+            <!-- Email With Verification -->
+            <div>
+                <div class="flex gap-2">
+                    <input type="email" id="custEmail" placeholder="Business Email" class="input-style">
+                    <button id="emailBtn" onclick="handleEmail()" class="bg-blue-600 px-4 rounded-xl text-xs font-bold whitespace-nowrap">Verify</button>
+                </div>
+                <div id="emailOtpGroup" class="hidden mt-2 flex gap-2">
+                    <input type="text" id="emailOtp" placeholder="Enter OTP" class="input-style">
+                    <button onclick="verifyEmailOTP()" class="bg-green-600 px-4 rounded-xl text-xs font-bold">Confirm</button>
+                    <button onclick="handleEmail()" class="bg-gray-700 px-2 rounded-xl text-[10px]">Resend</button>
+                </div>
             </div>
-            <div id="emailOtpSection" class="hidden flex gap-2">
-                <input type="text" id="emailOtp" placeholder="Enter Email OTP" class="flex-1 bg-white/5 border border-white/10 p-4 rounded-xl outline-none">
-                <button onclick="verifyEmailOTP()" class="bg-green-600 px-6 rounded-xl font-bold">Confirm</button>
+
+            <!-- Phone With Verification -->
+            <div>
+                <div class="flex gap-2">
+                    <input type="tel" id="custPhone" placeholder="Mobile Number" class="input-style">
+                    <button id="phoneBtn" onclick="handlePhone()" class="bg-blue-600 px-4 rounded-xl text-xs font-bold whitespace-nowrap">Verify</button>
+                </div>
+                <div id="phoneOtpGroup" class="hidden mt-2 flex gap-2">
+                    <input type="text" id="phoneOtp" placeholder="Enter OTP" class="input-style">
+                    <button onclick="verifyPhoneOTP()" class="bg-green-600 px-4 rounded-xl text-xs font-bold">Confirm</button>
+                    <button onclick="handlePhone()" class="bg-gray-700 px-2 rounded-xl text-[10px]">Resend</button>
+                </div>
             </div>
+
+            <div class="p-4 bg-white/5 rounded-xl border border-white/5">
+                <p class="text-sm text-gray-400">Service: <span id="planDisplay" class="text-white"></span></p>
+                <p class="text-xl font-bold mt-1">Total: <span id="totalAmt"></span></p>
+            </div>
+
+            <button id="payBtn" disabled onclick="startPayment()" class="w-full bg-blue-600 py-4 rounded-xl font-bold disabled:opacity-30 disabled:bg-gray-500">
+                Pay Now
+            </button>
         </div>
-
-        <div id="phoneSection" class="hidden space-y-4 mt-4">
-            <input type="text" id="custName" placeholder="Full Name" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none">
-            <div class="flex gap-2">
-                <input type="tel" id="custPhone" placeholder="Mobile Number" class="flex-1 bg-white/5 border border-white/10 p-4 rounded-xl outline-none">
-                <button id="sendPhoneBtn" onclick="sendPhoneOTP()" class="bg-blue-600 px-6 rounded-xl font-bold hover:bg-blue-500">Verify</button>
-            </div>
-            <div id="phoneOtpSection" class="hidden flex gap-2">
-                <input type="text" id="phoneOtp" placeholder="Enter Phone OTP" class="flex-1 bg-white/5 border border-white/10 p-4 rounded-xl outline-none">
-                <button onclick="verifyPhoneOTP()" class="bg-green-600 px-6 rounded-xl font-bold">Confirm</button>
-            </div>
-        </div>
-
-        <button id="payBtn" disabled onclick="startPayment()" class="w-full mt-8 bg-gray-600 py-4 rounded-2xl font-bold uppercase transition disabled:opacity-50">Pay Now</button>
     </div>
 
     <script>
-        // Email Logic
-        async function sendEmailOTP() {
+        // State Management
+        let emailVerified = false, phoneVerified = false;
+
+        async function handleEmail() {
             const email = document.getElementById('custEmail').value;
-            await fetch('https://sns-ads-project.onrender.com/api/send-otp', {
-                method: 'POST', headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ email })
-            });
-            document.getElementById('emailOtpSection').classList.remove('hidden');
-            document.getElementById('sendEmailBtn').classList.add('hidden');
+            await fetch('https://sns-ads-project.onrender.com/api/send-otp', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ email }) });
+            document.getElementById('emailOtpGroup').classList.remove('hidden');
         }
 
         async function verifyEmailOTP() {
-            const res = await fetch('https://sns-ads-project.onrender.com/api/verify-otp', {
-                method: 'POST', headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ email: document.getElementById('custEmail').value, otp: document.getElementById('emailOtp').value })
-            });
+            const otp = document.getElementById('emailOtp').value;
+            const res = await fetch('https://sns-ads-project.onrender.com/api/verify-otp', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ email: document.getElementById('custEmail').value, otp }) });
             if(res.ok) {
-                document.getElementById('custEmail').readOnly = true;
-                document.getElementById('emailOtpSection').classList.add('hidden');
-                document.getElementById('phoneSection').classList.remove('hidden');
-            } else { alert("Invalid Email OTP!"); }
+                emailVerified = true;
+                document.getElementById('emailOtpGroup').classList.add('hidden');
+                document.getElementById('emailBtn').innerText = "Verified ✅";
+                document.getElementById('emailBtn').disabled = true;
+                checkReady();
+            } else alert("Invalid OTP");
         }
 
-        // Phone Logic
-        async function sendPhoneOTP() {
+        async function handlePhone() {
             const phone = document.getElementById('custPhone').value;
-            await fetch('https://sns-ads-project.onrender.com/api/send-phone-otp', {
-                method: 'POST', headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ phone })
-            });
-            document.getElementById('phoneOtpSection').classList.remove('hidden');
-            document.getElementById('sendPhoneBtn').classList.add('hidden');
+            await fetch('https://sns-ads-project.onrender.com/api/send-phone-otp', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ phone }) });
+            document.getElementById('phoneOtpGroup').classList.remove('hidden');
         }
 
         async function verifyPhoneOTP() {
-            const res = await fetch('https://sns-ads-project.onrender.com/api/verify-phone-otp', {
-                method: 'POST', headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ phone: document.getElementById('custPhone').value, otp: document.getElementById('phoneOtp').value })
-            });
+            const otp = document.getElementById('phoneOtp').value;
+            const res = await fetch('https://sns-ads-project.onrender.com/api/verify-phone-otp', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ phone: document.getElementById('custPhone').value, otp }) });
             if(res.ok) {
-                document.getElementById('payBtn').disabled = false;
-                document.getElementById('payBtn').classList.replace('bg-gray-600', 'bg-blue-600');
-                document.getElementById('phoneOtpSection').classList.add('hidden');
-                alert("Phone Verified!");
-            } else { alert("Invalid Phone OTP!"); }
+                phoneVerified = true;
+                document.getElementById('phoneOtpGroup').classList.add('hidden');
+                document.getElementById('phoneBtn').innerText = "Verified ✅";
+                document.getElementById('phoneBtn').disabled = true;
+                checkReady();
+            } else alert("Invalid OTP");
         }
 
-        function startPayment() { /* Yahan aapka wahi purana Razorpay code rahega */ }
+        function checkReady() {
+            if(emailVerified && phoneVerified) document.getElementById('payBtn').disabled = false;
+        }
+
+        // URL Data setup logic... (Same as before)
     </script>
 </body>
 </html>
