@@ -37,29 +37,24 @@
 </head>
 <body class="hero-gradient text-white min-h-screen">
 
-    <!-- Navbar -->
     <nav class="fixed top-0 left-0 w-full z-[100] bg-black/60 backdrop-blur-md border-b border-white/5 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-10 py-5 flex justify-between items-center">
-            <!-- Brand Logo -->
             <a href="index.html" class="flex items-center gap-3">
                 <div class="h-10 w-1 bg-blue-600 rounded-full"></div>
                 <div class="text-2xl font-black tracking-tight text-white uppercase">SNS ADS</div>
             </a>
 
-            <!-- Menu Links -->
             <div class="hidden md:flex items-center gap-12">
                 <div class="flex gap-10 text-[11px] font-bold text-gray-400 uppercase tracking-[0.25em]">
                     <a href="#about" class="hover:text-blue-500 transition">Strategy</a>
                     <a href="#pricing" class="hover:text-blue-500 transition">Plans</a>
                     <a href="#enquire" class="hover:text-blue-500 transition">Contact</a>
                 </div>
-                <!-- Dynamic Login/Portal Button -->
                 <button onclick="window.loginAndCheckout(null, null)" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition shadow-lg shadow-blue-600/20">
                     Portal Login
                 </button>
             </div>
             
-            <!-- Mobile Menu Icon (Simple for now) -->
             <div class="md:hidden text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
@@ -68,10 +63,8 @@
         </div>
     </nav>
 
-    <!-- Spacer: Content ko niche dhakelne ke liye -->
     <div class="h-20"></div>
 
-    <!-- ================= ELITE HIGH-END HERO SECTION ================= -->
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden py-24 md:py-32">
         <div class="absolute inset-0 z-0">
             <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-[0.22] scale-105 transition-transform duration-[10000ms] ease-out">
@@ -118,10 +111,8 @@
         </div>
     </section>
 
-    <!-- Contact Section (Book a Call) -->
     <section id="enquire" class="py-24 px-6 max-w-7xl mx-auto border-t border-white/5">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-            <!-- Left: Creative Image Display -->
             <div class="hidden md:block relative group">
                 <div class="absolute -inset-1 bg-gradient-to-r from-red-600 to-blue-600 rounded-[2.5rem] blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
                 <div class="relative bg-black rounded-[2.5rem] overflow-hidden border border-white/10 h-[600px]">
@@ -130,7 +121,6 @@
                 </div>
             </div>
 
-            <!-- Right: Contact Form -->
             <div class="space-y-8">
                 <div>
                     <p class="text-red-500 font-bold uppercase tracking-[0.3em] text-[10px] mb-4">Get Started</p>
@@ -181,7 +171,6 @@
         </div>
     </section>
 
-    <!-- About / Services Block -->
     <section id="about" class="py-16 md:py-32 px-6 max-w-7xl mx-auto border-t border-white/5">
         <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
             <div class="md:col-span-8 glass-card p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] border-t border-blue-500/30">
@@ -211,7 +200,6 @@
         </div>
     </section>
 
-    <!-- Services Grid -->
     <section id="services" class="py-32 px-6 max-w-7xl mx-auto border-t border-white/5">
         <div class="mb-16">
             <p class="text-red-500 font-bold uppercase tracking-[0.3em] text-[10px] mb-4">What We Do</p>
@@ -255,7 +243,6 @@
         </div>
     </section>
 
-    <!-- Pricing Grid -->
     <section class="pb-32 px-6" id="pricing">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="glass-card rounded-[2.5rem] p-10 flex flex-col hover:border-blue-500/30 transition-all duration-500 group text-center">
@@ -269,7 +256,7 @@
                     <li>— Meta Ads Setup</li>
                     <li>— 2 Ad Creatives</li>
                 </ul>
-                <button onclick="window.loginAndCheckout(6000, 'Business Starter')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition mb-3">Pay Now</button>
+                <button onclick="window.location.href='seo-starter.html'" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition mb-3">Pay Now</button>
                 <button onclick="window.scrollToEnquire('Business Starter')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
             </div>
 
@@ -285,7 +272,7 @@
                     <li>✓ Meta + Google Ads</li>
                     <li>✓ 5 Custom Creatives</li>
                 </ul>
-                <button onclick="window.loginAndCheckout(8000, 'Medium Business')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-blue-600/30 mb-3">Get Started</button>
+                <button onclick="window.location.href='seo-medium.html'" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-blue-600/30 mb-3">Get Started</button>
                 <button onclick="window.scrollToEnquire('Medium Business')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
             </div>
 
@@ -300,13 +287,12 @@
                     <li>— Full Funnel Mastery</li>
                     <li>— Priority 24/7 Support</li>
                 </ul>
-                <button onclick="window.loginAndCheckout(14000, 'Enterprise Level')" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition mb-3">Scale Now</button>
+                <button onclick="window.location.href='seo-enterprise.html'" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition mb-3">Scale Now</button>
                 <button onclick="window.scrollToEnquire('Enterprise Level')" class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-2xl font-bold text-[10px] text-gray-400 uppercase tracking-widest transition">Enquire Now</button>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials Section -->
     <section class="py-32 px-6 max-w-7xl mx-auto">
         <div class="text-center mb-20">
             <p class="text-blue-500 font-bold uppercase tracking-[0.3em] text-[10px] mb-4">Success Stories</p>
@@ -349,7 +335,6 @@
         </div>
     </section>
 
-    <!-- Final CTA Section (Red Bold) -->
     <section class="bg-[#ff2020] py-32 px-6 text-center text-white">
         <div class="max-w-4xl mx-auto">
             <p class="text-[10px] font-black uppercase tracking-[0.4em] mb-8 opacity-80">Ready to Grow?</p>
@@ -362,7 +347,6 @@
         </div>
     </section>
 
-    <!-- Final Elite Footer -->
     <footer class="bg-black text-white py-20 px-10 border-t border-white/5">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
             <div class="flex flex-col items-center md:items-start">
@@ -394,9 +378,6 @@
         </div>
     </footer>
 
-    <!-- ========================================================================= -->
-    <!-- FIREBASE LOGIN GATE LOGIC (EMAIL OTP vs PHONE OTP)                        -->
-    <!-- ========================================================================= -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { 
@@ -429,7 +410,7 @@
             else { currentUserInstance = null; }
         });
 
-        // 1. Pricing Button Click Interceptor
+        // 1. Pricing Button Click Interceptor (Kept intact for 'Portal Login' button)
         window.loginAndCheckout = function(amount, plan) {
             if (currentUserInstance) {
                 window.proceedToCheckoutRedirect(amount, plan);
@@ -514,7 +495,6 @@
             btn.innerText = "Connecting & Sending Code (Takes a moment)...";
 
             try {
-                // Seedha Render Backend ko request
                 const response = await fetch('https://sns-ads-project.onrender.com/api/send-otp', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -542,7 +522,7 @@
             
             if(!otpInput) return alert("Please enter the 6-digit code!");
 
-            const btn = event.target; // Get clicked button
+            const btn = event.target; 
             const originalText = btn.innerText;
             btn.innerText = "Verifying...";
             btn.disabled = true;
@@ -582,7 +562,6 @@
             btn.disabled = true;
             btn.innerText = "Sending SMS...";
 
-            // Initialize invisible reCAPTCHA only once
             if(!window.recaptchaVerifier) {
                 window.recaptchaVerifier = new RecaptchaVerifier(auth, 'sendPhoneOtpBtn', { 'size': 'invisible' });
             }
@@ -620,7 +599,6 @@
 
         // ================= GENERAL UX SCRIPTS =================
 
-        // Contact Form Interceptor
         document.getElementById('contactForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const formData = {
@@ -654,7 +632,6 @@
             }
         });
 
-        // Navbar Animation
         window.addEventListener('scroll', function() {
             const nav = document.querySelector('nav');
             if (window.scrollY > 50) {
@@ -671,9 +648,6 @@
         };
     </script>
 
-    <!-- ========================================================================= -->
-    <!-- NEW UNIFIED LOGIN MODAL (GOOGLE, EMAIL OTP, PHONE OTP)                    -->
-    <!-- ========================================================================= -->
     <div id="loginGateModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/85 backdrop-blur-md p-6">
         <div class="glass-card max-w-md w-full rounded-[2.5rem] p-8 shadow-2xl relative border border-white/10 bg-zinc-950/90 text-center">
             
@@ -685,7 +659,6 @@
                 <p class="text-gray-400 text-xs mt-2 font-medium">Please authenticate your account to verify order credentials.</p>
             </div>
 
-            <!-- ONE-CLICK GOOGLE -->
             <button onclick="window.loginWithGoogle()" class="w-full bg-white text-black hover:bg-gray-200 py-4 rounded-xl font-bold text-xs uppercase tracking-widest transition flex items-center justify-center gap-3 shadow-lg shadow-white/5">
                 <svg class="w-4 h-4" viewBox="0 0 24 24">
                     <path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.859-3.578-7.859-8s3.53-8 7.859-8c2.46 0 4.105 1.025 5.047 1.926l3.257-3.133C18.422 1.21 15.6 0 12.24 0 5.58 0 0 5.37 0 12s5.58 12 12.24 12c6.96 0 11.57-4.83 11.57-11.79 0-.795-.085-1.4-.195-1.925H12.24z"/>
@@ -693,19 +666,16 @@
                 Continue with Google
             </button>
 
-            <!-- OR DIVIDER -->
             <div class="relative my-6">
                 <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-white/10"></div></div>
                 <div class="relative text-[9px] uppercase tracking-[0.3em] font-bold text-gray-500 bg-zinc-950 px-4 inline-block">Or via Secure OTP</div>
             </div>
 
-            <!-- TOGGLE TABS (EMAIL VS PHONE) -->
             <div class="flex bg-white/5 rounded-xl p-1 mb-6 border border-white/10">
                 <button onclick="window.setAuthMode('email')" id="btnModeEmail" class="flex-1 text-[10px] uppercase tracking-widest font-bold py-2 rounded-lg bg-blue-600 text-white transition shadow-lg shadow-blue-600/20">Email OTP</button>
                 <button onclick="window.setAuthMode('phone')" id="btnModePhone" class="flex-1 text-[10px] uppercase tracking-widest font-bold py-2 rounded-lg text-gray-400 hover:text-white transition">Phone OTP</button>
             </div>
 
-            <!-- ================= EMAIL MODE CONTAINER ================= -->
             <div id="emailModeContainer">
                 <div class="text-left mb-4">
                     <label class="text-[9px] font-bold uppercase tracking-widest text-gray-500 ml-1">Business Email</label>
@@ -727,7 +697,6 @@
                 </div>
             </div>
 
-            <!-- ================= PHONE MODE CONTAINER ================= -->
             <div id="phoneModeContainer" class="hidden">
                 <div class="text-left mb-4">
                     <label class="text-[9px] font-bold uppercase tracking-widest text-gray-500 ml-1">Mobile Number</label>
@@ -735,7 +704,6 @@
                 </div>
                 
                 <div id="phoneInitSection" class="space-y-4 text-left">
-                    <!-- Invisible reCaptcha is attached to this button via JS -->
                     <button id="sendPhoneOtpBtn" onclick="window.triggerPhoneOTP()" class="w-full bg-blue-600/10 hover:bg-blue-600/20 border border-blue-500/30 text-blue-400 py-4 rounded-xl font-bold text-[10px] uppercase tracking-widest transition mt-2">
                         Send SMS OTP
                     </button>
