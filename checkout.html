@@ -234,6 +234,50 @@
                 document.getElementById('payBtn').disabled = false;
             }
         }
+
+        window.onload = () => {
+    // 1. Fetch Plan details from URL
+    const params = new URLSearchParams(window.location.search);
+    selectedPlan = params.get('plan') || "Custom Service";
+    finalAmount = params.get('amount') || "0";
+    
+    document.getElementById('planDisplay').innerText = selectedPlan;
+    document.getElementById('totalAmt').innerText = finalAmount;
+
+    // 2. Fetch Verified Credentials from LocalStorage
+    const savedEmail = localStorage.getItem('userEmail');
+    const savedPhone = localStorage.getItem('userPhone');
+    
+    // Logic 1: Agar Email / Google se login kiya hai
+    if(savedEmail) {
+        // Email lock karo
+        document.getElementById('custEmail').value = savedEmail;
+        document.getElementById('custEmail').readOnly = true;
+        document.getElementById('emailBtn').innerText = "Verified ✅";
+        document.getElementById('emailBtn').disabled = true;
+        document.getElementById('emailOtpGroup').classList.add('hidden'); // Hide OTP box
+        emailVerified = true;
+        
+        // Phone khula rakhna padega taaki user daal sake
+        phoneVerified = false; 
+    } 
+    
+    // Logic 2: Agar Phone se login kiya hai
+    if(savedPhone) {
+        // Phone lock karo
+        document.getElementById('custPhone').value = savedPhone;
+        document.getElementById('custPhone').readOnly = true;
+        document.getElementById('phoneBtn').innerText = "Verified ✅";
+        document.getElementById('phoneBtn').disabled = true;
+        document.getElementById('phoneOtpGroup').classList.add('hidden'); // Hide OTP box
+        phoneVerified = true;
+        
+        // Email khula rakhna padega
+        emailVerified = false;
+    }
+
+    checkReady(); // Check if both are verified to enable Pay Now
+};
     </script>
 </body>
 </html>
