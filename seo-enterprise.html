@@ -6,50 +6,210 @@
     <title>Enterprise SEO Plan | SNS ADS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background: radial-gradient(circle at top right, #312e81, #020617, #000000); color: white; }
-        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        body { background-color: #020617; color: white; font-family: sans-serif; overflow-x: hidden; }
+        .glass-card { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .feature-bg { background: radial-gradient(circle at top right, #312e81, #020617, #000000); }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-6">
+<body class="min-h-screen flex flex-col md:flex-row">
 
-    <div class="glass-card max-w-2xl w-full rounded-[2.5rem] p-10 shadow-2xl relative overflow-hidden">
-        <div class="absolute top-0 left-0 w-40 h-40 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-40"></div>
+    <!-- ================= LEFT SIDE: AUTHENTICATION ================= -->
+    <div class="w-full md:w-1/2 flex items-center justify-center p-8 lg:p-16 border-r border-white/5 relative">
+        <div class="max-w-md w-full glass-card rounded-[2.5rem] p-8 shadow-2xl relative z-10">
+            
+            <a href="index.html" class="absolute top-6 right-6 text-gray-500 hover:text-white text-2xl transition">&times;</a>
+            
+            <div class="mb-8 text-center">
+                <div class="text-blue-500 font-bold text-[10px] uppercase tracking-[0.3em] mb-2">Security Verification</div>
+                <h2 class="text-3xl font-black tracking-tight text-white">Access Growth Portal</h2>
+                <p class="text-gray-400 text-xs mt-2 font-medium">Please authenticate your account to verify order credentials.</p>
+            </div>
 
-        <a href="index.html" class="text-indigo-400 hover:text-white text-sm mb-6 inline-block font-semibold relative z-10">← Back to Home</a>
-        
-        <h1 class="text-4xl font-bold mb-2 relative z-10">Enterprise Plan</h1>
-        <p class="text-gray-400 mb-8 relative z-10">Best for Scaling businesses, SaaS companies, and Competitive Niches targeting absolute market dominance.</p>
+            <!-- GOOGLE LOGIN -->
+            <button onclick="window.loginWithGoogle()" class="w-full bg-white text-black hover:bg-gray-200 py-4 rounded-xl font-bold text-xs uppercase tracking-widest transition flex items-center justify-center gap-3 shadow-lg shadow-white/5">
+                <svg class="w-4 h-4" viewBox="0 0 24 24">
+                    <path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.859-3.578-7.859-8s3.53-8 7.859-8c2.46 0 4.105 1.025 5.047 1.926l3.257-3.133C18.422 1.21 15.6 0 12.24 0 5.58 0 0 5.37 0 12s5.58 12 12.24 12c6.96 0 11.57-4.83 11.57-11.79 0-.795-.085-1.4-.195-1.925H12.24z"/>
+                </svg>
+                Continue with Google
+            </button>
 
-        <div class="text-4xl font-extrabold text-white mb-8 relative z-10">₹19,999 <span class="text-lg font-normal text-gray-400">/project</span></div>
+            <div class="relative my-6 text-center">
+                <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-white/10"></div></div>
+                <div class="relative text-[9px] uppercase tracking-[0.3em] font-bold text-gray-500 bg-[#020617] px-4 inline-block">Or via Secure OTP</div>
+            </div>
 
-        <h3 class="text-xl font-semibold mb-4 text-indigo-400 relative z-10">Everything in Medium, PLUS:</h3>
-        <ul class="space-y-4 text-gray-300 mb-10 relative z-10">
-            <li class="flex items-start gap-3">
-                <span class="text-indigo-400 mt-1">✔</span>
+            <!-- TOGGLE TABS -->
+            <div class="flex bg-white/5 rounded-xl p-1 mb-6 border border-white/10">
+                <button onclick="window.setAuthMode('email')" id="btnModeEmail" class="flex-1 text-[10px] uppercase tracking-widest font-bold py-3 rounded-lg bg-indigo-600 text-white transition">Email OTP</button>
+                <button onclick="window.setAuthMode('phone')" id="btnModePhone" class="flex-1 text-[10px] uppercase tracking-widest font-bold py-3 rounded-lg text-gray-400 hover:text-white transition">Phone OTP</button>
+            </div>
+
+            <!-- EMAIL SECTION -->
+            <div id="emailModeContainer">
+                <div class="text-left mb-4">
+                    <label class="text-[9px] font-bold uppercase tracking-widest text-gray-500 ml-1">Business Email</label>
+                    <input type="email" id="gateEmail" placeholder="name@company.com" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-indigo-500 text-white text-sm mt-1.5">
+                </div>
+                <div id="emailInitSection">
+                    <button id="sendEmailOtpBtn" onclick="window.triggerEmailOTP()" class="w-full bg-indigo-900/40 hover:bg-indigo-800/60 border border-indigo-500/30 text-indigo-400 py-4 rounded-xl font-bold text-[10px] uppercase tracking-widest transition">Send OTP to Email</button>
+                </div>
+                <div id="emailOtpSection" class="hidden mt-6 border-t border-white/10 pt-6">
+                    <input type="text" id="gateEmailOtpInput" placeholder="000000" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none text-center tracking-[0.5em] font-bold text-lg mb-4 text-white">
+                    <button onclick="window.verifyEmailOTP()" class="w-full bg-indigo-600 py-4 rounded-xl font-bold uppercase tracking-widest text-white text-xs">Verify & Continue</button>
+                </div>
+            </div>
+
+            <!-- PHONE SECTION (FIXED RECAPTCHA) -->
+            <div id="phoneModeContainer" class="hidden">
+                <div class="text-left mb-4">
+                    <label class="text-[9px] font-bold uppercase tracking-widest text-gray-500 ml-1">Mobile Number</label>
+                    <input type="tel" id="gatePhone" placeholder="+91 9876543210" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-indigo-500 text-white text-sm mt-1.5">
+                </div>
+                <div id="recaptcha-container" class="mb-2"></div> <!-- RECAPTCHA DIV -->
+                <div id="phoneInitSection">
+                    <button id="sendPhoneOtpBtn" onclick="window.triggerPhoneOTP()" class="w-full bg-indigo-900/40 hover:bg-indigo-800/60 border border-indigo-500/30 text-indigo-400 py-4 rounded-xl font-bold text-[10px] uppercase tracking-widest transition">Send SMS OTP</button>
+                </div>
+                <div id="phoneOtpSection" class="hidden mt-6 border-t border-white/10 pt-6">
+                    <input type="text" id="gatePhoneOtpInput" placeholder="000000" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none text-center tracking-[0.5em] font-bold text-lg mb-4 text-white">
+                    <button onclick="window.verifyPhoneOTP()" class="w-full bg-indigo-600 py-4 rounded-xl font-bold uppercase tracking-widest text-white text-xs">Verify & Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= RIGHT SIDE: PLAN FEATURES ================= -->
+    <div class="w-full md:w-1/2 feature-bg p-8 lg:p-16 flex flex-col justify-center relative overflow-hidden">
+        <h1 class="text-5xl lg:text-6xl font-bold mb-4">Enterprise Plan</h1>
+        <p class="text-gray-400 text-lg mb-8 max-w-md">Best for Scaling businesses, SaaS companies, and Competitive Niches targeting absolute market dominance.</p>
+
+        <div class="text-5xl font-extrabold text-white mb-10">₹19,999 <span class="text-xl font-normal text-gray-400">/project</span></div>
+
+        <ul class="space-y-6 text-gray-300">
+            <li class="flex items-start gap-4">
+                <div class="w-6 h-6 rounded-full bg-indigo-500/20 flex items-center justify-center mt-0.5"><span class="text-indigo-400 text-sm">✓</span></div>
                 <span><strong>Unlimited Keyword Dominance:</strong> Full-funnel keyword strategy (Top, Mid, Bottom).</span>
             </li>
-            <li class="flex items-start gap-3">
-                <span class="text-indigo-400 mt-1">✔</span>
+            <li class="flex items-start gap-4">
+                <div class="w-6 h-6 rounded-full bg-indigo-500/20 flex items-center justify-center mt-0.5"><span class="text-indigo-400 text-sm">✓</span></div>
                 <span><strong>Authority Building & Local SEO:</strong> PR-led link building & GBP review management.</span>
             </li>
-            <li class="flex items-start gap-3">
-                <span class="text-indigo-400 mt-1">✔</span>
+            <li class="flex items-start gap-4">
+                <div class="w-6 h-6 rounded-full bg-indigo-500/20 flex items-center justify-center mt-0.5"><span class="text-indigo-400 text-sm">✓</span></div>
                 <span><strong>CRO:</strong> UI/UX audit to turn traffic into paying leads.</span>
             </li>
-            <li class="flex items-start gap-3">
-                <span class="text-indigo-400 mt-1">✔</span>
+            <li class="flex items-start gap-4">
+                <div class="w-6 h-6 rounded-full bg-indigo-500/20 flex items-center justify-center mt-0.5"><span class="text-indigo-400 text-sm">✓</span></div>
                 <span><strong>Dedicated Account Manager:</strong> 24/7 priority support via WhatsApp/Email.</span>
             </li>
-            <li class="flex items-start gap-3">
-                <span class="text-indigo-400 mt-1">✔</span>
+            <li class="flex items-start gap-4">
+                <div class="w-6 h-6 rounded-full bg-indigo-500/20 flex items-center justify-center mt-0.5"><span class="text-indigo-400 text-sm">✓</span></div>
                 <span><strong>Live Dashboard:</strong> Real-time access to customized reporting & weekly sprints.</span>
             </li>
         </ul>
-
-        <a href="checkout.html?plan=Enterprise&amount=19999" class="block w-full bg-indigo-600 hover:bg-indigo-500 text-center py-4 rounded-2xl font-bold uppercase tracking-widest transition shadow-lg shadow-indigo-600/30 relative z-10">
-            Get Started Now
-        </a>
     </div>
 
+    <!-- ================= SCRIPTS ================= -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = { apiKey: "AIzaSyB7W5HWVe1JYbqhpGdrguNrQOgU3DwW_44", authDomain: "sns-ads.firebaseapp.com", projectId: "sns-ads", storageBucket: "sns-ads.firebasestorage.app", messagingSenderId: "193364476047", appId: "1:193364476047:web:d65e2412d13a42f701f0fa" };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        const PLAN_NAME = "Enterprise Plan";
+        const PLAN_AMOUNT = 19999;
+
+        window.proceedToCheckout = function() {
+            window.location.href = `checkout.html?plan=${encodeURIComponent(PLAN_NAME)}&amount=${PLAN_AMOUNT}`;
+        };
+
+        window.setAuthMode = function(mode) {
+            if(mode === 'email') {
+                document.getElementById('btnModeEmail').className = "flex-1 text-[10px] uppercase tracking-widest font-bold py-3 rounded-lg bg-indigo-600 text-white";
+                document.getElementById('btnModePhone').className = "flex-1 text-[10px] uppercase tracking-widest font-bold py-3 rounded-lg text-gray-400 hover:text-white";
+                document.getElementById('emailModeContainer').classList.remove('hidden');
+                document.getElementById('phoneModeContainer').classList.add('hidden');
+            } else {
+                document.getElementById('btnModePhone').className = "flex-1 text-[10px] uppercase tracking-widest font-bold py-3 rounded-lg bg-indigo-600 text-white";
+                document.getElementById('btnModeEmail').className = "flex-1 text-[10px] uppercase tracking-widest font-bold py-3 rounded-lg text-gray-400 hover:text-white";
+                document.getElementById('emailModeContainer').classList.add('hidden');
+                document.getElementById('phoneModeContainer').classList.remove('hidden');
+            }
+        };
+
+        window.loginWithGoogle = async function() {
+            try {
+                const result = await signInWithPopup(auth, provider);
+                localStorage.setItem('userEmail', result.user.email);
+                localStorage.removeItem('userPhone');
+                window.proceedToCheckout();
+            } catch (error) { alert("Error: " + error.message); }
+        };
+
+        window.triggerEmailOTP = async function() {
+            const email = document.getElementById('gateEmail').value;
+            if(!email) return alert("Enter email!");
+            const btn = document.getElementById('sendEmailOtpBtn');
+            btn.innerText = "Sending..."; btn.disabled = true;
+            try {
+                const res = await fetch('https://sns-ads-project.onrender.com/api/send-otp', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ email }) });
+                if(res.ok) {
+                    document.getElementById('emailInitSection').classList.add('hidden');
+                    document.getElementById('emailOtpSection').classList.remove('hidden');
+                } else throw new Error("Failed");
+            } catch (e) { alert("Failed to send OTP"); btn.innerText = "Send OTP to Email"; btn.disabled = false; }
+        };
+
+        window.verifyEmailOTP = async function() {
+            const email = document.getElementById('gateEmail').value;
+            const otp = document.getElementById('gateEmailOtpInput').value;
+            try {
+                const res = await fetch('https://sns-ads-project.onrender.com/api/verify-otp', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ email, otp }) });
+                if (res.ok) {
+                    localStorage.setItem('userEmail', email);
+                    localStorage.removeItem('userPhone');
+                    window.proceedToCheckout();
+                } else alert("Wrong OTP!");
+            } catch (e) { alert("Verification failed"); }
+        };
+
+        // FIXED PHONE OTP LOGIC
+        window.triggerPhoneOTP = async function() {
+            const phoneInput = document.getElementById('gatePhone').value.trim();
+            if(!phoneInput) return alert("Please enter mobile number!");
+
+            const phoneNumber = phoneInput.startsWith('+') ? phoneInput : '+91' + phoneInput;
+            const btn = document.getElementById('sendPhoneOtpBtn');
+            btn.innerText = "Sending SMS..."; 
+            btn.disabled = true;
+
+            try {
+                if(!window.recaptchaVerifier) {
+                    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+                        'size': 'invisible'
+                    });
+                }
+                window.confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier);
+                document.getElementById('phoneInitSection').classList.add('hidden');
+                document.getElementById('phoneOtpSection').classList.remove('hidden');
+            } catch (error) { 
+                alert("SMS Error: " + error.message); 
+                btn.innerText = "Send SMS OTP"; 
+                btn.disabled = false; 
+            }
+        };
+
+        window.verifyPhoneOTP = async function() {
+            const code = document.getElementById('gatePhoneOtpInput').value;
+            try {
+                await window.confirmationResult.confirm(code);
+                localStorage.setItem('userPhone', document.getElementById('gatePhone').value);
+                localStorage.removeItem('userEmail');
+                window.proceedToCheckout();
+            } catch (e) { alert("Invalid SMS Code!"); }
+        };
+    </script>
 </body>
 </html>
