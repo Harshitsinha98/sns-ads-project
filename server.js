@@ -206,3 +206,27 @@ app.get('/api/admin/leads', async (req, res) => {
 // --- Server Start ---
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`🚀 Server running perfectly on port ${PORT}`));
+
+// Phone OTP Store
+let phoneOtpStore = {};
+
+// Route for Phone OTP
+app.post('/api/send-phone-otp', async (req, res) => {
+    const { phone } = req.body;
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    phoneOtpStore[phone] = otp; 
+    
+    console.log(`OTP for ${phone}: ${otp}`); // Yahan se aap console mein OTP dekh sakte hain
+    res.status(200).json({ message: "OTP Sent Successfully" });
+});
+
+// Route for Phone OTP Verify
+app.post('/api/verify-phone-otp', (req, res) => {
+    const { phone, otp } = req.body;
+    if (phoneOtpStore[phone] && phoneOtpStore[phone] === otp) {
+        delete phoneOtpStore[phone];
+        res.status(200).json({ message: "Verified" });
+    } else {
+        res.status(400).json({ error: "Invalid OTP" });
+    }
+});
