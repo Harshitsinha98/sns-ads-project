@@ -6,14 +6,25 @@
     <title>Client Portal | SNS ADS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background: #020617; color: white; font-family: 'Inter', sans-serif; }
-        .glass-panel { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); }
-        .hero-glow { background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.15), transparent 40%); }
+        /* CSS conflict fixed: Using background-color separate from background-image */
+        body { 
+            background-color: #020617; 
+            color: white; 
+            font-family: 'Inter', sans-serif; 
+        }
+        .glass-panel { 
+            background: rgba(255, 255, 255, 0.03); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            backdrop-filter: blur(10px); 
+        }
+        .hero-glow { 
+            background-image: radial-gradient(circle at top right, rgba(37, 99, 235, 0.15), transparent 40%); 
+        }
     </style>
 </head>
 <body class="min-h-screen hero-glow flex flex-col">
 
-    <nav class="w-full border-b border-white/5 bg-black/40 backdrop-blur-md">
+    <nav class="w-full border-b border-white/5 bg-[#020617]/80 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <div class="h-8 w-1 bg-blue-600 rounded-full"></div>
@@ -30,7 +41,7 @@
         
         <div class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
-                <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-2">My Services</h1>
+                <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-2 text-white">My Services</h1>
                 <p class="text-gray-400 text-sm">Manage your active plans and track billing history.</p>
             </div>
             <a href="https://wa.me/917016163373" target="_blank" class="bg-blue-600/10 border border-blue-500/30 text-blue-400 hover:bg-blue-600 hover:text-white px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition flex items-center justify-center gap-2">
@@ -39,7 +50,7 @@
             </a>
         </div>
 
-        <div id="loadingIndicator" class="text-gray-500 font-bold text-sm tracking-widest uppercase animate-pulse">
+        <div id="loadingIndicator" class="text-blue-400 font-bold text-sm tracking-widest uppercase animate-pulse">
             Fetching your data...
         </div>
 
@@ -53,17 +64,14 @@
             const email = localStorage.getItem('userEmail');
             const phone = localStorage.getItem('userPhone');
 
-            // Security: Agar login data nahi hai toh redirect back to home
             if (!email && !phone) {
                 window.location.href = "index.html";
                 return;
             }
 
-            // Display logged in user
             document.getElementById('userDisplay').innerText = `Logged in as: ${email || phone}`;
 
             try {
-                // Backend API call
                 let url = new URL('https://sns-ads-project.onrender.com/api/my-orders');
                 if (email) url.searchParams.append('email', email);
                 if (phone) url.searchParams.append('phone', phone);
@@ -74,7 +82,6 @@
                 document.getElementById('loadingIndicator').style.display = 'none';
                 const ordersDiv = document.getElementById('ordersList');
 
-                // Agar koi order nahi mila
                 if (!orders || orders.length === 0) {
                     ordersDiv.innerHTML = `
                         <div class="col-span-full glass-panel rounded-[2rem] p-12 text-center border-dashed border-white/20">
@@ -85,23 +92,26 @@
                     return;
                 }
 
-                // Agar orders hain, toh loop chalakar cards banao
                 let html = "";
                 orders.forEach(o => {
                     const statusColor = o.paymentStatus === 'Paid' ? 'text-green-400 bg-green-400/10 border-green-500/20' : 'text-yellow-400 bg-yellow-400/10 border-yellow-500/20';
                     const formattedDate = new Date(o.date).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
+                    
+                    // Fallback in case old test data is empty
+                    const serviceName = o.service ? o.service.split(' (')[0] : 'Custom Service';
+                    const amount = o.amount ? `₹${o.amount}` : 'N/A';
 
                     html += `
                         <div class="glass-panel p-8 rounded-3xl hover:border-blue-500/30 transition-colors relative group">
-                            <div class="absolute top-6 right-6 ${statusColor} border px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">${o.paymentStatus}</div>
+                            <div class="absolute top-6 right-6 ${statusColor} border px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">${o.paymentStatus || 'Pending'}</div>
                             
-                            <h3 class="text-xl font-bold text-white mb-2 pr-20">${o.service.split(' (')[0]}</h3>
-                            <p class="text-xs text-gray-500 uppercase tracking-widest font-bold mb-6">${formattedDate}</p>
+                            <h3 class="text-xl font-bold text-white mb-2 pr-20">${serviceName}</h3>
+                            <p class="text-xs text-gray-400 uppercase tracking-widest font-bold mb-6">${formattedDate}</p>
                             
-                            <div class="space-y-3 border-t border-white/5 pt-6 mt-6">
+                            <div class="space-y-3 border-t border-white/10 pt-6 mt-6">
                                 <div class="flex justify-between items-center text-sm">
                                     <span class="text-gray-400">Total Billed</span>
-                                    <span class="font-bold text-white">₹${o.amount}</span>
+                                    <span class="font-bold text-white">${amount}</span>
                                 </div>
                                 <div class="flex justify-between items-center text-sm">
                                     <span class="text-gray-400">Order ID</span>
@@ -119,7 +129,6 @@
             }
         };
 
-        // Logout logic
         function logout() {
             localStorage.removeItem('userEmail');
             localStorage.removeItem('userPhone');
