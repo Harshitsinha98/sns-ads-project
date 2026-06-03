@@ -404,15 +404,13 @@
 
         let currentUserInstance = null;
 
-        // Auto-detect authentication state
         onAuthStateChanged(auth, (user) => {
             if (user) { currentUserInstance = user; } 
             else { currentUserInstance = null; }
         });
 
-        // 1. Pricing Button Click Interceptor (Kept intact for 'Portal Login' button)
         window.loginAndCheckout = function(amount, plan) {
-            if (currentUserInstance) {
+            if (currentUserInstance || localStorage.getItem('userEmail') || localStorage.getItem('userPhone')) {
                 window.proceedToCheckoutRedirect(amount, plan);
             } else {
                 if (amount && plan) {
@@ -426,7 +424,6 @@
             }
         };
 
-        // 2. Safely Redirect to Checkout
         window.proceedToCheckoutRedirect = function(amount, plan) {
             localStorage.removeItem('pending_selected_plan');
             localStorage.removeItem('pending_selected_amount');
@@ -434,15 +431,15 @@
             if(amount && plan && amount !== 'null' && plan !== 'null' && amount !== 'undefined') {
                 window.location.href = `checkout.html?amount=${amount}&plan=${encodeURIComponent(plan)}`;
             } else {
+                // Seedha dashboard agar "Portal Login" press kiya hai
                 window.location.href = "dashboard.html"; 
             }
         };
 
-        // 3. UI Toggles for Login Modal & Modes
         window.openLoginGateModal = function() {
             document.getElementById('loginGateModal').classList.remove('hidden');
             document.getElementById('loginGateModal').classList.add('flex');
-            window.setAuthMode('email'); // Default to Email Mode
+            window.setAuthMode('email'); 
         };
         
         window.closeLoginGate = function() {
@@ -450,7 +447,6 @@
             document.getElementById('loginGateModal').classList.remove('flex');
         };
 
-        // Switch between Email OTP & Phone OTP dynamically
         window.setAuthMode = function(mode) {
             const btnEmail = document.getElementById('btnModeEmail');
             const btnPhone = document.getElementById('btnModePhone');
@@ -470,12 +466,17 @@
             }
         };
 
-        // ================= AUTH METHODS =================
+        // ================= AUTH METHODS (FIXED LOCALSTORAGE) =================
 
-        // METHOD 1: Google Login
+        // 1. Google Login
         window.loginWithGoogle = async function() {
             try {
-                await signInWithPopup(auth, provider);
+                const result = await signInWithPopup(auth, provider);
+                
+                // DATA SAVE KARNA ZAROORI HAI YAHAN
+                localStorage.setItem('userEmail', result.user.email);
+                localStorage.removeItem('userPhone');
+
                 window.closeLoginGate();
                 const pendingPlan = localStorage.getItem('pending_selected_plan');
                 const pendingAmount = localStorage.getItem('pending_selected_amount');
@@ -483,16 +484,14 @@
             } catch (error) { alert("Authentication Interrupted: " + error.message); }
         };
 
-        // METHOD 2: Email OTP System (Via Node.js Server)
-        // ================= PRODUCTION EMAIL OTP SYSTEM =================
-
+        // 2. Email OTP
         window.triggerEmailOTP = async function() {
             const emailInput = document.getElementById('gateEmail').value.trim();
             if(!emailInput) return alert("Please enter your business email!");
 
             const btn = document.getElementById('sendEmailOtpBtn');
             btn.disabled = true;
-            btn.innerText = "Connecting & Sending Code (Takes a moment)...";
+            btn.innerText = "Connecting & Sending Code...";
 
             try {
                 const response = await fetch('https://sns-ads-project.onrender.com/api/send-otp', {
@@ -504,13 +503,11 @@
                 if(response.ok) {
                     document.getElementById('emailInitSection').classList.add('hidden');
                     document.getElementById('emailOtpSection').classList.remove('hidden');
-                    alert("✅ Verification code sent to your email!");
                 } else {
                     throw new Error("Backend response failed");
                 }
             } catch (error) {
-                console.error("OTP Error:", error);
-                alert("❌ Delivery failed. Ensure your email is correct and try again.");
+                alert("❌ Delivery failed.");
                 btn.disabled = false;
                 btn.innerText = "Send OTP to Email";
             }
@@ -519,8 +516,7 @@
         window.verifyEmailOTP = async function() {
             const emailInput = document.getElementById('gateEmail').value.trim();
             const otpInput = document.getElementById('gateEmailOtpInput').value.trim();
-            
-            if(!otpInput) return alert("Please enter the 6-digit code!");
+            if(!otpInput) return alert("Please enter code!");
 
             const btn = event.target; 
             const originalText = btn.innerText;
@@ -535,24 +531,26 @@
                 });
 
                 if (response.ok) {
-                    alert("✅ Email Verified Successfully!");
+                    // DATA SAVE KARNA ZAROORI HAI YAHAN
+                    localStorage.setItem('userEmail', emailInput);
+                    localStorage.removeItem('userPhone');
+
                     window.closeLoginGate();
-                    
                     const pendingPlan = localStorage.getItem('pending_selected_plan');
                     const pendingAmount = localStorage.getItem('pending_selected_amount');
                     window.proceedToCheckoutRedirect(pendingAmount, pendingPlan);
                 } else {
-                    alert("❌ Incorrect Code! Please try again.");
+                    alert("❌ Incorrect Code!");
                 }
             } catch (error) { 
-                alert("Verification system error. Please try again."); 
+                alert("Error verifying code."); 
             } finally {
                 btn.innerText = originalText;
                 btn.disabled = false;
             }
         };
 
-        // METHOD 3: Phone OTP System (Via Firebase Phone Auth)
+        // 3. Phone OTP
         window.triggerPhoneOTP = async function() {
             const phoneInput = document.getElementById('gatePhone').value.trim();
             if(!phoneInput) return alert("Please enter your mobile number!");
@@ -572,23 +570,30 @@
                 
                 document.getElementById('phoneInitSection').classList.add('hidden');
                 document.getElementById('phoneOtpSection').classList.remove('hidden');
-                alert("OTP sent via SMS!");
             } catch (error) {
                 alert("SMS Error: " + error.message);
                 btn.disabled = false;
                 btn.innerText = "Send SMS OTP";
+                if(window.recaptchaVerifier) {
+                    window.recaptchaVerifier.clear();
+                    window.recaptchaVerifier = null;
+                }
             }
         };
 
         window.verifyPhoneOTP = async function() {
             const code = document.getElementById('gatePhoneOtpInput').value.trim();
-            if(!code) return alert("Please enter the 6-digit SMS code!");
+            if(!code) return alert("Please enter SMS code!");
 
             try {
                 await window.confirmationResult.confirm(code);
-                alert("Phone Verified Successfully!");
-                window.closeLoginGate();
                 
+                // DATA SAVE KARNA ZAROORI HAI YAHAN
+                const phoneInput = document.getElementById('gatePhone').value.trim();
+                localStorage.setItem('userPhone', phoneInput);
+                localStorage.removeItem('userEmail');
+
+                window.closeLoginGate();
                 const pendingPlan = localStorage.getItem('pending_selected_plan');
                 const pendingAmount = localStorage.getItem('pending_selected_amount');
                 window.proceedToCheckoutRedirect(pendingAmount, pendingPlan);
@@ -621,11 +626,11 @@
                     body: JSON.stringify(formData)
                 });
                 if (response.ok) {
-                    alert("Behtareen! Aapka message mil gaya hai. Hum jaldi call karenge.");
+                    alert("Aapka message mil gaya hai. Hum jaldi call karenge.");
                     document.getElementById('contactForm').reset();
                 } else { throw new Error("Server error"); }
             } catch (error) {
-                alert("Bhai, kuch issue aa gaya. Ek baar refresh karke try karo.");
+                alert("Kuch issue aa gaya. Refresh karke try karo.");
             } finally {
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
