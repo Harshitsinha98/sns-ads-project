@@ -230,3 +230,25 @@ app.post('/api/verify-phone-otp', (req, res) => {
         res.status(400).json({ error: "Invalid OTP" });
     }
 });
+
+// ==========================================
+// 5. CUSTOMER DASHBOARD ROUTE
+// ==========================================
+app.get('/api/my-orders', async (req, res) => {
+    try {
+        const { email, phone } = req.query;
+        
+        let query = {};
+        // Check karenge ki user email se aaya hai ya phone se
+        if (email) query.email = email;
+        else if (phone) query.service = { $regex: phone, $options: 'i' }; // Phone number humne service description me save kiya tha
+        else return res.status(400).json({ error: "Unauthorized access" });
+
+        // Database se orders fetch karo, newest first
+        const orders = await Lead.find(query).sort({ date: -1 });
+        
+        res.status(200).json(orders);
+    } catch (err) {
+        res.status(500).json({ error: "Failed to fetch orders" });
+    }
+});

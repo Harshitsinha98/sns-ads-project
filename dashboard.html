@@ -13,7 +13,6 @@
 </head>
 <body class="min-h-screen hero-glow flex flex-col">
 
-    <!-- Top Navigation -->
     <nav class="w-full border-b border-white/5 bg-black/40 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-3">
@@ -27,7 +26,6 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main class="flex-grow max-w-7xl mx-auto w-full px-6 py-12">
         
         <div class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -45,10 +43,8 @@
             Fetching your data...
         </div>
 
-        <!-- Orders Grid -->
         <div id="ordersList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Data will inject here -->
-        </div>
+            </div>
 
     </main>
 
@@ -57,13 +53,13 @@
             const email = localStorage.getItem('userEmail');
             const phone = localStorage.getItem('userPhone');
 
-            // Agar koi login data nahi hai toh redirect back to home
+            // Security: Agar login data nahi hai toh redirect back to home
             if (!email && !phone) {
                 window.location.href = "index.html";
                 return;
             }
 
-            // UI Display
+            // Display logged in user
             document.getElementById('userDisplay').innerText = `Logged in as: ${email || phone}`;
 
             try {
@@ -78,6 +74,7 @@
                 document.getElementById('loadingIndicator').style.display = 'none';
                 const ordersDiv = document.getElementById('ordersList');
 
+                // Agar koi order nahi mila
                 if (!orders || orders.length === 0) {
                     ordersDiv.innerHTML = `
                         <div class="col-span-full glass-panel rounded-[2rem] p-12 text-center border-dashed border-white/20">
@@ -88,16 +85,17 @@
                     return;
                 }
 
+                // Agar orders hain, toh loop chalakar cards banao
                 let html = "";
                 orders.forEach(o => {
-                    const statusColor = o.paymentStatus === 'Paid' ? 'text-green-400 bg-green-400/10' : 'text-yellow-400 bg-yellow-400/10';
+                    const statusColor = o.paymentStatus === 'Paid' ? 'text-green-400 bg-green-400/10 border-green-500/20' : 'text-yellow-400 bg-yellow-400/10 border-yellow-500/20';
                     const formattedDate = new Date(o.date).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
 
                     html += `
                         <div class="glass-panel p-8 rounded-3xl hover:border-blue-500/30 transition-colors relative group">
-                            <div class="absolute top-6 right-6 ${statusColor} px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">${o.paymentStatus}</div>
+                            <div class="absolute top-6 right-6 ${statusColor} border px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">${o.paymentStatus}</div>
                             
-                            <h3 class="text-2xl font-bold text-white mb-2 pr-20">${o.service.split(' (')[0]}</h3>
+                            <h3 class="text-xl font-bold text-white mb-2 pr-20">${o.service.split(' (')[0]}</h3>
                             <p class="text-xs text-gray-500 uppercase tracking-widest font-bold mb-6">${formattedDate}</p>
                             
                             <div class="space-y-3 border-t border-white/5 pt-6 mt-6">
@@ -121,6 +119,7 @@
             }
         };
 
+        // Logout logic
         function logout() {
             localStorage.removeItem('userEmail');
             localStorage.removeItem('userPhone');
