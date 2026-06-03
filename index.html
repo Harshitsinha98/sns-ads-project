@@ -404,9 +404,17 @@
 
         let currentUserInstance = null;
 
+        // IS FUNCTION KO REPLACE KARO
         onAuthStateChanged(auth, (user) => {
-            if (user) { currentUserInstance = user; } 
-            else { currentUserInstance = null; }
+            if (user) { 
+                currentUserInstance = user; 
+                // Ye 2 lines add ki hain taaki Dashboard bounce na kare
+                if(user.email) localStorage.setItem('userEmail', user.email);
+                if(user.phoneNumber) localStorage.setItem('userPhone', user.phoneNumber);
+            } 
+            else { 
+                currentUserInstance = null; 
+            }
         });
 
         window.loginAndCheckout = function(amount, plan) {
